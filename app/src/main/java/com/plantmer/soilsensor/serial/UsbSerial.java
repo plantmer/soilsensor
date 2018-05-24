@@ -26,7 +26,16 @@ public class UsbSerial implements Runnable {
         this.handler = handler;
     }
 
-    UsbSerialPort mDriver;
+    public NewLineListener getNlistener() {
+        return nlistener;
+    }
+
+    public void setNlistener(NewLineListener nlistener) {
+        this.nlistener = nlistener;
+    }
+
+    private NewLineListener nlistener;
+    private UsbSerialPort mDriver;
     private static PendingIntent mPermissionIntent = null;
     protected UsbManager manager;
     protected UsbDevice device;
@@ -247,8 +256,17 @@ public class UsbSerial implements Runnable {
             // if (DEBUG) android.util.Log.i(TAG, "Read data len=" + len);
             String rec="";
             for (int i = 0; i < len; i++) {
-                if (DEBUG) rec += (char)rcv_bytes[i];
+                char c = (char)rcv_bytes[i];
+                if (DEBUG) rec += c;
+
                 inputBuf.getOutputStream().write(rcv_bytes[i]);
+                if(c=='\n' && nlistener!=null){
+                    byte[] arr = new byte[getIN().available()];
+                    getIN().read(arr);
+                    String ret = new String(arr);
+                    nlistener.noNewLine(ret);
+                }
+
             }
             if (DEBUG) android.util.Log.i(TAG, "rec=" + rec);
 
