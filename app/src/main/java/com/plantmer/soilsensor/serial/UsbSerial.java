@@ -12,7 +12,7 @@ import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 
 
-import com.plantmer.soilsensor.SettingsActivity;
+import com.plantmer.soilsensor.MainActivity;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
 public class UsbSerial implements Runnable {
     public static final String TAG = "Usb";
 
-    public UsbSerial(SettingsActivity handler) {
+    public UsbSerial(MainActivity handler) {
         this.handler = handler;
     }
 
@@ -40,7 +40,7 @@ public class UsbSerial implements Runnable {
     protected UsbManager manager;
     protected UsbDevice device;
     protected UsbDeviceConnection connection;
-    protected SettingsActivity handler;
+    protected MainActivity handler;
 
     public static void getPermission(final UsbManager manager, Context context, UsbDevice device) {
         if (mPermissionIntent == null) {
