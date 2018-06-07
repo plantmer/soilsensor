@@ -13,15 +13,15 @@ public class DataObj {
     private float temperatureDay;
     private float temperatureEvening;
     private float temperatureNight;
-    private String pressure;
-    private String humidity;
-    private String icon;
-    private String description;
-    private String windSpeed;
-    private String windDegree;
-    private String cloudiness;
-    private String rain;
-    private String snow;
+    private String pressure="0";
+    private String humidity="0";
+    private String icon="0";
+    private String description="0";
+    private String windSpeed="0";
+    private String windDegree="0";
+    private String cloudiness="0";
+    private String rain="0";
+    private String snow="0";
 
     public long getDateTime() {
         return dateTime;

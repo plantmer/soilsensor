@@ -55,27 +55,29 @@ public class GraphFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ee.setText("");
-
+        mForecastList.add(new DataObj());
+        View vv =inflater.inflate(R.layout.fragment_1, container, false);
+        
         mValueFormatter = new CustomValueFormatter();
         mYAxisFormatter = new YAxisValueFormatter();
-        mTemperatureChart = (LineChart) getView().findViewById(R.id.temperature_chart);
-        mWindChart = (LineChart) getView().findViewById(R.id.wind_chart);
-        mRainChart = (LineChart) getView().findViewById(R.id.rain_chart);
-        mSnowChart = (LineChart) getView().findViewById(R.id.snow_chart);
-        TextView temperatureLabel = (TextView) getView().findViewById(R.id.graphs_temperature_label);
+        mTemperatureChart = (LineChart) vv.findViewById(R.id.temperature_chart);
+        mWindChart = (LineChart) vv.findViewById(R.id.wind_chart);
+        mRainChart = (LineChart) vv.findViewById(R.id.rain_chart);
+        mSnowChart = (LineChart) vv.findViewById(R.id.snow_chart);
+        TextView temperatureLabel = (TextView) vv.findViewById(R.id.graphs_temperature_label);
         temperatureLabel.setText(getString(R.string.label_temperature) +
                 ", " +
                 Utils.getTemperatureScale(this.getContext()));
-        TextView windLabel = (TextView) getView().findViewById(R.id.graphs_wind_label);
+        TextView windLabel = (TextView) vv.findViewById(R.id.graphs_wind_label);
         windLabel.setText(getString(R.string.label_wind) + ", " + Utils.getSpeedScale(this.getContext()));
-        TextView rainLabel = (TextView) getView().findViewById(R.id.graphs_rain_label);
+        TextView rainLabel = (TextView) vv.findViewById(R.id.graphs_rain_label);
         rainLabel.setText(getString(R.string.label_rain) + ", " + getString(R.string.millimetre_label));
-        TextView snowLabel = (TextView) getView().findViewById(R.id.graphs_snow_label);
+        TextView snowLabel = (TextView) vv.findViewById(R.id.graphs_snow_label);
         snowLabel.setText(getString(R.string.label_snow) + ", " + getString(R.string.millimetre_label));
 
         updateUI();
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_1, container, false);
+        return vv;
     }
     private void setTemperatureChart() {
         mTemperatureChart.setDescription(ee);
