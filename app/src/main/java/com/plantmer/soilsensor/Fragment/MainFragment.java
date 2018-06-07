@@ -26,17 +26,6 @@ public class MainFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View vv =inflater.inflate(R.layout.fragment_1, container, false);
-        weatherConditionsIcons();
-        initializeTextView(vv);
-
-        return vv;
-    }
-
     private String mIconWind;
     private String mIconHumidity;
     private String mIconPressure;
@@ -45,7 +34,7 @@ public class MainFragment extends Fragment {
     private String mIconSunset;
     private String mPercentSign;
     private String mPressureMeasurement;
-    
+
     private TextView mHumidityView;
     private TextView mWindSpeedView;
     private TextView mPressureView;
@@ -59,6 +48,17 @@ public class MainFragment extends Fragment {
     private TextView mIconSunriseView;
     private TextView mIconSunsetView;
 
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View vv =inflater.inflate(R.layout.fragment_1, container, false);
+        weatherConditionsIcons();
+        initializeTextView(vv);
+
+        return vv;
+    }
     private void updateCurrentWeather() {
         String pressure = String.format(Locale.getDefault(), "%.1f",10.01f);
         String wind = String.format(Locale.getDefault(), "%.1f", 10.01f);
