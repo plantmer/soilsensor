@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.plantmer.soilsensor.Fragment.CallsFragment;
-import com.plantmer.soilsensor.Fragment.ChatFragment;
-import com.plantmer.soilsensor.Fragment.ContactsFragment;
+import com.plantmer.soilsensor.Fragment.MainFragment;
+import com.plantmer.soilsensor.Fragment.GraphFragment;
+import com.plantmer.soilsensor.Fragment.DataFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
     //Fragments
 
-    ChatFragment chatFragment;
-    CallsFragment callsFragment;
-    ContactsFragment contactsFragment;
+    GraphFragment graphFragment;
+    MainFragment mainFragment;
+    DataFragment dataFragment;
     MenuItem prevMenuItem;
 
     @Override
@@ -102,12 +102,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        callsFragment=new CallsFragment();
-        chatFragment=new ChatFragment();
-        contactsFragment=new ContactsFragment();
-        adapter.addFragment(callsFragment);
-        adapter.addFragment(chatFragment);
-        adapter.addFragment(contactsFragment);
+        mainFragment =new MainFragment();
+        graphFragment =new GraphFragment();
+        dataFragment =new DataFragment();
+        adapter.addFragment(mainFragment);
+        adapter.addFragment(graphFragment);
+        adapter.addFragment(dataFragment);
         viewPager.setAdapter(adapter);
     }
 }

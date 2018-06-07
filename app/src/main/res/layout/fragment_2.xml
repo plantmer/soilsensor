@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.plantmer.soilsensor.Fragment.ContactsFragment">
+    tools:context="com.plantmer.soilsensor.Fragment.DataFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:text="@string/tab3"
         android:layout_centerInParent="true"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:id="@+id/textView" />
 
 </RelativeLayout>
