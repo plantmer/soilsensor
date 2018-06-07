@@ -10,19 +10,8 @@ import android.view.ViewGroup;
 import com.github.mikephil.charting.components.Description;
 import com.plantmer.soilsensor.R;
 
-
-import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -31,22 +20,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
-import com.plantmer.soilsensor.util.Constants;
 import com.plantmer.soilsensor.util.CustomValueFormatter;
 import com.plantmer.soilsensor.util.DataObj;
 import com.plantmer.soilsensor.util.Utils;
 import com.plantmer.soilsensor.util.XAxisValueFormatter;
 import com.plantmer.soilsensor.util.YAxisValueFormatter;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,7 +48,7 @@ public class GraphFragment extends Fragment {
 
     private CustomValueFormatter mValueFormatter;
     private YAxisValueFormatter mYAxisFormatter;
-    public List<DataObj> mForecastList;
+    public List<DataObj> mForecastList=new ArrayList<>();
     Description ee = new Description();
 
     @Override
