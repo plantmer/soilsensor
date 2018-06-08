@@ -18,32 +18,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/activity_vertical_margin">
-            <LinearLayout
-                style="@style/MainLinearLayout"
-                android:layout_width="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/connText"
-                    style="@style/MainConditions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="TextView" />
-
-                <Button
-                    android:id="@+id/connButton"
-                    android:layout_width="122dp"
-                    android:layout_height="36dp"
-                    android:text="CONNECT" />
-
-            </LinearLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="48dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="4dp"
                 android:background="?android:attr/listDivider"/>
-
 
             <LinearLayout
                 style="@style/MainLinearLayout"
@@ -57,7 +37,7 @@
                     android:layout_height="32dp"/>
 
                 <TextView
-                    android:id="@+id/main.pressure"
+                    android:id="@+id/main_dp"
                     style="@style/MainConditions"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"/>
@@ -69,13 +49,13 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/main.cloudiness_icon"
+                    android:id="@+id/main.icon_ec"
                     style="@style/MainIcon"
                     android:layout_width="32dp"
                     android:layout_height="32dp"/>
 
                 <TextView
-                    android:id="@+id/main.cloudiness"
+                    android:id="@+id/main_ec"
                     style="@style/MainConditions"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"/>
@@ -88,13 +68,13 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/main.sunrise_icon"
+                    android:id="@+id/main.icon_temp"
                     style="@style/MainIcon"
                     android:layout_width="32dp"
                     android:layout_height="32dp"/>
 
                 <TextView
-                    android:id="@+id/main.sunrise"
+                    android:id="@+id/main_temp"
                     style="@style/MainConditions"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"/>
@@ -106,17 +86,44 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/main.sunset_icon"
+                    android:id="@+id/main.icon_vwc"
                     style="@style/MainIcon"
                     android:layout_width="32dp"
                     android:layout_height="32dp"/>
 
                 <TextView
-                    android:id="@+id/main.sunset"
+                    android:id="@+id/main_vwc"
                     style="@style/MainConditions"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:background="?android:attr/listDivider"/>
+            <LinearLayout
+                style="@style/MainLinearLayout"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/connButton"
+                    android:layout_width="122dp"
+                    android:layout_height="36dp"
+                    android:text="CONNECT" />
+                <TextView
+                    android:id="@+id/connText"
+                    style="@style/MainConditions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Not Connected" />
+
+
+            </LinearLayout>
+
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>

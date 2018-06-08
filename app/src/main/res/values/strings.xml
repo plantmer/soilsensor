@@ -65,6 +65,11 @@
     <string name="icon_sunrise" translatable="false"></string>
     <string name="icon_sunset" translatable="false"></string>
 
+    <string name="icon_dp" translatable="false"></string>
+    <string name="icon_temp" translatable="false"></string>
+    <string name="icon_ec" translatable="false"></string>
+    <string name="icon_vwc" translatable="false"></string>
+
     <!-- Units and Measurement-->
     <string name="percent_sign" translatable="false">\u0025</string>
     <string name="temperature_with_degree" translatable="false">%s\u00B0</string>
@@ -113,6 +118,12 @@
     <string name="about_f_droid_pref_title" translatable="false">F-Droid</string>
     <string name="about_google_play_pref_title" translatable="false">Google Play</string>
     <string name="about_open_source_licenses_pref_title">Open Source licenses</string>
+
+
+    <string name="dp_label">Dielectric permittivity: %1$s</string>
+    <string name="ec_label">Electrical Conductivity: %1$s</string>
+    <string name="temp_label">Temperature: %1$s%2$s</string>
+    <string name="vwc_label">Volumetric Water Content: %1$s%2$s</string>
 
     <!-- Weather conditions label strings -->
     <string name="wind_label">Wind: %1$s %2$s</string>
