@@ -3,7 +3,7 @@
 
     <string name="tab1">MAIN</string>
     <string name="tab2">GRAPH</string>
-    <string name="tab3">DATA</string>
+    <string name="tab3">SETTINGS</string>
 
     <string name="enter_city_hint">Enter city</string>
     <string name="label_current_city">Current city</string>

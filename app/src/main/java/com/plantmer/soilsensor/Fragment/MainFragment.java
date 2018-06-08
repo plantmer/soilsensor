@@ -8,8 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.plantmer.soilsensor.MainActivity;
 import com.plantmer.soilsensor.R;
 import com.plantmer.soilsensor.util.Utils;
 
@@ -21,7 +23,7 @@ import java.util.Locale;
  */
 public class MainFragment extends Fragment {
 
-
+    MainActivity act;
     public MainFragment() {
         // Required empty public constructor
     }
@@ -35,61 +37,59 @@ public class MainFragment extends Fragment {
     private String mPercentSign;
     private String mPressureMeasurement;
 
-    private TextView mHumidityView;
-    private TextView mWindSpeedView;
     private TextView mPressureView;
     private TextView mCloudinessView;
     private TextView mSunriseView;
     private TextView mSunsetView;
-    private TextView mIconWindView;
-    private TextView mIconHumidityView;
     private TextView mIconPressureView;
     private TextView mIconCloudinessView;
     private TextView mIconSunriseView;
     private TextView mIconSunsetView;
+    private TextView connText;
+
+    private Button connButton;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View vv =inflater.inflate(R.layout.fragment_1, container, false);
-        weatherConditionsIcons();
-        initializeTextView(vv);
-
-        return vv;
+        return inflater.inflate(R.layout.fragment_0, container, false);
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        weatherConditionsIcons();
+        initializeTextView(view);
+    }
+
     private void updateCurrentWeather() {
         String pressure = String.format(Locale.getDefault(), "%.1f",10.01f);
         String wind = String.format(Locale.getDefault(), "%.1f", 10.01f);
 
 
-        mHumidityView.setText(getString(R.string.humidity_label,
-                String.valueOf(50),
-                mPercentSign));
         mPressureView.setText(getString(R.string.pressure_label, pressure,
                 mPressureMeasurement));
-        mWindSpeedView.setText(getString(R.string.wind_label, wind, "20"));
         mSunriseView.setText(getString(R.string.sunrise_label, "19:00"));
         mSunsetView.setText(getString(R.string.sunset_label, "19:00"));
 
      }
 
     private void initializeTextView(View vv) {
-        Typeface weatherFontIcon = Typeface.createFromAsset(vv.getContext().getAssets(),
+        Typeface weatherFontIcon = Typeface.createFromAsset(getActivity().getAssets(),
                 "fonts/weathericons-regular-webfont.ttf");
-        Typeface robotoLight = Typeface.createFromAsset(vv.getContext().getAssets(),
+        Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),
                 "fonts/Roboto-Light.ttf");
 
-        mPressureView = (TextView) vv.findViewById(R.id.main_pressure);
-        mHumidityView = (TextView) vv.findViewById(R.id.main_humidity);
-        mWindSpeedView = (TextView) vv.findViewById(R.id.main_wind_speed);
-        mCloudinessView = (TextView) vv.findViewById(R.id.main_cloudiness);
-        mSunriseView = (TextView) vv.findViewById(R.id.main_sunrise);
-        mSunsetView = (TextView) vv.findViewById(R.id.main_sunset);
+        connButton =  getActivity().findViewById(R.id.connButton);
+        connText =  getActivity().findViewById(R.id.connText);
 
-        mWindSpeedView.setTypeface(robotoLight);
-        mHumidityView.setTypeface(robotoLight);
+        mPressureView =  getActivity().findViewById(R.id.main_pressure);
+        mCloudinessView =  getActivity().findViewById(R.id.main_cloudiness);
+        mSunriseView =  getActivity().findViewById(R.id.main_sunrise);
+        mSunsetView =  getActivity().findViewById(R.id.main_sunset);
+
+        connButton.setTypeface(robotoLight);
+        connText.setTypeface(robotoLight);
         mPressureView.setTypeface(robotoLight);
         mCloudinessView.setTypeface(robotoLight);
         mSunriseView.setTypeface(robotoLight);
@@ -98,22 +98,16 @@ public class MainFragment extends Fragment {
         /**
          * Initialize and configure weather icons
          */
-        mIconWindView = (TextView) vv.findViewById(R.id.main_wind_icon);
-        mIconWindView.setTypeface(weatherFontIcon);
-        mIconWindView.setText(mIconWind);
-        mIconHumidityView = (TextView) vv.findViewById(R.id.main_humidity_icon);
-        mIconHumidityView.setTypeface(weatherFontIcon);
-        mIconHumidityView.setText(mIconHumidity);
-        mIconPressureView = (TextView) vv.findViewById(R.id.main_pressure_icon);
+        mIconPressureView =  getActivity().findViewById(R.id.main_pressure_icon);
         mIconPressureView.setTypeface(weatherFontIcon);
         mIconPressureView.setText(mIconPressure);
-        mIconCloudinessView = (TextView) vv.findViewById(R.id.main_cloudiness_icon);
+        mIconCloudinessView =  getActivity().findViewById(R.id.main_cloudiness_icon);
         mIconCloudinessView.setTypeface(weatherFontIcon);
         mIconCloudinessView.setText(mIconCloudiness);
-        mIconSunriseView = (TextView) vv.findViewById(R.id.main_sunrise_icon);
+        mIconSunriseView =  getActivity().findViewById(R.id.main_sunrise_icon);
         mIconSunriseView.setTypeface(weatherFontIcon);
         mIconSunriseView.setText(mIconSunrise);
-        mIconSunsetView = (TextView) vv.findViewById(R.id.main_sunset_icon);
+        mIconSunsetView =  getActivity().findViewById(R.id.main_sunset_icon);
         mIconSunsetView.setTypeface(weatherFontIcon);
         mIconSunsetView.setText(mIconSunset);
     }

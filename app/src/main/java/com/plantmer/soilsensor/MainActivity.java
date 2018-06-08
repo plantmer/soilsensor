@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import com.plantmer.soilsensor.Fragment.MainFragment;
 import com.plantmer.soilsensor.Fragment.GraphFragment;
-import com.plantmer.soilsensor.Fragment.DataFragment;
+import com.plantmer.soilsensor.Fragment.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     GraphFragment graphFragment;
     MainFragment mainFragment;
-    DataFragment dataFragment;
+    SettingsFragment dataFragment;
     MenuItem prevMenuItem;
 
     @Override
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         mainFragment =new MainFragment();
         graphFragment =new GraphFragment();
-        dataFragment =new DataFragment();
+        dataFragment =new SettingsFragment();
         adapter.addFragment(mainFragment);
         adapter.addFragment(graphFragment);
         adapter.addFragment(dataFragment);

@@ -13,10 +13,10 @@ import com.plantmer.soilsensor.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DataFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
 
-    public DataFragment() {
+    public SettingsFragment() {
         // Required empty public constructor
     }
 

@@ -23,49 +23,27 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/connText"
+                    style="@style/MainConditions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="TextView" />
+
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/connButton"
                     android:layout_width="122dp"
                     android:layout_height="36dp"
-                    android:text="Connect" />
+                    android:text="CONNECT" />
 
             </LinearLayout>
-
-            <LinearLayout
-                style="@style/MainLinearLayout"
+            <View
                 android:layout_width="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="1dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:background="?android:attr/listDivider"/>
 
-                <TextView
-                    android:id="@+id/main.wind_icon"
-                    style="@style/MainIcon"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"/>
-
-                <TextView
-                    android:id="@+id/main.wind_speed"
-                    style="@style/MainConditions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/MainLinearLayout"
-                android:layout_width="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/main.humidity_icon"
-                    style="@style/MainIcon"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"/>
-
-                <TextView
-                    android:id="@+id/main.humidity"
-                    style="@style/MainConditions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
 
             <LinearLayout
                 style="@style/MainLinearLayout"
@@ -103,12 +81,6 @@
                     android:layout_height="match_parent"/>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="4dp"
-                android:background="?android:attr/listDivider"/>
 
             <LinearLayout
                 style="@style/MainLinearLayout"
