@@ -44,9 +44,4 @@ public class Utils {
         ClipData clipData = ClipData.newPlainText(string, string);
         clipboardManager.setPrimaryClip(clipData);
     }
-
-    private static String getCityAndCountryFromPreference(Context context) {
-        String[] cityAndCountryArray = AppPreference.getCityAndCode(context);
-        return cityAndCountryArray[0] + ", " + cityAndCountryArray[1];
-    }
 }

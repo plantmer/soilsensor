@@ -22,7 +22,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.plantmer.soilsensor.util.CustomValueFormatter;
 import com.plantmer.soilsensor.util.DataObj;
-import com.plantmer.soilsensor.util.Utils;
 import com.plantmer.soilsensor.util.XAxisValueFormatter;
 import com.plantmer.soilsensor.util.YAxisValueFormatter;
 
