@@ -64,7 +64,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/graphs.temperature_label"
+                            android:id="@+id/graphs.dp_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
@@ -72,7 +72,7 @@
                             android:textSize="18sp"/>
 
                         <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/temperature_chart"
+                            android:id="@+id/dp_chart"
                             android:layout_width="match_parent"
                             android:layout_height="220dp">
                         </com.github.mikephil.charting.charts.LineChart>
@@ -90,7 +90,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/graphs.wind_label"
+                            android:id="@+id/graphs.ec_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
@@ -98,7 +98,7 @@
                             android:textSize="18sp"/>
 
                         <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/wind_chart"
+                            android:id="@+id/ec_chart"
                             android:layout_width="match_parent"
                             android:layout_height="220dp">
                         </com.github.mikephil.charting.charts.LineChart>
@@ -116,7 +116,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/graphs.rain_label"
+                            android:id="@+id/graphs.temp_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
@@ -124,7 +124,7 @@
                             android:textSize="18sp"/>
 
                         <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/rain_chart"
+                            android:id="@+id/temp_chart"
                             android:layout_width="match_parent"
                             android:layout_height="220dp">
                         </com.github.mikephil.charting.charts.LineChart>
@@ -142,7 +142,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/graphs.snow_label"
+                            android:id="@+id/graphs.vwc_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
@@ -150,7 +150,7 @@
                             android:textSize="18sp"/>
 
                         <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/snow_chart"
+                            android:id="@+id/vwc_chart"
                             android:layout_width="match_parent"
                             android:layout_height="220dp">
                         </com.github.mikephil.charting.charts.LineChart>

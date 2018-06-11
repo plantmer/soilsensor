@@ -30,28 +30,12 @@
         <item>1440</item>
     </string-array>
     
-    <string-array name="widget_theme_entries">
-        <item>@string/theme_dark</item>
-        <item>@string/theme_light</item>
-        <item>@string/theme_transparent</item>
-    </string-array>
     <string-array name="widget_theme_values" translatable="false">
         <item>dark</item>
         <item>light</item>
         <item>transparent</item>
     </string-array>
 
-    <!-- Wind directions array -->
-    <string-array name="wind_directions">
-        <item>@string/wind_direction_north</item>
-        <item>@string/wind_direction_north_east</item>
-        <item>@string/wind_direction_east</item>
-        <item>@string/wind_direction_south_east</item>
-        <item>@string/wind_direction_south</item>
-        <item>@string/wind_direction_south_west</item>
-        <item>@string/wind_direction_west</item>
-        <item>@string/wind_direction_north_west</item>
-    </string-array>
     <string-array name="wind_direction_arrows" translatable="false">
         <item name="n">&#xf058;</item>
         <item name="ne">&#xf057;</item>
@@ -63,44 +47,5 @@
         <item name="nw">&#xf087;</item>
     </string-array>
 
-    <!-- Languages array -->
-    <string-array name="language_entries">
-        <item name="default">@string/pref_language_default</item>
-        <item name="english">English</item>
-        <item name="basque">Euskara (Basque)</item>
-        <item name="belarusian">Беларуская (Belarusian)</item>
-        <item name="catalan">Català (Catalan)</item>
-        <item name="czech">Čeština (Czech)</item>
-        <item name="french">Français (French)</item>
-        <item name="italian">Italiano (Italian)</item>
-        <item name="german">Deutsch (German)</item>
-        <item name="spanish">Español (Spanish)</item>
-        <item name="japanese">日本語 (Japanese)</item>
-        <item name="polish">Polski (Polish)</item>
-        <item name="russian">Русский (Russian)</item>
-        <item name="turkish">Türkçe (Turkish)</item>
-    </string-array>
-    <string-array name="language_values">
-        <item name="default"></item>
-        <item name="english">en</item>
-        <item name="basque">eu</item>
-        <item name="belarusian">be</item>
-        <item name="catalan">ca</item>
-        <item name="czech">cs</item>
-        <item name="french">fr</item>
-        <item name="italian">it</item>
-        <item name="german">de</item>
-        <item name="spanish">es</item>
-        <item name="japanese">ja</item>
-        <item name="polish">pl</item>
-        <item name="russian">ru</item>
-        <item name="turkish">tr</item>
-    </string-array>
-
-    <!-- Themes array -->
-    <string-array name="theme_entries">
-        <item name="light">@string/theme_light</item>
-        <item name="dark">@string/theme_dark</item>
-    </string-array>
 
 </resources>

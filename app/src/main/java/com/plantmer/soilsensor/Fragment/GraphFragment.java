@@ -40,10 +40,10 @@ public class GraphFragment extends Fragment {
     public GraphFragment() {
         // Required empty public constructor
     }
-    private LineChart mTemperatureChart;
-    private LineChart mWindChart;
-    private LineChart mRainChart;
-    private LineChart mSnowChart;
+    private LineChart mDpChart;
+    private LineChart mEcChart;
+    private LineChart mTempChart;
+    private LineChart mVwcChart;
     private String[] mDatesArray;
 
     private CustomValueFormatter mValueFormatter;
@@ -65,41 +65,39 @@ public class GraphFragment extends Fragment {
             mForecastList.add(new DataObj());
         mValueFormatter = new CustomValueFormatter();
         mYAxisFormatter = new YAxisValueFormatter();
-        mTemperatureChart = (LineChart) getActivity().findViewById(R.id.temperature_chart);
-        mWindChart = (LineChart) getActivity().findViewById(R.id.wind_chart);
-        mRainChart = (LineChart) getActivity().findViewById(R.id.rain_chart);
-        mSnowChart = (LineChart) getActivity().findViewById(R.id.snow_chart);
-        TextView temperatureLabel = (TextView) getActivity().findViewById(R.id.graphs_temperature_label);
-        temperatureLabel.setText(getString(R.string.label_temperature) +
-                ", " +
-                Utils.getTemperatureScale(this.getContext()));
-        TextView windLabel = (TextView) getActivity().findViewById(R.id.graphs_wind_label);
-        windLabel.setText(getString(R.string.label_wind) + ", " + Utils.getSpeedScale(this.getContext()));
-        TextView rainLabel = (TextView) getActivity().findViewById(R.id.graphs_rain_label);
-        rainLabel.setText(getString(R.string.label_rain) + ", " + getString(R.string.millimetre_label));
-        TextView snowLabel = (TextView) getActivity().findViewById(R.id.graphs_snow_label);
-        snowLabel.setText(getString(R.string.label_snow) + ", " + getString(R.string.millimetre_label));
+        mTempChart = (LineChart) getActivity().findViewById(R.id.temp_chart);
+        mDpChart = (LineChart) getActivity().findViewById(R.id.dp_chart);
+        mEcChart = (LineChart) getActivity().findViewById(R.id.ec_chart);
+        mVwcChart = (LineChart) getActivity().findViewById(R.id.vwc_chart);
+        TextView temperatureLabel = (TextView) getActivity().findViewById(R.id.graphs_temp_label);
+        temperatureLabel.setText("Temperature");
+        TextView dpLabel = (TextView) getActivity().findViewById(R.id.graphs_dp_label);
+        dpLabel.setText("Dielectric permittivity");
+        TextView ecLabel = (TextView) getActivity().findViewById(R.id.graphs_ec_label);
+        ecLabel.setText("Electrical Conductivity");
+        TextView vwcLabel = (TextView) getActivity().findViewById(R.id.graphs_vwc_label);
+        vwcLabel.setText("Water Content");
 
         updateUI();
         // Inflate the layout for this fragment
     }
-    private void setTemperatureChart() {
-        mTemperatureChart.setDescription(ee);
-        mTemperatureChart.setDrawGridBackground(false);
-        mTemperatureChart.setTouchEnabled(true);
-        mTemperatureChart.setDragEnabled(true);
-        mTemperatureChart.setMaxHighlightDistance(300);
-        mTemperatureChart.setPinchZoom(true);
-        mTemperatureChart.getLegend().setEnabled(false);
+    private void setTempChart() {
+        mTempChart.setDescription(ee);
+        mTempChart.setDrawGridBackground(false);
+        mTempChart.setTouchEnabled(true);
+        mTempChart.setDragEnabled(true);
+        mTempChart.setMaxHighlightDistance(300);
+        mTempChart.setPinchZoom(true);
+        mTempChart.getLegend().setEnabled(false);
 
         formatDate();
-        XAxis x = mTemperatureChart.getXAxis();
+        XAxis x = mTempChart.getXAxis();
         x.setEnabled(true);
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
         x.setDrawGridLines(false);
         x.setValueFormatter(new XAxisValueFormatter(mDatesArray));
 
-        YAxis yLeft = mTemperatureChart.getAxisLeft();
+        YAxis yLeft = mTempChart.getAxisLeft();
         yLeft.setEnabled(true);
         yLeft.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         yLeft.setDrawAxisLine(false);
@@ -109,7 +107,7 @@ public class GraphFragment extends Fragment {
         yLeft.setXOffset(15);
         yLeft.setValueFormatter(mYAxisFormatter);
 
-        mTemperatureChart.getAxisRight().setEnabled(false);
+        mTempChart.getAxisRight().setEnabled(false);
 
         List<Entry> entries = new ArrayList<>();
         for (int i = 0; i < mForecastList.size(); i++) {
@@ -118,9 +116,9 @@ public class GraphFragment extends Fragment {
         }
 
         LineDataSet set;
-        if (mTemperatureChart.getData() != null) {
-            mTemperatureChart.getData().removeDataSet(mTemperatureChart.getData().getDataSetByIndex(
-                    mTemperatureChart.getData().getDataSetCount() - 1));
+        if (mTempChart.getData() != null) {
+            mTempChart.getData().removeDataSet(mTempChart.getData().getDataSetByIndex(
+                    mTempChart.getData().getDataSetCount() - 1));
             set = new LineDataSet(entries, "Day");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
@@ -133,7 +131,7 @@ public class GraphFragment extends Fragment {
             set.setValueFormatter(mValueFormatter);
 
             LineData data = new LineData(set);
-            mTemperatureChart.setData(data);
+            mTempChart.setData(data);
         } else {
             set = new LineDataSet(entries, "Day");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
@@ -147,28 +145,28 @@ public class GraphFragment extends Fragment {
             set.setValueFormatter(mValueFormatter);
 
             LineData data = new LineData(set);
-            mTemperatureChart.setData(data);
+            mTempChart.setData(data);
         }
-        mTemperatureChart.invalidate();
+        mTempChart.invalidate();
     }
 
-    private void setWindChart() {
-        mWindChart.setDescription(ee);
-        mWindChart.setDrawGridBackground(false);
-        mWindChart.setTouchEnabled(true);
-        mWindChart.setDragEnabled(true);
-        mWindChart.setMaxHighlightDistance(300);
-        mWindChart.setPinchZoom(true);
-        mWindChart.getLegend().setEnabled(false);
+    private void setDpChart() {
+        mDpChart.setDescription(ee);
+        mDpChart.setDrawGridBackground(false);
+        mDpChart.setTouchEnabled(true);
+        mDpChart.setDragEnabled(true);
+        mDpChart.setMaxHighlightDistance(300);
+        mDpChart.setPinchZoom(true);
+        mDpChart.getLegend().setEnabled(false);
 
         formatDate();
-        XAxis x = mWindChart.getXAxis();
+        XAxis x = mDpChart.getXAxis();
         x.setEnabled(true);
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
         x.setDrawGridLines(false);
         x.setValueFormatter(new XAxisValueFormatter(mDatesArray));
 
-        YAxis yLeft = mWindChart.getAxisLeft();
+        YAxis yLeft = mDpChart.getAxisLeft();
         yLeft.setEnabled(true);
         yLeft.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         yLeft.setDrawAxisLine(false);
@@ -178,7 +176,7 @@ public class GraphFragment extends Fragment {
         yLeft.setXOffset(15);
         yLeft.setValueFormatter(mYAxisFormatter);
 
-        mWindChart.getAxisRight().setEnabled(false);
+        mDpChart.getAxisRight().setEnabled(false);
 
         List<Entry> entries = new ArrayList<>();
         for (int i = 0; i < mForecastList.size(); i++) {
@@ -187,9 +185,9 @@ public class GraphFragment extends Fragment {
         }
 
         LineDataSet set;
-        if (mWindChart.getData() != null) {
-            mWindChart.getData().removeDataSet(mWindChart.getData().getDataSetByIndex(
-                    mWindChart.getData().getDataSetCount() - 1));
+        if (mDpChart.getData() != null) {
+            mDpChart.getData().removeDataSet(mDpChart.getData().getDataSetByIndex(
+                    mDpChart.getData().getDataSetCount() - 1));
             set = new LineDataSet(entries, "Wind");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
@@ -202,7 +200,7 @@ public class GraphFragment extends Fragment {
             set.setValueFormatter(mValueFormatter);
 
             LineData data = new LineData(set);
-            mWindChart.setData(data);
+            mDpChart.setData(data);
         } else {
             set = new LineDataSet(entries, "Wind");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
@@ -216,28 +214,28 @@ public class GraphFragment extends Fragment {
             set.setValueFormatter(mValueFormatter);
 
             LineData data = new LineData(set);
-            mWindChart.setData(data);
+            mDpChart.setData(data);
         }
-        mWindChart.invalidate();
+        mDpChart.invalidate();
     }
 
-    private void setRainChart() {
-        mRainChart.setDescription(ee);
-        mRainChart.setDrawGridBackground(false);
-        mRainChart.setTouchEnabled(true);
-        mRainChart.setDragEnabled(true);
-        mRainChart.setMaxHighlightDistance(300);
-        mRainChart.setPinchZoom(true);
-        mRainChart.getLegend().setEnabled(false);
+    private void setEcChart() {
+        mEcChart.setDescription(ee);
+        mEcChart.setDrawGridBackground(false);
+        mEcChart.setTouchEnabled(true);
+        mEcChart.setDragEnabled(true);
+        mEcChart.setMaxHighlightDistance(300);
+        mEcChart.setPinchZoom(true);
+        mEcChart.getLegend().setEnabled(false);
 
         formatDate();
-        XAxis x = mRainChart.getXAxis();
+        XAxis x = mEcChart.getXAxis();
         x.setEnabled(true);
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
         x.setDrawGridLines(false);
         x.setValueFormatter(new XAxisValueFormatter(mDatesArray));
 
-        YAxis yLeft = mRainChart.getAxisLeft();
+        YAxis yLeft = mEcChart.getAxisLeft();
         yLeft.setEnabled(true);
         yLeft.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         yLeft.setDrawAxisLine(false);
@@ -247,7 +245,7 @@ public class GraphFragment extends Fragment {
         yLeft.setXOffset(15);
         yLeft.setValueFormatter(mYAxisFormatter);
 
-        mRainChart.getAxisRight().setEnabled(false);
+        mEcChart.getAxisRight().setEnabled(false);
 
         List<Entry> entries = new ArrayList<>();
         for (int i = 0; i < mForecastList.size(); i++) {
@@ -256,9 +254,9 @@ public class GraphFragment extends Fragment {
         }
 
         LineDataSet set;
-        if (mRainChart.getData() != null) {
-            mRainChart.getData().removeDataSet(mRainChart.getData().getDataSetByIndex(
-                    mRainChart.getData().getDataSetCount() - 1));
+        if (mEcChart.getData() != null) {
+            mEcChart.getData().removeDataSet(mEcChart.getData().getDataSetByIndex(
+                    mEcChart.getData().getDataSetCount() - 1));
             set = new LineDataSet(entries, "Rain");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
@@ -271,7 +269,7 @@ public class GraphFragment extends Fragment {
             set.setValueFormatter(mValueFormatter);
 
             LineData data = new LineData(set);
-            mRainChart.setData(data);
+            mEcChart.setData(data);
         } else {
             set = new LineDataSet(entries, "Rain");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
@@ -285,28 +283,28 @@ public class GraphFragment extends Fragment {
             set.setValueFormatter(mValueFormatter);
 
             LineData data = new LineData(set);
-            mRainChart.setData(data);
+            mEcChart.setData(data);
         }
-        mRainChart.invalidate();
+        mEcChart.invalidate();
     }
 
-    private void setSnowChart() {
-        mSnowChart.setDescription(ee);
-        mSnowChart.setDrawGridBackground(false);
-        mSnowChart.setTouchEnabled(true);
-        mSnowChart.setDragEnabled(true);
-        mSnowChart.setMaxHighlightDistance(300);
-        mSnowChart.setPinchZoom(true);
-        mSnowChart.getLegend().setEnabled(false);
+    private void setVwcChart() {
+        mVwcChart.setDescription(ee);
+        mVwcChart.setDrawGridBackground(false);
+        mVwcChart.setTouchEnabled(true);
+        mVwcChart.setDragEnabled(true);
+        mVwcChart.setMaxHighlightDistance(300);
+        mVwcChart.setPinchZoom(true);
+        mVwcChart.getLegend().setEnabled(false);
 
         formatDate();
-        XAxis x = mSnowChart.getXAxis();
+        XAxis x = mVwcChart.getXAxis();
         x.setEnabled(true);
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
         x.setDrawGridLines(false);
         x.setValueFormatter(new XAxisValueFormatter(mDatesArray));
 
-        YAxis yLeft = mSnowChart.getAxisLeft();
+        YAxis yLeft = mVwcChart.getAxisLeft();
         yLeft.setEnabled(true);
         yLeft.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         yLeft.setDrawAxisLine(false);
@@ -316,7 +314,7 @@ public class GraphFragment extends Fragment {
         yLeft.setXOffset(15);
         yLeft.setValueFormatter(mYAxisFormatter);
 
-        mSnowChart.getAxisRight().setEnabled(false);
+        mVwcChart.getAxisRight().setEnabled(false);
 
         List<Entry> entries = new ArrayList<>();
         for (int i = 0; i < mForecastList.size(); i++) {
@@ -325,9 +323,9 @@ public class GraphFragment extends Fragment {
         }
 
         LineDataSet set;
-        if (mSnowChart.getData() != null) {
-            mSnowChart.getData().removeDataSet(mSnowChart.getData().getDataSetByIndex(
-                    mSnowChart.getData().getDataSetCount() - 1));
+        if (mVwcChart.getData() != null) {
+            mVwcChart.getData().removeDataSet(mVwcChart.getData().getDataSetByIndex(
+                    mVwcChart.getData().getDataSetCount() - 1));
             set = new LineDataSet(entries, "Snow");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
@@ -340,7 +338,7 @@ public class GraphFragment extends Fragment {
             set.setValueFormatter(mValueFormatter);
 
             LineData data = new LineData(set);
-            mSnowChart.setData(data);
+            mVwcChart.setData(data);
         } else {
             set = new LineDataSet(entries, "Snow");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
@@ -354,9 +352,9 @@ public class GraphFragment extends Fragment {
             set.setValueFormatter(mValueFormatter);
 
             LineData data = new LineData(set);
-            mSnowChart.setData(data);
+            mVwcChart.setData(data);
         }
-        mSnowChart.invalidate();
+        mVwcChart.invalidate();
     }
 
     private void formatDate() {
@@ -376,40 +374,40 @@ public class GraphFragment extends Fragment {
 
 
     private void toggleValues() {
-        for (IDataSet set : mTemperatureChart.getData().getDataSets()) {
+        for (IDataSet set : mTempChart.getData().getDataSets()) {
             set.setDrawValues(!set.isDrawValuesEnabled());
         }
-        for (IDataSet set : mWindChart.getData().getDataSets()) {
+        for (IDataSet set : mDpChart.getData().getDataSets()) {
             set.setDrawValues(!set.isDrawValuesEnabled());
         }
-        for (IDataSet set : mRainChart.getData().getDataSets()) {
+        for (IDataSet set : mEcChart.getData().getDataSets()) {
             set.setDrawValues(!set.isDrawValuesEnabled());
         }
-        for (IDataSet set : mSnowChart.getData().getDataSets()) {
+        for (IDataSet set : mVwcChart.getData().getDataSets()) {
             set.setDrawValues(!set.isDrawValuesEnabled());
         }
-        mTemperatureChart.invalidate();
-        mWindChart.invalidate();
-        mRainChart.invalidate();
-        mSnowChart.invalidate();
+        mTempChart.invalidate();
+        mDpChart.invalidate();
+        mEcChart.invalidate();
+        mVwcChart.invalidate();
     }
 
     private void toggleYAxis() {
-        mTemperatureChart.getAxisLeft().setEnabled(!mTemperatureChart.getAxisLeft().isEnabled());
-        mWindChart.getAxisLeft().setEnabled(!mWindChart.getAxisLeft().isEnabled());
-        mRainChart.getAxisLeft().setEnabled(!mRainChart.getAxisLeft().isEnabled());
-        mSnowChart.getAxisLeft().setEnabled(!mSnowChart.getAxisLeft().isEnabled());
-        mTemperatureChart.invalidate();
-        mWindChart.invalidate();
-        mRainChart.invalidate();
-        mSnowChart.invalidate();
+        mTempChart.getAxisLeft().setEnabled(!mTempChart.getAxisLeft().isEnabled());
+        mDpChart.getAxisLeft().setEnabled(!mDpChart.getAxisLeft().isEnabled());
+        mEcChart.getAxisLeft().setEnabled(!mEcChart.getAxisLeft().isEnabled());
+        mVwcChart.getAxisLeft().setEnabled(!mVwcChart.getAxisLeft().isEnabled());
+        mTempChart.invalidate();
+        mDpChart.invalidate();
+        mEcChart.invalidate();
+        mVwcChart.invalidate();
     }
 
 
     private void updateUI() {
-        setTemperatureChart();
-        setWindChart();
-        setRainChart();
-        setSnowChart();
+        setTempChart();
+        setDpChart();
+        setEcChart();
+        setVwcChart();
     }
 }

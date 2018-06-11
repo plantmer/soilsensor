@@ -31,7 +31,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/main.pressure_icon"
+                    android:id="@+id/icon_dp"
                     style="@style/MainIcon"
                     android:layout_width="32dp"
                     android:layout_height="32dp"/>
@@ -49,7 +49,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/main.icon_ec"
+                    android:id="@+id/icon_ec"
                     style="@style/MainIcon"
                     android:layout_width="32dp"
                     android:layout_height="32dp"/>
@@ -68,7 +68,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/main.icon_temp"
+                    android:id="@+id/icon_temp"
                     style="@style/MainIcon"
                     android:layout_width="32dp"
                     android:layout_height="32dp"/>
@@ -86,7 +86,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/main.icon_vwc"
+                    android:id="@+id/icon_vwc"
                     style="@style/MainIcon"
                     android:layout_width="32dp"
                     android:layout_height="32dp"/>
