@@ -169,6 +169,208 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="LoraWan:" />
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/lwInfoButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="READ" />
+
+                    <TextView
+                        android:id="@+id/tvReadLW"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rad settings " />
+                    <Button
+                        android:id="@+id/lwGenButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="GENERATE" />
+
+                    <TextView
+                        android:id="@+id/tvGenLW"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Generate settings" />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/tv0lw1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OTAA:" />
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/lwDevEuiButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SET" />
+
+                    <TextView
+                        android:id="@+id/tvDevEuiLw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Device EUI:" />
+
+                    <EditText
+                        android:id="@+id/lwDevEuiEt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789ABCDEF"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="16"
+                        android:text="" />
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/lwAppEuiButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SET" />
+
+                    <TextView
+                        android:id="@+id/tvAppEuiLw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Application EUI:" />
+
+                    <EditText
+                        android:id="@+id/lwAppEuiEt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789ABCDEF"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="16"
+                        android:text="" />
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/lwAppKeyButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SET" />
+
+                    <TextView
+                        android:id="@+id/tvAppKeyLw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="App Key:" />
+
+                    <EditText
+                        android:id="@+id/lwAppKeyEt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789ABCDEF"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="32"
+                        android:text="" />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/tv0lw2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ABP:" />
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/lwDevAddrButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SET" />
+
+                    <TextView
+                        android:id="@+id/tvDevAddrLw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Device Address:" />
+
+                    <EditText
+                        android:id="@+id/lwDevAddrEt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789ABCDEF"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="8"
+                        android:text="" />
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/lwNWKSKeyButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SET" />
+
+                    <TextView
+                        android:id="@+id/tvNWKSKeyLw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Network Session Key:" />
+
+                    <EditText
+                        android:id="@+id/lwNWKSKeyEt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789ABCDEF"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="32"
+                        android:text="" />
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/lwAPPSKeyButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SET" />
+
+                    <TextView
+                        android:id="@+id/tvAPPSKeyLw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="App Session Key:" />
+
+                    <EditText
+                        android:id="@+id/lwAPPSKeyEt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789ABCDEF"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="32"
+                        android:text="" />
+                </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
     </android.support.design.widget.CoordinatorLayout>
