@@ -8,6 +8,7 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 import android.util.Log;
 
+import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 
@@ -16,6 +17,7 @@ import com.plantmer.soilsensor.MainActivity;
 
 import java.io.*;
 import java.nio.ByteBuffer;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -88,9 +90,18 @@ public class UsbSerial implements Runnable {
         if (manager == null) {
             manager = (UsbManager) handler.getSystemService(Context.USB_SERVICE);
         }
+        List<UsbSerialDriver> drivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
+        if(drivers.size()==0){
+            return false;
+        }
+        List<UsbSerialPort> ports = drivers.get(0).getPorts();
 
+        if(ports.size()==0){
+            return false;
+        }
 // Open a connection to the first available driver.
-        mDriver = UsbSerialProber.getDefaultProber().findAllDrivers(manager).get(0).getPorts().get(0);
+
+        mDriver = ports.get(0);
         try {
             if (mDriver == null) {
                 return false;
