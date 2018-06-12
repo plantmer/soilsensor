@@ -7,21 +7,22 @@ package com.plantmer.soilsensor.util;
 public class DataObj {
 
     private long dateTime;
-    private float temperatureMin;
-    private float temperatureMax;
-    private float temperatureMorning;
-    private float temperatureDay;
-    private float temperatureEvening;
-    private float temperatureNight;
-    private String pressure="0";
-    private String humidity="0";
-    private String icon="0";
-    private String description="0";
-    private String windSpeed="0";
-    private String windDegree="0";
-    private String cloudiness="0";
-    private String rain="0";
-    private String snow="0";
+    private float dp;
+    private float ec;
+    private float temp;
+    private float vwc;
+
+    public DataObj(long dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public DataObj(long dateTime, float dp, float ec, float temp, float vwc) {
+        this.dateTime = dateTime;
+        this.dp = dp;
+        this.ec = ec;
+        this.temp = temp;
+        this.vwc = vwc;
+    }
 
     public long getDateTime() {
         return dateTime;
@@ -31,123 +32,35 @@ public class DataObj {
         this.dateTime = dateTime;
     }
 
-    public float getTemperatureMin() {
-        return temperatureMin;
+    public float getDp() {
+        return dp;
     }
 
-    public void setTemperatureMin(float temperatureMin) {
-        this.temperatureMin = temperatureMin;
+    public void setDp(float dp) {
+        this.dp = dp;
     }
 
-    public float getTemperatureMax() {
-        return temperatureMax;
+    public float getEc() {
+        return ec;
     }
 
-    public void setTemperatureMax(float temperatureMax) {
-        this.temperatureMax = temperatureMax;
+    public void setEc(float ec) {
+        this.ec = ec;
     }
 
-    public float getTemperatureMorning() {
-        return temperatureMorning;
+    public float getTemp() {
+        return temp;
     }
 
-    public void setTemperatureMorning(float temperatureMorning) {
-        this.temperatureMorning = temperatureMorning;
+    public void setTemp(float temp) {
+        this.temp = temp;
     }
 
-    public float getTemperatureDay() {
-        return temperatureDay;
+    public float getVwc() {
+        return vwc;
     }
 
-    public void setTemperatureDay(float temperatureDay) {
-        this.temperatureDay = temperatureDay;
-    }
-
-    public float getTemperatureEvening() {
-        return temperatureEvening;
-    }
-
-    public void setTemperatureEvening(float temperatureEvening) {
-        this.temperatureEvening = temperatureEvening;
-    }
-
-    public float getTemperatureNight() {
-        return temperatureNight;
-    }
-
-    public void setTemperatureNight(float temperatureNight) {
-        this.temperatureNight = temperatureNight;
-    }
-
-    public String getPressure() {
-        return pressure;
-    }
-
-    public void setPressure(String pressure) {
-        this.pressure = pressure;
-    }
-
-    public String getHumidity() {
-        return humidity;
-    }
-
-    public void setHumidity(String humidity) {
-        this.humidity = humidity;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getWindSpeed() {
-        return windSpeed;
-    }
-
-    public void setWindSpeed(String windSpeed) {
-        this.windSpeed = windSpeed;
-    }
-
-    public String getWindDegree() {
-        return windDegree;
-    }
-
-    public void setWindDegree(String windDegree) {
-        this.windDegree = windDegree;
-    }
-
-    public String getCloudiness() {
-        return cloudiness;
-    }
-
-    public void setCloudiness(String cloudiness) {
-        this.cloudiness = cloudiness;
-    }
-
-    public String getRain() {
-        return rain;
-    }
-
-    public void setRain(String rain) {
-        this.rain = rain;
-    }
-
-    public String getSnow() {
-        return snow;
-    }
-
-    public void setSnow(String snow) {
-        this.snow = snow;
+    public void setVwc(float vwc) {
+        this.vwc = vwc;
     }
 }

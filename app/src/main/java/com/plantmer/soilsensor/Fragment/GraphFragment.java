@@ -73,7 +73,7 @@ public class GraphFragment extends Fragment {
     public void onViewCreated(View vv, Bundle savedInstanceState){
 
             ee.setText("");
-            mForecastList.add(new DataObj());
+            mForecastList.add(new DataObj(System.currentTimeMillis()));
         mValueFormatter = new CustomValueFormatter();
         mYAxisFormatter = new YAxisValueFormatter();
         mTempChart = (LineChart) getActivity().findViewById(R.id.temp_chart);
@@ -122,7 +122,7 @@ public class GraphFragment extends Fragment {
 
         List<Entry> entries = new ArrayList<>();
         for (int i = 0; i < mForecastList.size(); i++) {
-            float temperatureDay = mForecastList.get(i).getTemperatureDay();
+            float temperatureDay = mForecastList.get(i).getTemp();
             entries.add(new Entry(i, temperatureDay));
         }
 
@@ -130,7 +130,7 @@ public class GraphFragment extends Fragment {
         if (mTempChart.getData() != null) {
             mTempChart.getData().removeDataSet(mTempChart.getData().getDataSetByIndex(
                     mTempChart.getData().getDataSetCount() - 1));
-            set = new LineDataSet(entries, "Day");
+            set = new LineDataSet(entries, "Temp");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
             set.setDrawCircles(false);
@@ -144,7 +144,7 @@ public class GraphFragment extends Fragment {
             LineData data = new LineData(set);
             mTempChart.setData(data);
         } else {
-            set = new LineDataSet(entries, "Day");
+            set = new LineDataSet(entries, "Temp");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
             set.setDrawCircles(false);
@@ -191,15 +191,15 @@ public class GraphFragment extends Fragment {
 
         List<Entry> entries = new ArrayList<>();
         for (int i = 0; i < mForecastList.size(); i++) {
-            float wind = Float.parseFloat(mForecastList.get(i).getWindSpeed());
-            entries.add(new Entry(i, wind));
+            float dp = mForecastList.get(i).getDp();
+            entries.add(new Entry(i, dp));
         }
 
         LineDataSet set;
         if (mDpChart.getData() != null) {
             mDpChart.getData().removeDataSet(mDpChart.getData().getDataSetByIndex(
                     mDpChart.getData().getDataSetCount() - 1));
-            set = new LineDataSet(entries, "Wind");
+            set = new LineDataSet(entries, "DP");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
             set.setDrawCircles(false);
@@ -213,7 +213,7 @@ public class GraphFragment extends Fragment {
             LineData data = new LineData(set);
             mDpChart.setData(data);
         } else {
-            set = new LineDataSet(entries, "Wind");
+            set = new LineDataSet(entries, "DP");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
             set.setDrawCircles(false);
@@ -260,7 +260,7 @@ public class GraphFragment extends Fragment {
 
         List<Entry> entries = new ArrayList<>();
         for (int i = 0; i < mForecastList.size(); i++) {
-            float values = Float.parseFloat(mForecastList.get(i).getRain());
+            float values = mForecastList.get(i).getEc();
             entries.add(new Entry(i, values));
         }
 
@@ -268,7 +268,7 @@ public class GraphFragment extends Fragment {
         if (mEcChart.getData() != null) {
             mEcChart.getData().removeDataSet(mEcChart.getData().getDataSetByIndex(
                     mEcChart.getData().getDataSetCount() - 1));
-            set = new LineDataSet(entries, "Rain");
+            set = new LineDataSet(entries, "EC");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
             set.setDrawCircles(false);
@@ -282,7 +282,7 @@ public class GraphFragment extends Fragment {
             LineData data = new LineData(set);
             mEcChart.setData(data);
         } else {
-            set = new LineDataSet(entries, "Rain");
+            set = new LineDataSet(entries, "EC");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
             set.setDrawCircles(false);
@@ -329,7 +329,7 @@ public class GraphFragment extends Fragment {
 
         List<Entry> entries = new ArrayList<>();
         for (int i = 0; i < mForecastList.size(); i++) {
-            float values = Float.parseFloat(mForecastList.get(i).getSnow());
+            float values = mForecastList.get(i).getVwc();
             entries.add(new Entry(i, values));
         }
 
@@ -337,7 +337,7 @@ public class GraphFragment extends Fragment {
         if (mVwcChart.getData() != null) {
             mVwcChart.getData().removeDataSet(mVwcChart.getData().getDataSetByIndex(
                     mVwcChart.getData().getDataSetCount() - 1));
-            set = new LineDataSet(entries, "Snow");
+            set = new LineDataSet(entries, "VWC");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
             set.setDrawCircles(false);
@@ -351,7 +351,7 @@ public class GraphFragment extends Fragment {
             LineData data = new LineData(set);
             mVwcChart.setData(data);
         } else {
-            set = new LineDataSet(entries, "Snow");
+            set = new LineDataSet(entries, "VWC");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
             set.setDrawCircles(false);
@@ -369,13 +369,13 @@ public class GraphFragment extends Fragment {
     }
 
     private void formatDate() {
-        SimpleDateFormat format = new SimpleDateFormat("EEE", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         if (mForecastList != null) {
             int mSize = mForecastList.size();
             mDatesArray = new String[mSize];
 
             for (int i = 0; i < mSize; i++) {
-                Date date = new Date(mForecastList.get(i).getDateTime() * 1000);
+                Date date = new Date(mForecastList.get(i).getDateTime());
                 String day = format.format(date);
                 mDatesArray[i] = day;
             }
