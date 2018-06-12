@@ -185,6 +185,10 @@ public class UsbSerial implements Runnable {
 
     };
 
+    public void writeCmd(String cmd) {
+        write((cmd+"\n").getBytes());
+    }
+
     private enum State {
         STOPPED,
         RUNNING,

@@ -14,6 +14,7 @@ import android.widget.EditText;
 
 import com.plantmer.soilsensor.MainActivity;
 import com.plantmer.soilsensor.R;
+import com.plantmer.soilsensor.util.Utils;
 
 
 /**
@@ -81,32 +82,47 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
         switch (view.getId()) {
             case R.id.rawButton:
+                main.getSerial().writeCmd("raw "+rawEt.getText());
                 break;
             case R.id.airButton:
+                main.getSerial().writeCmd("air "+airEt.getText());
                 break;
             case R.id.waterButton:
+                main.getSerial().writeCmd("water "+waterEt.getText());
                 break;
             case R.id.usbIntervalButton:
+                main.getSerial().writeCmd("millis "+usbIntervalEt.getText());
                 break;
             case R.id.usbTimeButton:
+                main.getSerial().writeCmd("time "+System.currentTimeMillis());
                 break;
             case R.id.lwIntervalButton:
+                main.getSerial().writeCmd("int "+lwIntervalEt.getText());
                 break;
             case R.id.lwInfoButton:
+                main.getSerial().writeCmd("csv");
                 break;
             case R.id.lwGenButton:
+                lwDevEuiEt.setText(Utils.randomHex(8));
+                lwAppKeyEt.setText(Utils.randomHex(16));
                 break;
             case R.id.lwDevEuiButton:
+                main.getSerial().writeCmd("deveui "+lwDevEuiEt.getText());
                 break;
             case R.id.lwAppEuiButton:
+                main.getSerial().writeCmd("appeui "+lwAppEuiEt.getText());
                 break;
             case R.id.lwAppKeyButton:
+                main.getSerial().writeCmd("key "+lwAppKeyEt.getText());
                 break;
             case R.id.lwDevAddrButton:
+                main.getSerial().writeCmd("addr "+lwDevAddrEt.getText());
                 break;
             case R.id.lwNWKSKeyButton:
+                main.getSerial().writeCmd("nwks "+lwNWKSKeyEt.getText());
                 break;
             case R.id.lwAPPSKeyButton:
+                main.getSerial().writeCmd("apps "+lwAPPSKeyEt.getText());
                 break;
         }
     }
