@@ -18,6 +18,8 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class UsbSerial implements Runnable {
     public static final String TAG = "Usb";
@@ -26,15 +28,10 @@ public class UsbSerial implements Runnable {
         this.handler = handler;
     }
 
-    public NewLineListener getNlistener() {
-        return nlistener;
+    public String getType() {
+        return type;
     }
 
-    public void setNlistener(NewLineListener nlistener) {
-        this.nlistener = nlistener;
-    }
-
-    private NewLineListener nlistener;
     private UsbSerialPort mDriver;
     private static PendingIntent mPermissionIntent = null;
     protected UsbManager manager;
@@ -119,7 +116,6 @@ public class UsbSerial implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //handler.onConnected();
         write("ver\r\n".getBytes());
         try {
             Thread.sleep(300);
@@ -130,8 +126,10 @@ public class UsbSerial implements Runnable {
             byte[] arr = new byte[getIN().available()];
             getIN().read(arr);
             String ret = new String(arr);
+            handler.addLog(ret);
             type= ret.substring(0,2);
             android.util.Log.i(TAG, "DETECTED : " + type);
+            handler.setConnected(true);
             return true;
         }
         return false;
@@ -147,7 +145,9 @@ public class UsbSerial implements Runnable {
                 // Ignore.
             }
         }
+        type = null;
         stop();
+        handler.setConnected(false);
     }
 
     public InputStream getIN() {
@@ -241,13 +241,19 @@ public class UsbSerial implements Runnable {
             synchronized (this) {
                 mState = State.STOPPED;
                 android.util.Log.i(TAG, "USB Stopped.");
-                //handler.onDisconnected();
+                close();
+                handler.setConnected(false);
             }
         }
     }
 
     // volatile boolean reading = true;
     private byte[] rcv_bytes = new byte[BUFSIZ];
+    private AtomicBoolean block = new AtomicBoolean(false);
+
+    public AtomicBoolean getBlock() {
+        return block;
+    }
 
     private void step() throws IOException {
         // Handle incoming data.
@@ -260,11 +266,11 @@ public class UsbSerial implements Runnable {
                 if (DEBUG) rec += c;
 
                 inputBuf.getOutputStream().write(rcv_bytes[i]);
-                if(c=='\n' && nlistener!=null){
+                if(c=='\n' && !block.get()){
                     byte[] arr = new byte[getIN().available()];
                     getIN().read(arr);
                     String ret = new String(arr);
-                    nlistener.noNewLine(ret);
+                    handler.addLine(ret);
                 }
 
             }

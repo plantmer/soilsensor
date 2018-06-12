@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.components.Description;
+import com.plantmer.soilsensor.MainActivity;
 import com.plantmer.soilsensor.R;
 
 import android.graphics.Color;
@@ -35,7 +36,18 @@ import java.util.Locale;
  */
 public class GraphFragment extends Fragment {
 
+    private MainActivity main;
 
+    public void setMain(MainActivity main) {
+        this.main = main;
+    }
+    public void append(String[] split){
+        if(split.length==4){ // readings
+
+        }else if(split.length==5){ //readings with date
+
+        }
+    }
     public GraphFragment() {
         // Required empty public constructor
     }

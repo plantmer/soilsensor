@@ -1,5 +1,7 @@
 package com.plantmer.soilsensor;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,6 +14,10 @@ import android.widget.TextView;
 import com.plantmer.soilsensor.Fragment.MainFragment;
 import com.plantmer.soilsensor.Fragment.GraphFragment;
 import com.plantmer.soilsensor.Fragment.SettingsFragment;
+import com.plantmer.soilsensor.serial.UsbSerial;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,14 +26,48 @@ public class MainActivity extends AppCompatActivity {
     //This is our viewPager
     private ViewPager viewPager;
 
+    private List<String> logs = new ArrayList<>(10);
 
+    public void initLog(){
+
+        for(int i=0;i<10;i++){
+            logs.add("");
+        }
+        cmdLog.setText("\n\n\n\n\n\n\n\n\n\n");
+    }
+    public void addLine(String log){
+        if(log!=null){
+            String[] split =  log.split(",");
+            if(split.length>0){
+                mainFragment.append(split);
+                graphFragment.append(split);
+                settingsFragment.append(split);
+            }
+        }
+        addLog(log);
+    }
+    public void addLog(String log){
+        logs.remove(0);
+        logs.add(log);
+        StringBuilder sb = new StringBuilder("");
+        for(int i=0;i<logs.size();i++){
+            sb.append(logs.get(i)).append("\n");
+        }
+        cmdLog.setText(sb.toString());
+    }
     //Fragments
 
     GraphFragment graphFragment;
     MainFragment mainFragment;
-    SettingsFragment dataFragment;
+    SettingsFragment settingsFragment;
     MenuItem prevMenuItem;
     private TextView cmdLog;
+
+    private UsbSerial serial = new UsbSerial(this);
+
+    public UsbSerial getSerial() {
+        return serial;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,11 +147,37 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         mainFragment =new MainFragment();
+        mainFragment.setMain(this);
         graphFragment =new GraphFragment();
-        dataFragment =new SettingsFragment();
+        graphFragment.setMain(this);
+        settingsFragment =new SettingsFragment();
+        settingsFragment.setMain(this);
         adapter.addFragment(mainFragment);
         adapter.addFragment(graphFragment);
-        adapter.addFragment(dataFragment);
+        adapter.addFragment(settingsFragment);
         viewPager.setAdapter(adapter);
+    }
+    boolean connected = false;
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void alertNotConn(){
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("Alert");
+        alertDialog.setMessage("Device not connected");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+
+    }
+    public void setConnected(boolean conn) {
+        connected = conn;
+        mainFragment.setConnected(connected);
     }
 }

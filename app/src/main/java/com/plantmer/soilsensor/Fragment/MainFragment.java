@@ -14,17 +14,43 @@ import android.widget.TextView;
 import com.plantmer.soilsensor.MainActivity;
 import com.plantmer.soilsensor.R;
 
+import java.io.IOException;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MainFragment extends Fragment implements View.OnClickListener{
 
-    MainActivity act;
+    private MainActivity main;
+
+    public void setMain(MainActivity main) {
+        this.main = main;
+    }
     public MainFragment() {
         // Required empty public constructor
     }
+    public void setConnected(boolean connected){
+        if(connected){
+            connText.setText("Connected "+main.getSerial().getType());
+        }else{
+            connText.setText("Disconnected ");
+        }
 
+    }
+    public void append(String[] split){
+        if(split.length==4){ // readings
+            mDielectricPermittivityView.setText(getString(R.string.dp_label, split[0]));
+            mElectricalConductivityView.setText(getString(R.string.ec_label, split[1]));
+            mTemperatureView.setText(getString(R.string.temp_label, split[2]));
+            mVWCView.setText(getString(R.string.vwc_label, split[3], mPercentSign));
+        }else if(split.length==5){ //readings with date
+            mDielectricPermittivityView.setText(getString(R.string.dp_label, split[1]));
+            mElectricalConductivityView.setText(getString(R.string.ec_label, split[2]));
+            mTemperatureView.setText(getString(R.string.temp_label, split[3]));
+            mVWCView.setText(getString(R.string.vwc_label, split[4], mPercentSign));
+        }
+    }
 
     private TextView mDielectricPermittivityView;
     private TextView mElectricalConductivityView;
@@ -38,6 +64,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
 
     private TextView connText;
     private Button connButton;
+    private Button readButton;
 
     private String mPercentSign;
 
@@ -67,7 +94,14 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         Log.d("page", "onClick: "+view.getId());
         switch (view.getId()) {
             case R.id.connButton:
-                // Do something
+                try {
+                    main.getSerial().open();
+                } catch (IOException e) {
+                    Log.e("main","connButton",e);
+                }
+                break;
+            case R.id.readButton:
+                break;
         }
     }
     private void initializeTextView() {
@@ -79,6 +113,8 @@ public class MainFragment extends Fragment implements View.OnClickListener{
 
         connButton =  getActivity().findViewById(R.id.connButton);
         connButton.setOnClickListener(this);
+        readButton =  getActivity().findViewById(R.id.readButton);
+        readButton.setOnClickListener(this);
         connText =  getActivity().findViewById(R.id.connText);
 
         mDielectricPermittivityView =  getActivity().findViewById(R.id.main_dp);

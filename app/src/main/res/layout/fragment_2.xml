@@ -176,6 +176,33 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/lwIntervalButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Interval" />
+
+                    <TextView
+                        android:id="@+id/tvLwInterval"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seconds:" />
+
+                    <EditText
+                        android:id="@+id/lwIntervalEt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789"
+                        android:inputType="numberDecimal"
+                        android:text="20" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
                         android:id="@+id/lwInfoButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -185,7 +212,7 @@
                         android:id="@+id/tvReadLW"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rad settings " />
+                        android:text=" " />
                     <Button
                         android:id="@+id/lwGenButton"
                         android:layout_width="wrap_content"
@@ -196,7 +223,7 @@
                         android:id="@+id/tvGenLW"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Generate settings" />
+                        android:text="Generate DevEUI \n and AppKey" />
                 </LinearLayout>
                 <TextView
                     android:id="@+id/tv0lw1"
@@ -255,7 +282,7 @@
                         android:digits="0123456789ABCDEF"
                         android:inputType="textCapCharacters"
                         android:maxLength="16"
-                        android:text="" />
+                        android:text="70B3D57ED0008F94" />
                 </LinearLayout>
                 <LinearLayout
                     style="@style/MainLinearLayout"
