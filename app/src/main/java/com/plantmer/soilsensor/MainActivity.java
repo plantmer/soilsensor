@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.plantmer.soilsensor.Fragment.MainFragment;
 import com.plantmer.soilsensor.Fragment.GraphFragment;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     MainFragment mainFragment;
     SettingsFragment dataFragment;
     MenuItem prevMenuItem;
+    private TextView cmdLog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Initializing viewPager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+        cmdLog =  findViewById(R.id.cmdLog);
+        cmdLog.setText("Log... \nLog... \nLog... \nLog... \nLog... \nLog... \n");
 
         //Initializing the bottomNavigationView
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);

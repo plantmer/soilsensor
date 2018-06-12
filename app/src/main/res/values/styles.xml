@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -9,6 +9,9 @@
         <item name="android:windowBackground">@color/colorBackground</item>
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="android:windowActionBarOverlay">false</item>
+        <item name="android:windowSoftInputMode">stateHidden</item>
+        <!--<item name="android:windowActionBar">false</item>-->
+        <!--<item name="android:windowTitleSize">0dp</item>-->
     </style>
 
 
@@ -24,8 +27,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/TextViewStyle</item>
-        <item name="actionBarTheme">@style/AppThemeLight.Toolbar</item>
-        <item name="actionBarPopupTheme">@style/AppThemeLight.Toolbar</item>
+        <item name="android:windowSoftInputMode">stateHidden</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTitleSize">0dp</item>
     </style>
 
     <style name="AppBaseThemeDark" parent="Theme.AppCompat.NoActionBar">
@@ -33,8 +37,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccentDark</item>
         <item name="android:textViewStyle">@style/TextViewStyle</item>
-        <item name="actionBarTheme">@style/AppThemeLight.Toolbar</item>
-        <item name="actionBarPopupTheme">@style/AppThemeLight.Toolbar</item>
+        <item name="android:windowSoftInputMode">stateHidden</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTitleSize">0dp</item>
     </style>
 
     <style name="AppThemeDark" parent="AppBaseThemeDark">
