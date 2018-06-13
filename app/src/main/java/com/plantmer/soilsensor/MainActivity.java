@@ -217,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Log.i("main","!!!!!!!DISCONNECTED!!!!!!!!!!!!");
                 connected = conn;
                 mainFragment.setConnected(connected);
                 if(!conn){

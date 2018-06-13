@@ -104,6 +104,11 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                 }
                 break;
             case R.id.readButton:
+                if(!main.isConnected()){
+                    main.alertNotConn();
+                    return;
+                }
+
                 main.getSerial().writeCmd("read");
                 break;
         }
