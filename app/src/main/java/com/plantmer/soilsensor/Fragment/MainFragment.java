@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.plantmer.soilsensor.MainActivity;
@@ -143,8 +145,15 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         mIconTempView.setText(mIconTemp);
         mIconVWCView.setTypeface(weatherFontIcon);
         mIconVWCView.setText(mIconVWC);
-
+        showLogCB = getActivity().findViewById( R.id.showLogCB );
+        showLogCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
+                main.setLog(isChecked);
+            }
+        });
     }
+    CheckBox showLogCB;
 
     private String mIconDp;
     private String mIconTemp;

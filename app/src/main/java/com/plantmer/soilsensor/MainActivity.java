@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.plantmer.soilsensor.Fragment.MainFragment;
@@ -175,6 +176,13 @@ public class MainActivity extends AppCompatActivity {
                 });
         alertDialog.show();
 
+    }
+    public void setLog(boolean enable) {
+        if(enable){
+            cmdLog.setVisibility(View.VISIBLE);
+        }else{
+            cmdLog.setVisibility(View.INVISIBLE);
+        }
     }
     public void setConnected(boolean conn) {
         connected = conn;
