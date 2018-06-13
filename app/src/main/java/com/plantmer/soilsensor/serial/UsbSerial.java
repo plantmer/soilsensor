@@ -86,22 +86,28 @@ public class UsbSerial implements Runnable {
     }
 
     public boolean open() throws IOException {
+        Log.i(TAG,"open");
 // Find all available drivers from attached devices.
         if (manager == null) {
             manager = (UsbManager) handler.getSystemService(Context.USB_SERVICE);
         }
         List<UsbSerialDriver> drivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
+        Log.i(TAG,"drivers:"+drivers.size());
         if(drivers.size()==0){
             return false;
         }
         List<UsbSerialPort> ports = drivers.get(0).getPorts();
-
+        Log.i(TAG,"ports:"+ports.size());
         if(ports.size()==0){
             return false;
         }
 // Open a connection to the first available driver.
 
         mDriver = ports.get(0);
+        int deviceVID = mDriver.getDriver().getDevice().getVendorId();
+        int devicePID = mDriver.getDriver().getDevice().getProductId();
+        String deviceName = mDriver.getDriver().getDevice().getDeviceName();
+        Log.e(TAG,"deviceVID:"+deviceVID+" devicePID:"+devicePID+" deviceName:"+deviceName);
         try {
             if (mDriver == null) {
                 return false;
