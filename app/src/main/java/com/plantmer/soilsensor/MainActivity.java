@@ -31,22 +31,31 @@ public class MainActivity extends AppCompatActivity {
 
     public void initLog(){
 
-        for(int i=0;i<10;i++){
+        for(int i=0;i<5;i++){
             logs.add("");
         }
         cmdLog.setText("\n\n\n\n\n\n\n\n\n\n");
     }
+    private String type=null;
+
     public void addLine(final String log){
         if(log!=null){
-            Log.i("mainAct","in:"+log);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    String[] split =  log.split(",");
-                    if(split.length>0){
-                        mainFragment.append(split);
-                        graphFragment.append(split);
-                        settingsFragment.append(split);
+                    Log.i("main","in:"+log);
+                    if(!isConnected()){
+                        type= log.substring(0,3);
+                        android.util.Log.i("main", "DETECTED : " + type);
+                        connected = true;
+                        mainFragment.setConnected(connected);
+                    }else {
+                        String[] split = log.split(",");
+                        if (split.length > 0) {
+                            mainFragment.append(split);
+                            graphFragment.append(split);
+                            settingsFragment.append(split);
+                        }
                     }
                     addLog(log);
                 }
@@ -86,8 +95,7 @@ public class MainActivity extends AppCompatActivity {
         //Initializing viewPager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         cmdLog =  findViewById(R.id.cmdLog);
-        cmdLog.setText("Log... \nLog... \nLog... \nLog... \nLog... \nLog... \n");
-
+        initLog();
         //Initializing the bottomNavigationView
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
 
@@ -192,8 +200,23 @@ public class MainActivity extends AppCompatActivity {
             cmdLog.setVisibility(View.GONE);
         }
     }
-    public void setConnected(boolean conn) {
-        connected = conn;
-        mainFragment.setConnected(connected);
+
+    public String getType() {
+        return type;
+    }
+
+
+    public void setConnected(final boolean conn) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                connected = conn;
+                mainFragment.setConnected(connected);
+                if(!conn){
+                    type = null;
+                }
+
+            }
+        });
     }
 }

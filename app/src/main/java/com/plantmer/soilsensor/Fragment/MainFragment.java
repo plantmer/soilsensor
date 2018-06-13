@@ -34,7 +34,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     }
     public void setConnected(boolean connected){
         if(connected){
-            connText.setText("Connected "+main.getSerial().getType());
+            connText.setText("Connected "+main.getType());
         }else{
             connText.setText("Disconnected ");
         }

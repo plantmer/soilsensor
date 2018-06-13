@@ -29,11 +29,6 @@ public class UsbSerial implements Runnable {
     public UsbSerial(MainActivity handler) {
         this.handler = handler;
     }
-
-    public String getType() {
-        return type;
-    }
-
     private UsbSerialPort mDriver;
     private static PendingIntent mPermissionIntent = null;
     protected UsbManager manager;
@@ -140,19 +135,8 @@ public class UsbSerial implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if(getIN().available()>2){
-            byte[] arr = new byte[getIN().available()];
-            getIN().read(arr);
-            String ret = new String(arr);
-            handler.addLog(ret);
-            type= ret.substring(0,2);
-            android.util.Log.i(TAG, "DETECTED : " + type);
-            handler.setConnected(true);
-            return true;
-        }
-        return false;
+        return true;
     }
-    private String type=null;
     public void close() {
         run = false;
         if (mDriver != null) {
@@ -163,7 +147,6 @@ public class UsbSerial implements Runnable {
                 // Ignore.
             }
         }
-        type = null;
         stop();
         handler.setConnected(false);
     }
@@ -203,8 +186,16 @@ public class UsbSerial implements Runnable {
 
     };
 
-    public void writeCmd(String cmd) {
-        write((cmd+"\n").getBytes());
+    public void writeCmd(final String cmd) {
+        String wr = cmd+"\r\n";
+        write(wr.getBytes());
+        handler.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                handler.addLog(">"+cmd);
+            }
+        });
+
     }
 
     private enum State {
@@ -271,11 +262,11 @@ public class UsbSerial implements Runnable {
 
     // volatile boolean reading = true;
     private byte[] rcv_bytes = new byte[BUFSIZ];
-    private AtomicBoolean block = new AtomicBoolean(false);
+    //private AtomicBoolean block = new AtomicBoolean(false);
 
-    public AtomicBoolean getBlock() {
-        return block;
-    }
+//    public AtomicBoolean getBlock() {
+//        return block;
+//    }
 
     private void step() throws IOException {
         // Handle incoming data.
@@ -288,7 +279,7 @@ public class UsbSerial implements Runnable {
                 if (DEBUG) rec += c;
 
                 inputBuf.getOutputStream().write(rcv_bytes[i]);
-                if(c=='\n' && !block.get()){
+                if(c=='\n' ){//&& !block.get()
                     byte[] arr = new byte[getIN().available()];
                     getIN().read(arr);
                     String ret = new String(arr);
@@ -296,7 +287,7 @@ public class UsbSerial implements Runnable {
                 }
 
             }
-            if (DEBUG) android.util.Log.i(TAG, "rec=" + rec);
+            //if (DEBUG) android.util.Log.i(TAG, "rec=" + rec);
 
         }
 

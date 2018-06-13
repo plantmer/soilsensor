@@ -28,6 +28,7 @@
         <TextView
             android:id="@+id/cmdLog"
             android:layout_width="fill_parent"
+            android:lineSpacingMultiplier="0.6"
             android:layout_height="wrap_content" />
     </ScrollView>
 
