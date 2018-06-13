@@ -36,21 +36,29 @@ public class MainActivity extends AppCompatActivity {
         }
         cmdLog.setText("\n\n\n\n\n\n\n\n\n\n");
     }
-    public void addLine(String log){
+    public void addLine(final String log){
         if(log!=null){
-            String[] split =  log.split(",");
-            if(split.length>0){
-                mainFragment.append(split);
-                graphFragment.append(split);
-                settingsFragment.append(split);
-            }
+            Log.i("mainAct","in:"+log);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    String[] split =  log.split(",");
+                    if(split.length>0){
+                        mainFragment.append(split);
+                        graphFragment.append(split);
+                        settingsFragment.append(split);
+                    }
+                    addLog(log);
+                }
+            });
         }
-        addLog(log);
     }
     public void addLog(String log){
-        logs.remove(0);
+        if(logs.size()>5) {
+            logs.remove(0);
+        }
         logs.add(log);
-        StringBuilder sb = new StringBuilder("");
+        final StringBuilder sb = new StringBuilder("");
         for(int i=0;i<logs.size();i++){
             sb.append(logs.get(i)).append("\n");
         }

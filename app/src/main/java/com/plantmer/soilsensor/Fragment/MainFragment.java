@@ -97,6 +97,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         switch (view.getId()) {
             case R.id.connButton:
                 try {
+                    main.getSerial().findFirstDevice();
                     main.getSerial().open();
                 } catch (IOException e) {
                     Log.e("main","connButton",e);

@@ -84,6 +84,7 @@ public class UsbSerial implements Runnable {
         }
         return false;
     }
+//I/Usb: DEVICE OKUsbDevice[mName=/dev/bus/usb/001/002,mVendorId=9025,mProductId=32845,mClass=239,mSubclass=2,mProtocol=1,mManufacturerName=Arduino LLC,mProductName=SoilSensor3RF,mVersion=2.0,mSerialNumber=579BBD9F514D4E544B202020FF051B0E,mConfigurations=[
 
     public boolean open() throws IOException {
         Log.i(TAG,"open");
