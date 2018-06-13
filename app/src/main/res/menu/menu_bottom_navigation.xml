@@ -4,16 +4,19 @@
     <item
         android:id="@+id/action_call"
         android:checked="true"
+        android:icon="@drawable/ic_home"
         android:title="@string/tab1"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_chat"
         android:checked="false"
+        android:icon="@drawable/ic_chart"
         android:title="@string/tab2"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_contact"
         android:checked="false"
+        android:icon="@drawable/ic_settings"
         android:title="@string/tab3"
         app:showAsAction="ifRoom" />
 </menu>
