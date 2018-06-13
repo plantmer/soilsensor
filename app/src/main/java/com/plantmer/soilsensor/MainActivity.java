@@ -38,13 +38,21 @@ public class MainActivity extends AppCompatActivity {
     }
     private String type=null;
 
+    private boolean lastVer = false;
     public void addLine(final String log){
         if(log!=null){
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     Log.i("main","in:"+log);
-                    if(!isConnected()){
+                    addLog(log);
+                    if(log.startsWith(">")){
+                        return;
+                    }
+                    if(log.startsWith("ver")){
+                        lastVer=true;
+                    }else if(!isConnected() && lastVer){
+                        lastVer = false;
                         type= log.substring(0,3);
                         android.util.Log.i("main", "DETECTED : " + type);
                         connected = true;
@@ -57,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
                             settingsFragment.append(split);
                         }
                     }
-                    addLog(log);
                 }
             });
         }
