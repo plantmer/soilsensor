@@ -189,12 +189,12 @@ public class UsbSerial implements Runnable {
     public void writeCmd(final String cmd) {
         String wr = cmd+"\r\n";
         write(wr.getBytes());
-        handler.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                handler.addLog(">"+cmd);
-            }
-        });
+//        handler.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                handler.addLog(">"+cmd);
+//            }
+//        });
 
     }
 
