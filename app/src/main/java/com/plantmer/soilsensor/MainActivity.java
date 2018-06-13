@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         if(enable){
             cmdLog.setVisibility(View.VISIBLE);
         }else{
-            cmdLog.setVisibility(View.INVISIBLE);
+            cmdLog.setVisibility(View.GONE);
         }
     }
     public void setConnected(boolean conn) {

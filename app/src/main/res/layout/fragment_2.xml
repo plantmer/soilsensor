@@ -223,7 +223,7 @@
                         android:id="@+id/tvGenLW"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Generate DevEUI \n and AppKey" />
+                        android:text="Gen. DevEUI \n and AppKey" />
                 </LinearLayout>
                 <TextView
                     android:id="@+id/tv0lw1"
@@ -273,7 +273,7 @@
                         android:id="@+id/tvAppEuiLw"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Application EUI:" />
+                        android:text="App EUI:" />
 
                     <EditText
                         android:id="@+id/lwAppEuiEt"
@@ -332,7 +332,7 @@
                         android:id="@+id/tvDevAddrLw"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Device Address:" />
+                        android:text="Dev Address:" />
 
                     <EditText
                         android:id="@+id/lwDevAddrEt"
@@ -359,7 +359,7 @@
                         android:id="@+id/tvNWKSKeyLw"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Network Session Key:" />
+                        android:text="Net Sess Key:" />
 
                     <EditText
                         android:id="@+id/lwNWKSKeyEt"
@@ -386,7 +386,7 @@
                         android:id="@+id/tvAPPSKeyLw"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="App Session Key:" />
+                        android:text="App Sess Key:" />
 
                     <EditText
                         android:id="@+id/lwAPPSKeyEt"
