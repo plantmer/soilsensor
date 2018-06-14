@@ -82,8 +82,8 @@
     <string name="hint_activity_search">Search location</string>
 
 
-    <string name="dp_label">Dielectric perm.: %1$s</string>
-    <string name="ec_label">Electrical Cond.: %1$s</string>
+    <string name="dp_label">Dielectric Perm: %1$s</string>
+    <string name="ec_label">Electrical Cond: %1$s</string>
     <string name="temp_label">Temperature: %1$s</string>
     <string name="vwc_label">Water Content: %1$s%2$s</string>
 

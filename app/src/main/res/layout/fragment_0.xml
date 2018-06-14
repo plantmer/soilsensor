@@ -6,13 +6,12 @@
     tools:context="com.plantmer.soilsensor.Fragment.MainFragment">
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="@dimen/activity_vertical_margin"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorBackground"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -22,7 +21,7 @@
                 <LinearLayout
                     style="@style/MainLinearLayout"
                     android:layout_width="match_parent"
-                    android:background="@color/colorBackground"
+                    android:background="@color/textColorPrimary"
                     android:orientation="horizontal">
 
                     <TextView
@@ -40,7 +39,7 @@
                 <LinearLayout
                     style="@style/MainLinearLayout"
                     android:layout_width="match_parent"
-                    android:background="@color/colorBackground"
+                    android:background="@color/textColorPrimary"
                     android:orientation="horizontal">
 
                     <TextView
@@ -57,7 +56,7 @@
                 </LinearLayout>
                 <LinearLayout
                     style="@style/MainLinearLayout"
-                    android:background="@color/colorBackground"
+                    android:background="@color/textColorPrimary"
                     android:layout_width="match_parent"
                     android:orientation="horizontal">
 
@@ -75,7 +74,7 @@
                 </LinearLayout>
                 <LinearLayout
                     style="@style/MainLinearLayout"
-                    android:background="@color/colorBackground"
+                    android:background="@color/textColorPrimary"
                     android:layout_width="match_parent"
                     android:orientation="horizontal">
 
