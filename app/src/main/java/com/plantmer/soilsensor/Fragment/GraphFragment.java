@@ -41,13 +41,25 @@ public class GraphFragment extends Fragment {
     public void setMain(MainActivity main) {
         this.main = main;
     }
+
     public void append(String[] split){
-        if(split.length==4){ // readings
-
+        if(split.length==4){ // readings dateTime, float dp, float ec, float temp, float vwc
+            DataObj dob = new DataObj(System.currentTimeMillis(),Float.valueOf(split[0]),Float.valueOf(split[1]),Float.valueOf(split[2]),Float.valueOf(split[3]));
+            updatez(dob);
         }else if(split.length==5){ //readings with date
-
+            DataObj dob = new DataObj(System.currentTimeMillis(),Float.valueOf(split[1]),Float.valueOf(split[2]),Float.valueOf(split[3]),Float.valueOf(split[4]));
+            updatez(dob);
         }
     }
+
+    private void updatez(DataObj dob) {
+        mForecastList.add(dob);
+        if(mForecastList.size()>200){
+            mForecastList.remove(0);
+        }
+        updateUI();
+    }
+
     public GraphFragment() {
         // Required empty public constructor
     }
