@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0;i<5;i++){
             logs.add("");
         }
-        cmdLog.setText("\n\n\n\n\n\n\n\n\n\n");
+        cmdLog.setText("\n\n\n\n\n");
     }
     private String type=null;
 
@@ -44,26 +44,30 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i("main","in:"+log);
-                    addLog(log);
-                    if(log.startsWith(">")){
-                        return;
-                    }
-                    if(log.startsWith("ver")){
-                        lastVer=true;
-                    }else if(!isConnected() && lastVer){
-                        lastVer = false;
-                        type= log.substring(0,3);
-                        android.util.Log.i("main", "DETECTED : " + type);
-                        connected = true;
-                        mainFragment.setConnected(connected);
-                    }else {
-                        String[] split = log.split(",");
-                        if (split.length > 0) {
-                            mainFragment.append(split);
-                            graphFragment.append(split);
-                            settingsFragment.append(split);
+                    try {
+                        Log.i("main", "in:" + log);
+                        addLog(log);
+                        if (log.startsWith(">")) {
+                            return;
                         }
+                        if (log.startsWith("ver")) {
+                            lastVer = true;
+                        } else if (!isConnected() && lastVer) {
+                            lastVer = false;
+                            type = log.substring(0, 3);
+                            android.util.Log.i("main", "DETECTED : " + type);
+                            connected = true;
+                            mainFragment.setConnected(connected);
+                        } else {
+                            String[] split = log.split(",");
+                            if (split.length > 0) {
+                                mainFragment.append(split);
+                                graphFragment.append(split);
+                                settingsFragment.append(split);
+                            }
+                        }
+                    }catch (Exception ex){
+                        Log.e("main","addLine",ex);
                     }
                 }
             });

@@ -45,12 +45,12 @@ public class MainFragment extends Fragment implements View.OnClickListener{
             mDielectricPermittivityView.setText(getString(R.string.dp_label, split[0]));
             mElectricalConductivityView.setText(getString(R.string.ec_label, split[1]));
             mTemperatureView.setText(getString(R.string.temp_label, split[2]));
-            mVWCView.setText(getString(R.string.vwc_label, split[3], mPercentSign));
+            mVWCView.setText(getString(R.string.vwc_label, String.valueOf(Float.valueOf(split[3])*100.0), mPercentSign));
         }else if(split.length==5){ //readings with date
             mDielectricPermittivityView.setText(getString(R.string.dp_label, split[1]));
             mElectricalConductivityView.setText(getString(R.string.ec_label, split[2]));
             mTemperatureView.setText(getString(R.string.temp_label, split[3]));
-            mVWCView.setText(getString(R.string.vwc_label, split[4], mPercentSign));
+            mVWCView.setText(getString(R.string.vwc_label, String.valueOf(Float.valueOf(split[4])*100.0), mPercentSign));
         }
     }
 
@@ -84,10 +84,10 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     }
 
     private void updateCurrentWeather() {
-        mDielectricPermittivityView.setText(getString(R.string.dp_label, "20.0"));
-        mElectricalConductivityView.setText(getString(R.string.ec_label, "20.0"));
-        mTemperatureView.setText(getString(R.string.temp_label, "20.0"));
-        mVWCView.setText(getString(R.string.vwc_label, "10.0", mPercentSign));
+        mDielectricPermittivityView.setText(getString(R.string.dp_label, "0.00"));
+        mElectricalConductivityView.setText(getString(R.string.ec_label, "0.00"));
+        mTemperatureView.setText(getString(R.string.temp_label, "0.00"));
+        mVWCView.setText(getString(R.string.vwc_label, "0.00", mPercentSign));
 
      }
     @Override
