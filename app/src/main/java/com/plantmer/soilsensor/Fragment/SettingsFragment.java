@@ -172,12 +172,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         lwAPPSKeyEt =  getActivity().findViewById(R.id.lwAPPSKeyEt);
         usb = getActivity().findViewById(R.id.llUSB);
         lw = getActivity().findViewById(R.id.llLW);
+        llRaw = getActivity().findViewById(R.id.llRaw);
         setUsbEnabled(false);
         setLwEnabled(false);
+        setRawEnabled(false);
     }
 
     LinearLayout usb;
     LinearLayout lw;
+    LinearLayout llRaw;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -197,6 +200,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             lw.setVisibility(View.VISIBLE);
         }else{
             lw.setVisibility(View.GONE);
+        }
+    }
+    public void setRawEnabled(boolean enable){
+        if(llRaw==null){
+            return;
+        }
+        if(enable){
+            llRaw.setVisibility(View.VISIBLE);
+        }else{
+            llRaw.setVisibility(View.GONE);
         }
     }
 

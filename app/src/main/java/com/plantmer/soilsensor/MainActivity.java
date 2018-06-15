@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     bottomNavigationView.getMenu().getItem(0).setChecked(false);
                 }
-                Log.d("page", "onPageSelected: "+position);
+               // Log.d("page", "onPageSelected: "+position);
                 bottomNavigationView.getMenu().getItem(position).setChecked(true);
                 prevMenuItem = bottomNavigationView.getMenu().getItem(position);
 
@@ -227,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
         }else{
             cmdLog.setVisibility(View.GONE);
         }
+        settingsFragment.setRawEnabled(enable);
     }
 
     public String getType() {

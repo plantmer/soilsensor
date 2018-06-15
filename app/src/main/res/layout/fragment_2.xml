@@ -28,6 +28,7 @@
                     android:text="Calibration:" />
 
                 <LinearLayout
+                    android:id="@+id/llRaw"
                     style="@style/MainLinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
