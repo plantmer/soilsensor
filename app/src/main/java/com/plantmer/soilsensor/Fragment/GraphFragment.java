@@ -35,6 +35,7 @@ import com.plantmer.soilsensor.util.DataObj;
 import com.plantmer.soilsensor.util.XAxisValueFormatter;
 import com.plantmer.soilsensor.util.YAxisValueFormatter;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -127,10 +128,10 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         }
 
         if(split.length==4){ // readings dateTime, float dp, float ec, float temp, float vwc
-            DataObj dob = new DataObj(System.currentTimeMillis(),Float.valueOf(split[0]),Float.valueOf(split[1]),Float.valueOf(split[2]),Float.valueOf(split[3]));
+            DataObj dob = new DataObj(System.currentTimeMillis(),Float.valueOf(split[0]),Float.valueOf(split[1]),Float.valueOf(split[2]), BigDecimal.valueOf(Float.valueOf(split[3])*100).setScale(2).floatValue());
             updatez(dob);
         }else if(split.length==5){ //readings with date
-            DataObj dob = new DataObj(System.currentTimeMillis(),Float.valueOf(split[1]),Float.valueOf(split[2]),Float.valueOf(split[3]),Float.valueOf(split[4]));
+            DataObj dob = new DataObj(System.currentTimeMillis(),Float.valueOf(split[1]),Float.valueOf(split[2]),Float.valueOf(split[3]),BigDecimal.valueOf(Float.valueOf(split[4])*100).setScale(2).floatValue());
             updatez(dob);
         }
     }

@@ -178,13 +178,14 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         lw = getActivity().findViewById(R.id.llLW);
         llRaw = getActivity().findViewById(R.id.llRaw);
         setRawEnabled(false);
-        if(main.getType()==null) {
-            setUsbEnabled(false);
-            setLwEnabled(false);
-        }else if(main.getType().equals(main.TYPE_USB)){
-            setUsbEnabled(true);
-        }else if(main.getType().equals(main.TYPE_LWA)){
-            setLwEnabled(true);
+        setUsbEnabled(false);
+        setLwEnabled(false);
+        if(main.getType()!=null) {
+            if(main.getType().equals(main.TYPE_USB)){
+                setUsbEnabled(true);
+            }else if(main.getType().equals(main.TYPE_LWA)){
+                setLwEnabled(true);
+            }
         }
         init = true;
     }
