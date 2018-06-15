@@ -64,8 +64,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
 
     private EditText rawEt;
-    private EditText airEt;
-    private EditText waterEt;
+//    private EditText airEt;
+//    private EditText waterEt;
     private EditText usbIntervalEt;
     private EditText lwIntervalEt;
     private EditText lwDevEuiEt;
@@ -90,10 +90,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 main.getSerial().writeCmd("raw "+rawEt.getText());
                 break;
             case R.id.airButton:
-                main.getSerial().writeCmd("air "+airEt.getText());
+                main.getSerial().writeCmd("air");//+airEt.getText());
                 break;
             case R.id.waterButton:
-                main.getSerial().writeCmd("water "+waterEt.getText());
+                main.getSerial().writeCmd("water");//+waterEt.getText());
                 break;
             case R.id.usbIntervalButton:
                 main.getSerial().writeCmd("millis "+usbIntervalEt.getText());
@@ -163,8 +163,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         lwAPPSKeyButton.setOnClickListener(this);
 
         rawEt =  getActivity().findViewById(R.id.rawEt);
-        airEt =  getActivity().findViewById(R.id.airEt);
-        waterEt =  getActivity().findViewById(R.id.waterEt);
+//        airEt =  getActivity().findViewById(R.id.airEt);
+//        waterEt =  getActivity().findViewById(R.id.waterEt);
         usbIntervalEt =  getActivity().findViewById(R.id.usbIntervalEt);
         lwIntervalEt =  getActivity().findViewById(R.id.lwIntervalEt);
         lwDevEuiEt =  getActivity().findViewById(R.id.lwDevEuiEt);
