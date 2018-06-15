@@ -83,8 +83,11 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
+
                 mForecastList = main.getDb().dataDao().getRange(start,end);
-                Log.i("GF","mForecastList.size:"+mForecastList.size()+" start:"+new Date(start)+" send:"+new Date(end));
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+
+                Log.i("GF","mForecastList.size:"+mForecastList.size()+" start:"+format.format(new Date(start))+" end:"+format.format(new Date(end)));
                 if(mForecastList.size()==0){
                     mForecastList.add(new DataObj(System.currentTimeMillis()));
                 }
@@ -135,7 +138,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
 //            <item>7d</item>
 //            <item>30d</item>
 //        </string-array>
-    long min = 1000*60*60;
+    long min = 1000*60;
     long range = 5*min;;
     long end=System.currentTimeMillis();
     long start=end-range;
@@ -221,6 +224,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         adapter.setDropDownViewResource(R.layout.spinner_item);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
 
         mForecastList.add(new DataObj(System.currentTimeMillis()));
         mValueFormatter = new CustomValueFormatter();
