@@ -1,6 +1,7 @@
 package com.plantmer.soilsensor;
 
 import android.app.AlertDialog;
+import android.arch.persistence.room.Room;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import com.plantmer.soilsensor.Fragment.MainFragment;
 import com.plantmer.soilsensor.Fragment.GraphFragment;
 import com.plantmer.soilsensor.Fragment.SettingsFragment;
 import com.plantmer.soilsensor.serial.UsbSerial;
+import com.plantmer.soilsensor.util.AppDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,11 +100,12 @@ public class MainActivity extends AppCompatActivity {
         return serial;
     }
 
+    AppDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "soilSensDb").build();
         //Initializing viewPager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         cmdLog =  findViewById(R.id.cmdLog);

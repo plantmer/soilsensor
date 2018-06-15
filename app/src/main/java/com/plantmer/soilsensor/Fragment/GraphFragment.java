@@ -49,7 +49,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
     }
     private Button genButton;
     private Random rnd= new Random();
-
+    boolean last = true;
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -60,6 +60,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
             case R.id.genPrev:
                 end = start;
                 start = start - range;
+                last= false;
                 break;
             case R.id.genNext:
                 start = end;
@@ -67,6 +68,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
                 if(end>System.currentTimeMillis()){
                     end = System.currentTimeMillis();
                     start = end - range;
+                    last = true;
                 }
                 break;
         }

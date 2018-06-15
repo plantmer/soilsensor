@@ -1,15 +1,25 @@
 package com.plantmer.soilsensor.util;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 /**
  * Created by edgars.martinovs on 2018-06-07.
  */
 
+@Entity
 public class DataObj {
 
+    @PrimaryKey
     private long dateTime;
+    @ColumnInfo(name = "dp")
     private float dp;
+    @ColumnInfo(name = "ec")
     private float ec;
+    @ColumnInfo(name = "temp")
     private float temp;
+    @ColumnInfo(name = "vwc")
     private float vwc;
 
     public DataObj(long dateTime) {
