@@ -237,7 +237,6 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         ecLabel.setText("Electrical Conductivity");
         TextView vwcLabel = (TextView) getActivity().findViewById(R.id.graphs_vwc_label);
         vwcLabel.setText("Water Content");
-        updateUI();
         updateRange();
         // Inflate the layout for this fragment
     }
@@ -250,7 +249,6 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         mTempChart.setPinchZoom(true);
         mTempChart.getLegend().setEnabled(false);
 
-        formatDate();
         XAxis x = mTempChart.getXAxis();
         x.setEnabled(true);
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -319,7 +317,6 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         mDpChart.setPinchZoom(true);
         mDpChart.getLegend().setEnabled(false);
 
-        formatDate();
         XAxis x = mDpChart.getXAxis();
         x.setEnabled(true);
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -388,7 +385,6 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         mEcChart.setPinchZoom(true);
         mEcChart.getLegend().setEnabled(false);
 
-        formatDate();
         XAxis x = mEcChart.getXAxis();
         x.setEnabled(true);
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -457,7 +453,6 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         mVwcChart.setPinchZoom(true);
         mVwcChart.getLegend().setEnabled(false);
 
-        formatDate();
         XAxis x = mVwcChart.getXAxis();
         x.setEnabled(true);
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -565,6 +560,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
 
 
     private void updateUI() {
+        formatDate();
         setTempChart();
         setDpChart();
         setEcChart();
