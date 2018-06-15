@@ -12,6 +12,10 @@ import com.plantmer.soilsensor.MainActivity;
 import com.plantmer.soilsensor.R;
 
 import android.graphics.Color;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -31,15 +35,29 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GraphFragment extends Fragment {
+public class GraphFragment extends Fragment  implements View.OnClickListener,AdapterView.OnItemSelectedListener {
 
     private MainActivity main;
 
     public void setMain(MainActivity main) {
         this.main = main;
+    }
+    private Button genButton;
+    private Random rnd= new Random();
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.genButton:
+                DataObj dob = new DataObj(System.currentTimeMillis(),rnd.nextInt(20)+10,rnd.nextInt(20)+10,rnd.nextInt(20)+10,rnd.nextInt(20)+10);
+                updatez(dob);
+                break;
+        }
     }
 
     public void append(String[] split){
@@ -58,6 +76,47 @@ public class GraphFragment extends Fragment {
             mForecastList.remove(0);
         }
         updateUI();
+    }
+//        <string-array name="time_range_array">
+//            <item>5m</item>
+//            <item>15m</item>
+//            <item>1h</item>
+//            <item>6h</item>
+//            <item>12h</item>
+//            <item>24h</item>
+//            <item>2d</item>
+//            <item>7d</item>
+//            <item>30d</item>
+//        </string-array>
+
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(pos)
+        switch (pos){
+            case 0://5m
+                break;
+            case 1://15m
+                break;
+            case 2://1h
+                break;
+            case 3://6h
+                break;
+            case 4://12h
+                break;
+            case 5://24h
+                break;
+            case 6://2d
+                break;
+            case 7://7d
+                break;
+            case 8://30d
+                break;
+        }
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
     }
 
     public GraphFragment() {
@@ -83,9 +142,20 @@ public class GraphFragment extends Fragment {
 
     @Override
     public void onViewCreated(View vv, Bundle savedInstanceState){
+        genButton = getActivity().findViewById(R.id.genButton);
+        genButton.setOnClickListener(this);
+        ee.setText("");
 
-            ee.setText("");
-            mForecastList.add(new DataObj(System.currentTimeMillis()));
+        Spinner spinner = getActivity().findViewById(R.id.time_range_spinner);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.time_range_array, R.layout.spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(R.layout.spinner_item);
+// Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        mForecastList.add(new DataObj(System.currentTimeMillis()));
         mValueFormatter = new CustomValueFormatter();
         mYAxisFormatter = new YAxisValueFormatter();
         mTempChart = (LineChart) getActivity().findViewById(R.id.temp_chart);

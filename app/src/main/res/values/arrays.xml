@@ -19,7 +19,17 @@
         <item>720</item>
         <item>1440</item>
     </string-array>
-
+        <string-array name="time_range_array">
+            <item>5m</item>
+            <item>15m</item>
+            <item>1h</item>
+            <item>6h</item>
+            <item>12h</item>
+            <item>24h</item>
+            <item>2d</item>
+            <item>7d</item>
+            <item>30d</item>
+        </string-array>
     <string-array name="widget_update_period_values" translatable="false">
         <item>15</item>
         <item>30</item>
@@ -34,17 +44,6 @@
         <item>dark</item>
         <item>light</item>
         <item>transparent</item>
-    </string-array>
-
-    <string-array name="wind_direction_arrows" translatable="false">
-        <item name="n">&#xf058;</item>
-        <item name="ne">&#xf057;</item>
-        <item name="e">&#xf04d;</item>
-        <item name="se">&#xf088;</item>
-        <item name="s">&#xf044;</item>
-        <item name="sw">&#xf043;</item>
-        <item name="w">&#xf048;</item>
-        <item name="nw">&#xf087;</item>
     </string-array>
 
 
