@@ -57,6 +57,18 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
                 DataObj dob = new DataObj(System.currentTimeMillis(),rnd.nextInt(20)+10,rnd.nextInt(20)+10,rnd.nextInt(20)+10,rnd.nextInt(20)+10);
                 updatez(dob);
                 break;
+            case R.id.genPrev:
+                end = start;
+                start = start - range;
+                break;
+            case R.id.genNext:
+                start = end;
+                end = end+range;
+                if(end>System.currentTimeMillis()){
+                    end = System.currentTimeMillis();
+                    start = end - range;
+                }
+                break;
         }
     }
 
@@ -88,31 +100,45 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
 //            <item>7d</item>
 //            <item>30d</item>
 //        </string-array>
-
+    long min = 1000*60*60;
+    long range = 5*min;;
+    long end=System.currentTimeMillis();
+    long start=end-range;
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
         switch (pos){
             case 0://5m
+                range = 5*min;
                 break;
             case 1://15m
+                range = 15*min;
                 break;
             case 2://1h
+                range = 60*min;
                 break;
             case 3://6h
+                range = 6*60*min;
                 break;
             case 4://12h
+                range = 12*60*min;
                 break;
             case 5://24h
+                range = 24*60*min;
                 break;
             case 6://2d
+                range = 2*24*60*min;
                 break;
             case 7://7d
+                start = 7*24*60*min;
                 break;
             case 8://30d
+                range = 30*24*60*min;
                 break;
         }
+        end=System.currentTimeMillis();
+        start = end - range;
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
