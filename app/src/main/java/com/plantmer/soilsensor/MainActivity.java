@@ -57,6 +57,16 @@ public class MainActivity extends AppCompatActivity {
                         } else if (!isConnected() && lastVer) {
                             lastVer = false;
                             type = log.substring(0, 3);
+                            if(type!=null){
+                                if(type.startsWith("USB")){
+                                    settingsFragment.setUsbEnabled(true);
+                                    settingsFragment.setLwEnabled(false);
+                                }else{
+                                    settingsFragment.setUsbEnabled(false);
+                                    settingsFragment.setLwEnabled(true);
+                                }
+
+                            }
                             android.util.Log.i("main", "DETECTED : " + type);
                             connected = true;
                             mainFragment.setConnected(connected);

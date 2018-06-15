@@ -107,6 +107,11 @@
                         android:inputType="numberDecimal"
                         android:text="0" />
                 </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llUSB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv0usb"
@@ -159,6 +164,12 @@
                         android:layout_height="wrap_content"
                         android:text="Set current time" />
                 </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llLW"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv0lw"
@@ -393,7 +404,7 @@
                         android:maxLength="32"
                         android:text="" />
                 </LinearLayout>
-
+            </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </android.support.design.widget.CoordinatorLayout>

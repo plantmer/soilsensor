@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.plantmer.soilsensor.MainActivity;
 import com.plantmer.soilsensor.R;
@@ -169,12 +170,34 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         lwDevAddrEt =  getActivity().findViewById(R.id.lwDevAddrEt);
         lwNWKSKeyEt =  getActivity().findViewById(R.id.lwNWKSKeyEt);
         lwAPPSKeyEt =  getActivity().findViewById(R.id.lwAPPSKeyEt);
+        usb = getActivity().findViewById(R.id.llUSB);
+        lw = getActivity().findViewById(R.id.llLW);
+        setUsbEnabled(false);
+        setLwEnabled(false);
     }
+
+    LinearLayout usb;
+    LinearLayout lw;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_2, container, false);
+    }
+
+    public void setUsbEnabled(boolean enable){
+        if(enable){
+            usb.setVisibility(View.VISIBLE);
+        }else{
+            usb.setVisibility(View.GONE);
+        }
+    }
+    public void setLwEnabled(boolean enable){
+        if(enable){
+            lw.setVisibility(View.VISIBLE);
+        }else{
+            lw.setVisibility(View.GONE);
+        }
     }
 
 }
