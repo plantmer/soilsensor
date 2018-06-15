@@ -30,6 +30,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     public void append(String[] split){
+        if(!init){
+            return;
+        }
+
         if(split.length==7){
             lwIntervalEt.setText(split[0]);
             lwDevEuiEt.setText(split[1]);
@@ -71,7 +75,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private EditText lwNWKSKeyEt;
     private EditText lwAPPSKeyEt;
 
-
+    boolean init = false;
 
     @Override
     public void onClick(View view)
@@ -173,9 +177,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         usb = getActivity().findViewById(R.id.llUSB);
         lw = getActivity().findViewById(R.id.llLW);
         llRaw = getActivity().findViewById(R.id.llRaw);
-        setUsbEnabled(false);
-        setLwEnabled(false);
         setRawEnabled(false);
+        if(main.getType()==null) {
+            setUsbEnabled(false);
+            setLwEnabled(false);
+        }else if(main.getType().equals(main.TYPE_USB)){
+            setUsbEnabled(true);
+        }else if(main.getType().equals(main.TYPE_LWA)){
+            setLwEnabled(true);
+        }
+        init = true;
     }
 
     LinearLayout usb;
@@ -189,6 +200,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     public void setUsbEnabled(boolean enable){
+        if(!init){
+            return;
+        }
+
         if(enable){
             usb.setVisibility(View.VISIBLE);
         }else{
@@ -196,6 +211,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
     }
     public void setLwEnabled(boolean enable){
+        if(!init){
+            return;
+        }
+
         if(enable){
             lw.setVisibility(View.VISIBLE);
         }else{
@@ -203,9 +222,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
     }
     public void setRawEnabled(boolean enable){
-        if(llRaw==null){
+        if(!init){
             return;
         }
+
         if(enable){
             llRaw.setVisibility(View.VISIBLE);
         }else{

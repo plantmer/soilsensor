@@ -17,6 +17,9 @@ import com.plantmer.soilsensor.MainActivity;
 import com.plantmer.soilsensor.R;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 
 /**
@@ -33,6 +36,9 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         // Required empty public constructor
     }
     public void setConnected(boolean connected){
+        if(connText==null){
+            return;
+        }
         if(connected){
             connText.setText("Connected "+main.getType());
         }else{
@@ -41,17 +47,24 @@ public class MainFragment extends Fragment implements View.OnClickListener{
 
     }
     public void append(String[] split){
+        if(!init){
+            return;
+        }
         if(split.length==4){ // readings
             mDielectricPermittivityView.setText(getString(R.string.dp_label, split[0]));
             mElectricalConductivityView.setText(getString(R.string.ec_label, split[1]));
             mTemperatureView.setText(getString(R.string.temp_label, split[2]));
-            mVWCView.setText(getString(R.string.vwc_label, String.valueOf(Float.valueOf(split[3])*100.0), mPercentSign));
+            mVWCView.setText(getString(R.string.vwc_label, getWString(split[3]), mPercentSign));
         }else if(split.length==5){ //readings with date
             mDielectricPermittivityView.setText(getString(R.string.dp_label, split[1]));
             mElectricalConductivityView.setText(getString(R.string.ec_label, split[2]));
             mTemperatureView.setText(getString(R.string.temp_label, split[3]));
-            mVWCView.setText(getString(R.string.vwc_label, String.valueOf(Float.valueOf(split[4])*100.0), mPercentSign));
+            mVWCView.setText(getString(R.string.vwc_label, getWString(split[4]), mPercentSign));
         }
+    }
+
+    private String getWString(String s) {
+        return String.valueOf(BigDecimal.valueOf(Float.valueOf(s)*100.0).round(new MathContext(2, RoundingMode.HALF_UP)));
     }
 
     private TextView mDielectricPermittivityView;
@@ -67,7 +80,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     private TextView connText;
     private Button connButton;
     private Button readButton;
-
+    boolean init = false;
     private String mPercentSign;
 
     @Override
@@ -80,7 +93,8 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     public void onViewCreated(View view, Bundle savedInstanceState){
         weatherConditionsIcons();
         initializeTextView();
-        updateCurrentWeather();
+        //updateCurrentWeather();
+        setConnected(main.isConnected());
     }
 
     private void updateCurrentWeather() {
@@ -95,14 +109,13 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     {
         Log.d("page", "onClick: "+view.getId());
         switch (view.getId()) {
-            case R.id.connButton:
-                try {
-                    main.getSerial().findFirstDevice();
-                    main.getSerial().open();
-                } catch (IOException e) {
-                    Log.e("main","connButton",e);
-                }
-                break;
+//            case R.id.connButton:
+//                try {
+//                    main.run();
+//                } catch (Exception e) {
+//                    Log.e("main","connButton",e);
+//                }
+//                break;
             case R.id.readButton:
                 if(!main.isConnected()){
                     main.alertNotConn();
@@ -120,8 +133,8 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),
                 "fonts/Roboto-Light.ttf");
 
-        connButton =  getActivity().findViewById(R.id.connButton);
-        connButton.setOnClickListener(this);
+//        connButton =  getActivity().findViewById(R.id.connButton);
+//        connButton.setOnClickListener(this);
         readButton =  getActivity().findViewById(R.id.readButton);
         readButton.setOnClickListener(this);
         connText =  getActivity().findViewById(R.id.connText);
@@ -136,7 +149,6 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         mIconTempView=  getActivity().findViewById(R.id.icon_temp);
         mIconVWCView=  getActivity().findViewById(R.id.icon_vwc);
 
-        connButton.setTypeface(robotoLight);
         connText.setTypeface(robotoLight);
         mDielectricPermittivityView.setTypeface(robotoLight);
         mElectricalConductivityView.setTypeface(robotoLight);
@@ -153,13 +165,14 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         mIconVWCView.setText(mIconVWC);
         showLogCB = getActivity().findViewById( R.id.showLogCB );
         showLogCB.setChecked(false);
-        main.setLog(false);
         showLogCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
                 main.setLog(isChecked);
             }
         });
+        init=true;
+
     }
     CheckBox showLogCB;
 

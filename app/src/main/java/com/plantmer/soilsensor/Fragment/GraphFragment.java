@@ -50,6 +50,7 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 public class GraphFragment extends Fragment  implements View.OnClickListener,AdapterView.OnItemSelectedListener {
 
     private MainActivity main;
+    boolean init=false;
     Gson gson = new Gson();
     public void setMain(MainActivity main) {
         this.main = main;
@@ -121,6 +122,10 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         }.execute();
     }
     public void append(String[] split){
+        if(!init){
+            return;
+        }
+
         if(split.length==4){ // readings dateTime, float dp, float ec, float temp, float vwc
             DataObj dob = new DataObj(System.currentTimeMillis(),Float.valueOf(split[0]),Float.valueOf(split[1]),Float.valueOf(split[2]),Float.valueOf(split[3]));
             updatez(dob);
@@ -261,6 +266,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         TextView vwcLabel = (TextView) getActivity().findViewById(R.id.graphs_vwc_label);
         vwcLabel.setText("Water Content");
         updateRange();
+        init=true;
         // Inflate the layout for this fragment
     }
     private void setTempChart() {

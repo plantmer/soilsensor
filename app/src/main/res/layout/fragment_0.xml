@@ -101,11 +101,11 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/connButton"
-                        android:layout_width="122dp"
-                        android:layout_height="36dp"
-                        android:text="CONNECT" />
+                    <!--<Button-->
+                        <!--android:id="@+id/connButton"-->
+                        <!--android:layout_width="122dp"-->
+                        <!--android:layout_height="36dp"-->
+                        <!--android:text="CONNECT" />-->
                     <TextView
                         android:id="@+id/connText"
                         style="@style/MainConditions"

@@ -19,17 +19,27 @@ import com.plantmer.soilsensor.Fragment.SettingsFragment;
 import com.plantmer.soilsensor.serial.UsbSerial;
 import com.plantmer.soilsensor.util.AppDatabase;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-public class MainActivity extends AppCompatActivity {
+import static java.util.concurrent.TimeUnit.SECONDS;
 
+public class MainActivity extends AppCompatActivity implements Runnable {
+
+    public static final String TYPE_USB = "USB";
+    public static final String TYPE_LWA = "LWA";
     BottomNavigationView bottomNavigationView;
 
     //This is our viewPager
     private ViewPager viewPager;
 
     private List<String> logs = new ArrayList<>(10);
+    private final ScheduledExecutorService scheduler =
+            Executors.newScheduledThreadPool(1);
 
     public void initLog(){
 
@@ -37,10 +47,32 @@ public class MainActivity extends AppCompatActivity {
             logs.add("");
         }
         cmdLog.setText("\n\n\n\n\n");
+        scheduler.scheduleAtFixedRate(this, 3, 3, SECONDS);
     }
+
+    @Override
+    public void run() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if(!connected.get()){
+                        try {
+                            getSerial().connect();
+                        } catch (IOException e) {
+                            Log.e("main","connButton",e);
+                        }
+
+                    }
+                }catch (Exception ex){
+                    Log.e("main","addLine",ex);
+                }
+            }
+        });
+    }
+
     private String type=null;
 
-    private boolean lastVer = false;
     public void addLine(final String log){
         if(log!=null){
             runOnUiThread(new Runnable() {
@@ -52,27 +84,25 @@ public class MainActivity extends AppCompatActivity {
                         if (log.startsWith(">")) {
                             return;
                         }
-                        if (log.startsWith("ver")) {
-                            lastVer = true;
-                        } else if (!isConnected() && lastVer) {
-                            lastVer = false;
-                            type = log.substring(0, 3);
-                            if(type!=null){
-                                if(type.startsWith("USB")){
-                                    settingsFragment.setUsbEnabled(true);
-                                    settingsFragment.setLwEnabled(false);
-                                }else{
-                                    settingsFragment.setUsbEnabled(false);
-                                    settingsFragment.setLwEnabled(true);
-                                }
-
+                        if (!isConnected() && log.length()>3) {
+                            type = null;
+                            if(log.startsWith(TYPE_USB)){
+                                settingsFragment.setUsbEnabled(true);
+                                settingsFragment.setLwEnabled(false);
+                                type = log.substring(0, 3);
+                            }else if(log.startsWith(TYPE_USB)){
+                                settingsFragment.setUsbEnabled(false);
+                                settingsFragment.setLwEnabled(true);
+                                type = log.substring(0, 3);
                             }
-                            android.util.Log.i("main", "DETECTED : " + type);
-                            connected = true;
-                            mainFragment.setConnected(connected);
+                            if(type!=null) {
+                                android.util.Log.i("main", "DETECTED : " + type);
+                                connected.compareAndSet(false,true);
+                                mainFragment.setConnected(connected.get());
+                            }
                         } else {
                             String[] split = log.split(",");
-                            if (split.length > 0) {
+                            if (split.length > 2) {
                                 mainFragment.append(split);
                                 graphFragment.append(split);
                                 settingsFragment.append(split);
@@ -85,7 +115,12 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+    boolean init = false;
     public void addLog(String log){
+        if(!init){
+            return;
+        }
+
         if(logs.size()>5) {
             logs.remove(0);
         }
@@ -123,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
         //Initializing viewPager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         cmdLog =  findViewById(R.id.cmdLog);
-        initLog();
         //Initializing the bottomNavigationView
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
 
@@ -172,21 +206,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-       /*  //Disable ViewPager Swipe
-
-       viewPager.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                return true;
-            }
-        });
-
-        */
-
         setupViewPager(viewPager);
+        init = true;
+        initLog();
+        setLog(false);
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -202,10 +226,10 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(settingsFragment);
         viewPager.setAdapter(adapter);
     }
-    boolean connected = false;
+    AtomicBoolean connected = new AtomicBoolean(false);
 
     public boolean isConnected() {
-        return connected;
+        return connected.get();
     }
 
     public void alertNotConn(){
@@ -227,7 +251,6 @@ public class MainActivity extends AppCompatActivity {
         }else{
             cmdLog.setVisibility(View.GONE);
         }
-        settingsFragment.setRawEnabled(enable);
     }
 
     public String getType() {
@@ -235,16 +258,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void setConnected(final boolean conn) {
+    public void disconnected() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Log.i("main","!!!!!!!DISCONNECTED!!!!!!!!!!!!");
-                connected = conn;
-                mainFragment.setConnected(connected);
-                if(!conn){
-                    type = null;
-                }
+                connected.compareAndSet(true,false);
+                mainFragment.setConnected(connected.get());
+                type = null;
 
             }
         });
