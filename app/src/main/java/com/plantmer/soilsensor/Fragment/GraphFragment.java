@@ -1,8 +1,10 @@
 package com.plantmer.soilsensor.Fragment;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +50,8 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         this.main = main;
     }
     private Button genButton;
+    private Button genPrev;
+    private Button genNext;
     private Random rnd= new Random();
     boolean last = true;
     @Override
@@ -76,11 +80,23 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         }
     }
     public void updateRange(){
-        mForecastList = main.getDb().dataDao().getRange(start,end);
-        if(mForecastList.size()==0){
-            mForecastList.add(new DataObj(System.currentTimeMillis()));
-        }
-        updateUI();
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                mForecastList = main.getDb().dataDao().getRange(start,end);
+                Log.i("GF","mForecastList.size:"+mForecastList.size()+" start:"+new Date(start)+" send:"+new Date(end));
+                if(mForecastList.size()==0){
+                    mForecastList.add(new DataObj(System.currentTimeMillis()));
+                }
+                main.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateUI();
+                    }
+                });
+                return null;
+            }
+        }.execute();
     }
     public void append(String[] split){
         if(split.length==4){ // readings dateTime, float dp, float ec, float temp, float vwc
@@ -92,7 +108,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         }
     }
 
-    private void updatez(DataObj dob) {
+    private void updatez(final DataObj dob) {
         if(last) {
             mForecastList.add(dob);
             if (mForecastList.size() > 200) {
@@ -100,7 +116,13 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
             }
             updateUI();
         }
-        main.getDb().dataDao().insertAll(dob);
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                main.getDb().dataDao().insertAll(dob);
+                return null;
+            }
+        }.execute();
     }
 //        <string-array name="time_range_array">
 //            <item>5m</item>
@@ -184,6 +206,11 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
     public void onViewCreated(View vv, Bundle savedInstanceState){
         genButton = getActivity().findViewById(R.id.genButton);
         genButton.setOnClickListener(this);
+        genPrev = getActivity().findViewById(R.id.genPrev);
+        genPrev.setOnClickListener(this);
+        genNext = getActivity().findViewById(R.id.genNext);
+        genNext.setOnClickListener(this);
+
         ee.setText("");
 
         Spinner spinner = getActivity().findViewById(R.id.time_range_spinner);
@@ -195,7 +222,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-        //mForecastList.add(new DataObj(System.currentTimeMillis()));
+        mForecastList.add(new DataObj(System.currentTimeMillis()));
         updateRange();
         mValueFormatter = new CustomValueFormatter();
         mYAxisFormatter = new YAxisValueFormatter();

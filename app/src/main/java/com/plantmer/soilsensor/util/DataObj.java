@@ -2,6 +2,7 @@ package com.plantmer.soilsensor.util;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
@@ -22,10 +23,15 @@ public class DataObj {
     @ColumnInfo(name = "vwc")
     private float vwc;
 
+
+    public DataObj() {}
+
+    @Ignore
     public DataObj(long dateTime) {
         this.dateTime = dateTime;
     }
 
+    @Ignore
     public DataObj(long dateTime, float dp, float ec, float temp, float vwc) {
         this.dateTime = dateTime;
         this.dp = dp;
