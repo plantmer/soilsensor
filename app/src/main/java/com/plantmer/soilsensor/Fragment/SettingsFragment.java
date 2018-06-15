@@ -177,6 +177,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         usb = getActivity().findViewById(R.id.llUSB);
         lw = getActivity().findViewById(R.id.llLW);
         llRaw = getActivity().findViewById(R.id.llRaw);
+        init = true;
         setRawEnabled(false);
         setUsbEnabled(false);
         setLwEnabled(false);
@@ -187,7 +188,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 setLwEnabled(true);
             }
         }
-        init = true;
     }
 
     LinearLayout usb;
