@@ -25,7 +25,7 @@
                     android:id="@+id/genButton"
                     android:layout_width="122dp"
                     android:layout_height="36dp"
-                    android:text="GENERATE" />
+                    android:text="CSV to clipboard" />
             </LinearLayout>
 
             <LinearLayout

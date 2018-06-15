@@ -1,6 +1,8 @@
 package com.plantmer.soilsensor.Fragment;
 
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.components.Description;
+import com.google.gson.Gson;
 import com.plantmer.soilsensor.MainActivity;
 import com.plantmer.soilsensor.R;
 
@@ -39,13 +42,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class GraphFragment extends Fragment  implements View.OnClickListener,AdapterView.OnItemSelectedListener {
 
     private MainActivity main;
-
+    Gson gson = new Gson();
     public void setMain(MainActivity main) {
         this.main = main;
     }
@@ -58,8 +63,11 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.genButton:
-                DataObj dob = new DataObj(System.currentTimeMillis(),rnd.nextInt(20)+10,rnd.nextInt(20)+10,rnd.nextInt(20)+10,rnd.nextInt(20)+10);
-                updatez(dob);
+//                DataObj dob = new DataObj(System.currentTimeMillis(),rnd.nextInt(20)+10,rnd.nextInt(20)+10,rnd.nextInt(20)+10,rnd.nextInt(20)+10);
+//                updatez(dob);
+                final android.content.ClipboardManager clipboardManager = (ClipboardManager)getActivity().getSystemService(CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("CSV", gson.toJson(dataList));
+                clipboardManager.setPrimaryClip(clipData);
                 break;
             case R.id.genPrev:
                 end = start;
@@ -84,12 +92,12 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
             @Override
             protected Void doInBackground(Void... voids) {
 
-                mForecastList = main.getDb().dataDao().getRange(start,end);
+                dataList = main.getDb().dataDao().getRange(start,end);
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
-                Log.i("GF","mForecastList.size:"+mForecastList.size()+" start:"+format.format(new Date(start))+" end:"+format.format(new Date(end)));
-                if(mForecastList.size()==0){
-                    mForecastList.add(new DataObj(System.currentTimeMillis()));
+                Log.i("GF","dataList.size:"+dataList.size()+" start:"+format.format(new Date(start))+" end:"+format.format(new Date(end)));
+                if(dataList.size()==0){
+                    dataList.add(new DataObj(System.currentTimeMillis()));
                 }
                 main.runOnUiThread(new Runnable() {
                     @Override
@@ -113,9 +121,9 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
 
     private void updatez(final DataObj dob) {
         if(last) {
-            mForecastList.add(dob);
-            if (mForecastList.size() > 200) {
-                mForecastList.remove(0);
+            dataList.add(dob);
+            if (dataList.size() > 200) {
+                dataList.remove(0);
             }
             updateUI();
         }
@@ -195,7 +203,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
 
     private CustomValueFormatter mValueFormatter;
     private YAxisValueFormatter mYAxisFormatter;
-    public List<DataObj> mForecastList=new ArrayList<>();
+    public List<DataObj> dataList=new ArrayList<>();
     Description ee = new Description();
 
     @Override
@@ -226,7 +234,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        mForecastList.add(new DataObj(System.currentTimeMillis()));
+        dataList.add(new DataObj(System.currentTimeMillis()));
         mValueFormatter = new CustomValueFormatter();
         mYAxisFormatter = new YAxisValueFormatter();
         mTempChart = (LineChart) getActivity().findViewById(R.id.temp_chart);
@@ -272,8 +280,8 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         mTempChart.getAxisRight().setEnabled(false);
 
         List<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < mForecastList.size(); i++) {
-            float temperatureDay = mForecastList.get(i).getTemp();
+        for (int i = 0; i < dataList.size(); i++) {
+            float temperatureDay = dataList.get(i).getTemp();
             entries.add(new Entry(i, temperatureDay));
         }
 
@@ -340,8 +348,8 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         mDpChart.getAxisRight().setEnabled(false);
 
         List<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < mForecastList.size(); i++) {
-            float dp = mForecastList.get(i).getDp();
+        for (int i = 0; i < dataList.size(); i++) {
+            float dp = dataList.get(i).getDp();
             entries.add(new Entry(i, dp));
         }
 
@@ -408,8 +416,8 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         mEcChart.getAxisRight().setEnabled(false);
 
         List<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < mForecastList.size(); i++) {
-            float values = mForecastList.get(i).getEc();
+        for (int i = 0; i < dataList.size(); i++) {
+            float values = dataList.get(i).getEc();
             entries.add(new Entry(i, values));
         }
 
@@ -476,8 +484,8 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         mVwcChart.getAxisRight().setEnabled(false);
 
         List<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < mForecastList.size(); i++) {
-            float values = mForecastList.get(i).getVwc();
+        for (int i = 0; i < dataList.size(); i++) {
+            float values = dataList.get(i).getVwc();
             entries.add(new Entry(i, values));
         }
 
@@ -518,12 +526,12 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
 
     private void formatDate() {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        if (mForecastList != null) {
-            int mSize = mForecastList.size();
+        if (dataList != null) {
+            int mSize = dataList.size();
             mDatesArray = new String[mSize];
 
             for (int i = 0; i < mSize; i++) {
-                Date date = new Date(mForecastList.get(i).getDateTime());
+                Date date = new Date(dataList.get(i).getDateTime());
                 String day = format.format(date);
                 mDatesArray[i] = day;
             }
