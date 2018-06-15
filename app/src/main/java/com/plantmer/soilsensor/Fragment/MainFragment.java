@@ -152,7 +152,8 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         mIconVWCView.setTypeface(weatherFontIcon);
         mIconVWCView.setText(mIconVWC);
         showLogCB = getActivity().findViewById( R.id.showLogCB );
-        showLogCB.setChecked(true);
+        showLogCB.setChecked(false);
+        main.setLog(false);
         showLogCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){

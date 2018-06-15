@@ -23,7 +23,7 @@
 
                 <Button
                     android:id="@+id/genButton"
-                    android:layout_width="122dp"
+                    android:layout_width="222dp"
                     android:layout_height="36dp"
                     android:text="CSV to clipboard" />
             </LinearLayout>

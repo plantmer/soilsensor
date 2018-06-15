@@ -54,6 +54,17 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
     public void setMain(MainActivity main) {
         this.main = main;
     }
+
+    private String asCSV(){
+        StringBuilder sb = new StringBuilder("");
+        sb.append("\"TIME\",\"DP\",\"EC\",\"TEMP\",\"VWC\"\r\n");
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        for(DataObj d:dataList){
+            sb.append(format.format(new Date(d.getDateTime()))).append(",").append(d.getDp()).append(",").append(d.getEc()).append(",").append(d.getTemp()).append(",").append(d.getVwc()).append("\n\r");
+        }
+        return sb.toString();
+    }
+
     private Button genButton;
     private Button genPrev;
     private Button genNext;
@@ -66,7 +77,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
 //                DataObj dob = new DataObj(System.currentTimeMillis(),rnd.nextInt(20)+10,rnd.nextInt(20)+10,rnd.nextInt(20)+10,rnd.nextInt(20)+10);
 //                updatez(dob);
                 final android.content.ClipboardManager clipboardManager = (ClipboardManager)getActivity().getSystemService(CLIPBOARD_SERVICE);
-                ClipData clipData = ClipData.newPlainText("CSV", gson.toJson(dataList));
+                ClipData clipData = ClipData.newPlainText("JSON", asCSV());
                 clipboardManager.setPrimaryClip(clipData);
                 break;
             case R.id.genPrev:
