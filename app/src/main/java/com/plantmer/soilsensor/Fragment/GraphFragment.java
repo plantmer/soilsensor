@@ -61,6 +61,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
                 end = start;
                 start = start - range;
                 last= false;
+                updateRange();
                 break;
             case R.id.genNext:
                 start = end;
@@ -70,10 +71,17 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
                     start = end - range;
                     last = true;
                 }
+                updateRange();
                 break;
         }
     }
-
+    public void updateRange(){
+        mForecastList = main.getDb().dataDao().getRange(start,end);
+        if(mForecastList.size()==0){
+            mForecastList.add(new DataObj(System.currentTimeMillis()));
+        }
+        updateUI();
+    }
     public void append(String[] split){
         if(split.length==4){ // readings dateTime, float dp, float ec, float temp, float vwc
             DataObj dob = new DataObj(System.currentTimeMillis(),Float.valueOf(split[0]),Float.valueOf(split[1]),Float.valueOf(split[2]),Float.valueOf(split[3]));
@@ -85,11 +93,14 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
     }
 
     private void updatez(DataObj dob) {
-        mForecastList.add(dob);
-        if(mForecastList.size()>200){
-            mForecastList.remove(0);
+        if(last) {
+            mForecastList.add(dob);
+            if (mForecastList.size() > 200) {
+                mForecastList.remove(0);
+            }
+            updateUI();
         }
-        updateUI();
+        main.getDb().dataDao().insertAll(dob);
     }
 //        <string-array name="time_range_array">
 //            <item>5m</item>
@@ -141,6 +152,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         }
         end=System.currentTimeMillis();
         start = end - range;
+        updateRange();
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
@@ -183,7 +195,8 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-        mForecastList.add(new DataObj(System.currentTimeMillis()));
+        //mForecastList.add(new DataObj(System.currentTimeMillis()));
+        updateRange();
         mValueFormatter = new CustomValueFormatter();
         mYAxisFormatter = new YAxisValueFormatter();
         mTempChart = (LineChart) getActivity().findViewById(R.id.temp_chart);

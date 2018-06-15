@@ -100,6 +100,10 @@ public class MainActivity extends AppCompatActivity {
         return serial;
     }
 
+    public AppDatabase getDb() {
+        return db;
+    }
+
     AppDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

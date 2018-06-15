@@ -17,9 +17,15 @@ public interface DataDao {
     @Query("SELECT * FROM DataObj")
     List<DataObj> getAll();
 
+    @Query("SELECT * FROM DataObj WHERE dateTime < (:end) and dateTime > (:start)")
+    List<DataObj> getRange(long start , long end);
+
     @Insert
-    void insertAll(DataObj... users);
+    void insertAll(DataObj... data);
 
     @Delete
-    void delete(DataObj user);
+    void delete(DataObj data);
+
+    @Query("DELETE FROM DataObj WHERE dateTime < (:end)")
+    abstract void deleteOlder(long end);
 }
