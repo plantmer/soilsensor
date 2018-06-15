@@ -147,24 +147,24 @@
                         android:text="2000" />
                 </LinearLayout>
 
-                <LinearLayout
-                    style="@style/MainLinearLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                <!--<LinearLayout-->
+                    <!--style="@style/MainLinearLayout"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <Button
-                        android:id="@+id/usbTimeButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Current time" />
+                    <!--<Button-->
+                        <!--android:id="@+id/usbTimeButton"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="Current time" />-->
 
-                    <TextView
-                        android:id="@+id/tvCT"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Set current time" />
-                </LinearLayout>
+                    <!--<TextView-->
+                        <!--android:id="@+id/tvCT"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="Set current time" />-->
+                <!--</LinearLayout>-->
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/llLW"

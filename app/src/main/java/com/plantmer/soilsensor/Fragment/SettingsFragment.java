@@ -51,7 +51,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private Button airButton;
     private Button waterButton;
     private Button usbIntervalButton;
-    private Button usbTimeButton;
+//    private Button usbTimeButton;
     private Button lwIntervalButton;
     private Button lwInfoButton;
     private Button lwGenButton;
@@ -98,9 +98,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.usbIntervalButton:
                 main.getSerial().writeCmd("millis "+usbIntervalEt.getText());
                 break;
-            case R.id.usbTimeButton:
-                main.getSerial().writeCmd("time "+System.currentTimeMillis());
-                break;
+//            case R.id.usbTimeButton:
+//                main.getSerial().writeCmd("time "+System.currentTimeMillis());
+//                break;
             case R.id.lwIntervalButton:
                 main.getSerial().writeCmd("int "+lwIntervalEt.getText());
                 break;
@@ -141,8 +141,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         waterButton.setOnClickListener(this);
         usbIntervalButton =  getActivity().findViewById(R.id.usbIntervalButton);
         usbIntervalButton.setOnClickListener(this);
-        usbTimeButton =  getActivity().findViewById(R.id.usbTimeButton);
-        usbTimeButton.setOnClickListener(this);
+//        usbTimeButton =  getActivity().findViewById(R.id.usbTimeButton);
+//        usbTimeButton.setOnClickListener(this);
         lwIntervalButton =  getActivity().findViewById(R.id.lwIntervalButton);
         lwIntervalButton.setOnClickListener(this);
         lwInfoButton =  getActivity().findViewById(R.id.lwInfoButton);
