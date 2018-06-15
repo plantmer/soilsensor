@@ -223,7 +223,6 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         spinner.setAdapter(adapter);
 
         mForecastList.add(new DataObj(System.currentTimeMillis()));
-        updateRange();
         mValueFormatter = new CustomValueFormatter();
         mYAxisFormatter = new YAxisValueFormatter();
         mTempChart = (LineChart) getActivity().findViewById(R.id.temp_chart);
@@ -238,8 +237,8 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         ecLabel.setText("Electrical Conductivity");
         TextView vwcLabel = (TextView) getActivity().findViewById(R.id.graphs_vwc_label);
         vwcLabel.setText("Water Content");
-
         updateUI();
+        updateRange();
         // Inflate the layout for this fragment
     }
     private void setTempChart() {
@@ -278,8 +277,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
 
         LineDataSet set;
         if (mTempChart.getData() != null) {
-            mTempChart.getData().removeDataSet(mTempChart.getData().getDataSetByIndex(
-                    mTempChart.getData().getDataSetCount() - 1));
+            mTempChart.getData().removeDataSet(0);
             set = new LineDataSet(entries, "Temp");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
@@ -308,6 +306,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
             LineData data = new LineData(set);
             mTempChart.setData(data);
         }
+        mTempChart.notifyDataSetChanged();
         mTempChart.invalidate();
     }
 
@@ -347,8 +346,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
 
         LineDataSet set;
         if (mDpChart.getData() != null) {
-            mDpChart.getData().removeDataSet(mDpChart.getData().getDataSetByIndex(
-                    mDpChart.getData().getDataSetCount() - 1));
+            mDpChart.getData().removeDataSet(mDpChart.getData().getDataSetByIndex(0));
             set = new LineDataSet(entries, "DP");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
@@ -377,6 +375,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
             LineData data = new LineData(set);
             mDpChart.setData(data);
         }
+        mDpChart.notifyDataSetChanged();
         mDpChart.invalidate();
     }
 
@@ -416,8 +415,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
 
         LineDataSet set;
         if (mEcChart.getData() != null) {
-            mEcChart.getData().removeDataSet(mEcChart.getData().getDataSetByIndex(
-                    mEcChart.getData().getDataSetCount() - 1));
+            mEcChart.getData().removeDataSet(0);
             set = new LineDataSet(entries, "EC");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
@@ -446,6 +444,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
             LineData data = new LineData(set);
             mEcChart.setData(data);
         }
+        mEcChart.notifyDataSetChanged();
         mEcChart.invalidate();
     }
 
@@ -485,8 +484,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
 
         LineDataSet set;
         if (mVwcChart.getData() != null) {
-            mVwcChart.getData().removeDataSet(mVwcChart.getData().getDataSetByIndex(
-                    mVwcChart.getData().getDataSetCount() - 1));
+            mVwcChart.getData().removeDataSet(0);
             set = new LineDataSet(entries, "VWC");
             set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set.setCubicIntensity(0.2f);
@@ -515,6 +513,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
             LineData data = new LineData(set);
             mVwcChart.setData(data);
         }
+        mVwcChart.notifyDataSetChanged();
         mVwcChart.invalidate();
     }
 
