@@ -79,29 +79,33 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                 @Override
                 public void run() {
                     try {
-                        Log.i("main", "in:" + log);
+                        Log.i("main", "in:::" + log );
                         addLog(log);
+                        String line;
                         if (log.startsWith(">")) {
-                            return;
+                            line = log.substring(1,log.length());
+                        }else{
+                            line = log;
                         }
-                        if (!isConnected() && log.length()>3) {
-                            type = null;
-                            if(log.startsWith(TYPE_USB)){
+                        if (!connected.get() && line.length()>3) {
+                            Log.i("main", "line:" + line );
+                            type = line.substring(0, 3);;
+                            if(type.equalsIgnoreCase(TYPE_USB)){
                                 settingsFragment.setUsbEnabled(true);
                                 settingsFragment.setLwEnabled(false);
-                                type = log.substring(0, 3);
-                            }else if(log.startsWith(TYPE_USB)){
+                            }else if(type.equalsIgnoreCase(TYPE_LWA)){
                                 settingsFragment.setUsbEnabled(false);
                                 settingsFragment.setLwEnabled(true);
-                                type = log.substring(0, 3);
+                            }else{
+                                type = null;
                             }
                             if(type!=null) {
-                                android.util.Log.i("main", "DETECTED : " + type);
+                                android.util.Log.e("main", "DETECTED : " + type);
                                 connected.compareAndSet(false,true);
                                 mainFragment.setConnected(connected.get());
                             }
                         } else {
-                            String[] split = log.split(",");
+                            String[] split = line.split(",");
                             if (split.length > 2) {
                                 mainFragment.append(split);
                                 graphFragment.append(split);

@@ -254,7 +254,7 @@
                         android:id="@+id/tvDevEuiLw"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Device EUI:" />
+                        android:text="DevEUI:" />
 
                     <EditText
                         android:id="@+id/lwDevEuiEt"
@@ -281,7 +281,7 @@
                         android:id="@+id/tvAppEuiLw"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="App EUI:" />
+                        android:text="AppEUI:" />
 
                     <EditText
                         android:id="@+id/lwAppEuiEt"
