@@ -67,47 +67,13 @@
                         android:layout_height="wrap_content"
                         android:text="AIR" />
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/tvAir"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="Raw:" />-->
-
-                    <!--<EditText-->
-                        <!--android:id="@+id/airEt"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:digits="0123456789"-->
-                        <!--android:inputType="numberDecimal"-->
-                        <!--android:text="0" />-->
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/MainLinearLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
                     <Button
                         android:id="@+id/waterButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="WATER" />
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/tvWater"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="Raw:" />-->
-
-                    <!--<EditText-->
-                        <!--android:id="@+id/waterEt"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:digits="0123456789"-->
-                        <!--android:inputType="numberDecimal"-->
-                        <!--android:text="0" />-->
                 </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/llUSB"
                 android:layout_width="match_parent"
