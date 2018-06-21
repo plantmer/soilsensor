@@ -298,10 +298,23 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         mTempChart.getAxisRight().setEnabled(false);
 
         List<Entry> entries = new ArrayList<>();
+        float svg = 0;
+        int cnt=0;
+        int tot=0;
         for (int i = 0; i < dataList.size(); i++) {
-            float temperatureDay = dataList.get(i).getTemp();
-            entries.add(new Entry(i, temperatureDay));
+            svg=svg+ dataList.get(i).getTemp();
+            cnt++;
+            if(cnt==avgCnt) {
+                entries.add(new Entry(tot, svg/cnt));
+                tot++;
+                svg=0;
+                cnt=0;
+            }
         }
+        if(cnt>0){
+            entries.add(new Entry(tot, svg/cnt));
+        }
+        Log.i("GF","getTemp entries.size:"+entries.size()+" tot:"+tot+" dataList.size():"+dataList.size());
 
         LineDataSet set;
         if (mTempChart.getData() != null) {
@@ -366,10 +379,23 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         mDpChart.getAxisRight().setEnabled(false);
 
         List<Entry> entries = new ArrayList<>();
+        float svg = 0;
+        int cnt=0;
+        int tot=0;
         for (int i = 0; i < dataList.size(); i++) {
-            float dp = dataList.get(i).getDp();
-            entries.add(new Entry(i, dp));
+            svg=svg+ dataList.get(i).getDp();
+            cnt++;
+            if(cnt==avgCnt) {
+                entries.add(new Entry(tot, svg/cnt));
+                tot++;
+                svg=0;
+                cnt=0;
+            }
         }
+        if(cnt>0){
+            entries.add(new Entry(tot, svg/cnt));
+        }
+        Log.i("GF","getDp entries.size:"+entries.size()+" tot:"+tot+" dataList.size():"+dataList.size());
 
         LineDataSet set;
         if (mDpChart.getData() != null) {
@@ -434,10 +460,23 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         mEcChart.getAxisRight().setEnabled(false);
 
         List<Entry> entries = new ArrayList<>();
+        float svg = 0;
+        int cnt=0;
+        int tot=0;
         for (int i = 0; i < dataList.size(); i++) {
-            float values = dataList.get(i).getEc();
-            entries.add(new Entry(i, values));
+            svg=svg+ dataList.get(i).getEc();
+            cnt++;
+            if(cnt==avgCnt) {
+                entries.add(new Entry(tot, svg/cnt));
+                tot++;
+                svg=0;
+                cnt=0;
+            }
         }
+        if(cnt>0){
+            entries.add(new Entry(tot, svg/cnt));
+        }
+        Log.i("GF","getEc entries.size:"+entries.size()+" tot:"+tot+" dataList.size():"+dataList.size());
 
         LineDataSet set;
         if (mEcChart.getData() != null) {
@@ -502,11 +541,23 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         mVwcChart.getAxisRight().setEnabled(false);
 
         List<Entry> entries = new ArrayList<>();
+        float svg = 0;
+        int cnt=0;
+        int tot=0;
         for (int i = 0; i < dataList.size(); i++) {
-            float values = dataList.get(i).getVwc();
-            entries.add(new Entry(i, values));
+            svg=svg+ dataList.get(i).getVwc();
+            cnt++;
+            if(cnt==avgCnt) {
+                entries.add(new Entry(tot, svg/cnt));
+                tot++;
+                svg=0;
+                cnt=0;
+            }
         }
-
+        if(cnt>0){
+            entries.add(new Entry(tot, svg/cnt));
+        }
+        Log.i("GF","getVwc entries.size:"+entries.size()+" tot:"+tot+" dataList.size():"+dataList.size());
         LineDataSet set;
         if (mVwcChart.getData() != null) {
             mVwcChart.getData().removeDataSet(0);
@@ -541,18 +592,30 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         mVwcChart.notifyDataSetChanged();
         mVwcChart.invalidate();
     }
-
+    int SIZE_MAX=200;
+    int avgCnt = 1;
     private void formatDate() {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         if (dataList != null) {
-            int mSize = dataList.size();
-            mDatesArray = new String[mSize];
-
-            for (int i = 0; i < mSize; i++) {
-                Date date = new Date(dataList.get(i).getDateTime());
-                String day = format.format(date);
-                mDatesArray[i] = day;
+            avgCnt = dataList.size() / SIZE_MAX;
+            if(avgCnt==0){
+                avgCnt = 1;
             }
+            int mSize = dataList.size()/avgCnt;
+            mDatesArray = new String[mSize];
+            int a=0;
+            int cnt = 0;
+            for (int i = 0; i < dataList.size(); i++) {
+                cnt++;
+                if(cnt==avgCnt) {
+                    cnt=0;
+                    Date date = new Date(dataList.get(i).getDateTime());
+                    String day = format.format(date);
+                    mDatesArray[a] = day;
+                    a++;
+                }
+            }
+            Log.i("GF","date.size:"+mDatesArray.length +" avgCnt:"+avgCnt);
         }
     }
 
