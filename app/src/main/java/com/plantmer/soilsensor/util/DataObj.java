@@ -5,9 +5,6 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
-/**
- * Created by edgars.martinovs on 2018-06-07.
- */
 
 @Entity
 public class DataObj {

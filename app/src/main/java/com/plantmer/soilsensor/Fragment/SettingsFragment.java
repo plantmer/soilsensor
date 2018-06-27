@@ -1,8 +1,6 @@
 package com.plantmer.soilsensor.Fragment;
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -18,9 +16,6 @@ import com.plantmer.soilsensor.R;
 import com.plantmer.soilsensor.util.Utils;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private MainActivity main;

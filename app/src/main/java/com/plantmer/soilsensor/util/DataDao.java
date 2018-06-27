@@ -7,9 +7,6 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-/**
- * Created by edgars.martinovs on 2018-06-15.
- */
 
 @Dao
 public interface DataDao {

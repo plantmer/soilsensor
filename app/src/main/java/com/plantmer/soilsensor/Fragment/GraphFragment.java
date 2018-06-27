@@ -45,9 +45,6 @@ import java.util.Random;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class GraphFragment extends Fragment  implements View.OnClickListener,AdapterView.OnItemSelectedListener {
 
     private MainActivity main;
