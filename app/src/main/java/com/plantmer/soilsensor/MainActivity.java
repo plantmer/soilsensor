@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                 @Override
                 public void run() {
                     try {
-                        Log.i("main", "in:::" + log );
+                        //Log.i("main", "in:::" + log );
                         addLog(log);
                         String line;
                         if (log.startsWith(">")) {
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                             line = log;
                         }
                         if (!connected.get() && line.length()>3) {
-                            Log.i("main", "line:" + line );
+                            //Log.i("main", "line:" + line );
                             type = line.substring(0, 3);;
                             if(type.equalsIgnoreCase(TYPE_USB)){
                                 settingsFragment.setUsbEnabled(true);
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                                 type = null;
                             }
                             if(type!=null) {
-                                android.util.Log.e("main", "DETECTED : " + type);
+                                //android.util.Log.e("main", "DETECTED : " + type);
                                 connected.compareAndSet(false,true);
                                 mainFragment.setConnected(connected.get());
                             }

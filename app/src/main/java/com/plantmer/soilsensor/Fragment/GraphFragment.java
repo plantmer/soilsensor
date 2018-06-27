@@ -108,7 +108,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
                 dataList = main.getDb().dataDao().getRange(start,end);
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
-                Log.i("GF","dataList.size:"+dataList.size()+" start:"+format.format(new Date(start))+" end:"+format.format(new Date(end)));
+                //Log.i("GF","dataList.size:"+dataList.size()+" start:"+format.format(new Date(start))+" end:"+format.format(new Date(end)));
                 if(dataList.size()==0){
                     dataList.add(new DataObj(System.currentTimeMillis()));
                 }
@@ -314,7 +314,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         if(cnt>0){
             entries.add(new Entry(tot, svg/cnt));
         }
-        Log.i("GF","getTemp entries.size:"+entries.size()+" tot:"+tot+" dataList.size():"+dataList.size());
+        //Log.i("GF","getTemp entries.size:"+entries.size()+" tot:"+tot+" dataList.size():"+dataList.size());
 
         LineDataSet set;
         if (mTempChart.getData() != null) {
@@ -395,7 +395,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         if(cnt>0){
             entries.add(new Entry(tot, svg/cnt));
         }
-        Log.i("GF","getDp entries.size:"+entries.size()+" tot:"+tot+" dataList.size():"+dataList.size());
+        //Log.i("GF","getDp entries.size:"+entries.size()+" tot:"+tot+" dataList.size():"+dataList.size());
 
         LineDataSet set;
         if (mDpChart.getData() != null) {
@@ -476,7 +476,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         if(cnt>0){
             entries.add(new Entry(tot, svg/cnt));
         }
-        Log.i("GF","getEc entries.size:"+entries.size()+" tot:"+tot+" dataList.size():"+dataList.size());
+        //Log.i("GF","getEc entries.size:"+entries.size()+" tot:"+tot+" dataList.size():"+dataList.size());
 
         LineDataSet set;
         if (mEcChart.getData() != null) {
@@ -557,7 +557,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         if(cnt>0){
             entries.add(new Entry(tot, svg/cnt));
         }
-        Log.i("GF","getVwc entries.size:"+entries.size()+" tot:"+tot+" dataList.size():"+dataList.size());
+        //Log.i("GF","getVwc entries.size:"+entries.size()+" tot:"+tot+" dataList.size():"+dataList.size());
         LineDataSet set;
         if (mVwcChart.getData() != null) {
             mVwcChart.getData().removeDataSet(0);
@@ -615,7 +615,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
                     a++;
                 }
             }
-            Log.i("GF","date.size:"+mDatesArray.length +" avgCnt:"+avgCnt);
+            //Log.i("GF","date.size:"+mDatesArray.length +" avgCnt:"+avgCnt);
         }
     }
 

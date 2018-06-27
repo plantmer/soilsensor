@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Soil Sensor</string>
+    <string name="app_name">Plantmer Soil Sensor</string>
 
     <string name="tab1">MAIN</string>
     <string name="tab2">GRAPH</string>

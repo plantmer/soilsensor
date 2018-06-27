@@ -1,3 +1,5 @@
+# Plantmer.com Soil Sensor
+
 This android application may be used for plantmer.com soil moisture sensor setup and monitoring.
 
 The Plantmer PM-WCS-3 family sensors is low-cost accurate moisture sensor for monitoring water content, electrical conductivity and temperature of soil.
@@ -9,3 +11,8 @@ You may use any android phone supporting OTG host option to configure USB and Lo
 !WARNING LoraWan device waits for 10 seconds after power up for configuration terminal software connection. After terminal connection it remains in configuration mode until terminal software is disconnected.
 
 !WARNING device joining mode OTAA or ABP is switched automatically on configuration when you setup OTAA or ABP parameter.
+
+## Features
+* Setup USB and LoraWAN plantmer soil sensors
+* Write USB sensor data to phone memory
+* View data on charts and export to CSV

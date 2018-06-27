@@ -107,7 +107,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view)
     {
-        Log.d("page", "onClick: "+view.getId());
+        //Log.d("page", "onClick: "+view.getId());
         switch (view.getId()) {
 //            case R.id.connButton:
 //                try {

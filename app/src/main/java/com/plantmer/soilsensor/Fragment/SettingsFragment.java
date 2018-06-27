@@ -80,7 +80,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view)
     {
-        Log.d("settings", "onClick: "+view.getId());
+        //Log.d("settings", "onClick: "+view.getId());
         if(!main.isConnected()){
             main.alertNotConn();
             return;
