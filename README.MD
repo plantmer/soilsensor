@@ -1,4 +1,4 @@
-# Plantmer.com Soil Sensor
+# Plantmer Soil Sensor
 
 This android application may be used for plantmer.com soil moisture sensor setup and monitoring.
 
@@ -16,3 +16,7 @@ You may use any android phone supporting OTG host option to configure USB and Lo
 * Setup USB and LoraWAN plantmer soil sensors
 * Write USB sensor data to phone memory
 * View data on charts and export to CSV
+
+See sensor [specification here] (https://plantmer.com/about/)
+
+Legal Notice: Branding and logo icons are property of Plantmer.com and should not be used without our permission
