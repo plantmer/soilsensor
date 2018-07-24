@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.google.android.gms.common.SignInButton;
 import com.plantmer.soilsensor.MainActivity;
 import com.plantmer.soilsensor.R;
 
@@ -101,6 +102,8 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         mVWCView.setText(getString(R.string.vwc_label, "0.00", mPercentSign));
 
      }
+
+
     @Override
     public void onClick(View view)
     {
@@ -120,6 +123,9 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                 }
 
                 main.getSerial().writeCmd("read");
+                break;
+            case R.id.sign_in_button:
+                main.signIn();
                 break;
         }
     }
@@ -160,19 +166,13 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         mIconTempView.setText(mIconTemp);
         mIconVWCView.setTypeface(weatherFontIcon);
         mIconVWCView.setText(mIconVWC);
-        showLogCB = getActivity().findViewById( R.id.showLogCB );
-        showLogCB.setChecked(false);
-        showLogCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
-                main.setLog(isChecked);
-            }
-        });
         init=true;
-
+        signInButton = getActivity().findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_STANDARD);
+        signInButton.setOnClickListener(this);
+        updateCurrentWeather();
     }
-    CheckBox showLogCB;
-
+    SignInButton signInButton;
     private String mIconDp;
     private String mIconTemp;
     private String mIconEc;

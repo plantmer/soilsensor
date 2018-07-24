@@ -82,10 +82,10 @@
     <string name="hint_activity_search">Search location</string>
 
 
+    <string name="vwc_label">Water Content: %1$s%2$s</string>
+    <string name="temp_label">Temperature: %1$s</string>
     <string name="dp_label">Diel. permittivity: %1$s</string>
     <string name="ec_label">El. Conductivity: %1$s</string>
-    <string name="temp_label">Temperature: %1$s</string>
-    <string name="vwc_label">VWC: %1$s%2$s</string>
 
     <!-- Weather conditions label strings -->
     <string name="wind_label">Wind: %1$s %2$s</string>

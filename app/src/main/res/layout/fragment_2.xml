@@ -21,6 +21,26 @@
                 android:orientation="vertical"
                 android:padding="@dimen/activity_vertical_margin">
 
+                <ScrollView
+                    android:id="@+id/SCROLLER_ID"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:fillViewport="true"
+                    android:scrollbars="vertical"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/cmdLog"
+                        android:layout_width="fill_parent"
+                        android:lineSpacingMultiplier="0.6"
+                        android:layout_height="wrap_content" />
+                </ScrollView>
+                <CheckBox
+                    android:id="@+id/showLogCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Show logs" />
                 <TextView
                     android:id="@+id/tv0"
                     android:layout_width="wrap_content"

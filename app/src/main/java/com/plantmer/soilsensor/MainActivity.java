@@ -3,9 +3,11 @@ package com.plantmer.soilsensor;
 import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,6 +15,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.plantmer.soilsensor.Fragment.MainFragment;
 import com.plantmer.soilsensor.Fragment.GraphFragment;
 import com.plantmer.soilsensor.Fragment.SettingsFragment;
@@ -37,16 +53,10 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     //This is our viewPager
     private ViewPager viewPager;
 
-    private List<String> logs = new ArrayList<>(10);
     private final ScheduledExecutorService scheduler =
             Executors.newScheduledThreadPool(1);
 
     public void initLog(){
-
-        for(int i=0;i<5;i++){
-            logs.add("");
-        }
-        cmdLog.setText("\n\n\n\n\n");
         scheduler.scheduleAtFixedRate(this, 3, 3, SECONDS);
     }
 
@@ -121,19 +131,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     }
     boolean init = false;
     public void addLog(String log){
-        if(!init){
-            return;
-        }
-
-        if(logs.size()>5) {
-            logs.remove(0);
-        }
-        logs.add(log);
-        final StringBuilder sb = new StringBuilder("");
-        for(int i=0;i<logs.size();i++){
-            sb.append(logs.get(i)).append("\n");
-        }
-        cmdLog.setText(sb.toString());
+        settingsFragment.addLog(log);
     }
     //Fragments
 
@@ -141,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     MainFragment mainFragment;
     SettingsFragment settingsFragment;
     MenuItem prevMenuItem;
-    private TextView cmdLog;
 
     private UsbSerial serial = new UsbSerial(this);
 
@@ -161,7 +158,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "soilSensDb").build();
         //Initializing viewPager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        cmdLog =  findViewById(R.id.cmdLog);
         //Initializing the bottomNavigationView
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
 
@@ -213,10 +209,99 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         setupViewPager(viewPager);
         init = true;
         initLog();
-        setLog(false);
-
+        FirebaseApp.initializeApp(this);
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        signInClient = GoogleSignIn.getClient(this, gso);
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
+        updateUI(currentUser);
     }
 
+    private void updateUI(FirebaseUser currentUser) {
+        if(currentUser!=null){
+            Log.i(TAG,"updateUI"+currentUser.getDisplayName());
+            currentUser.getIdToken(true)
+                    .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                        public void onComplete(@NonNull Task<GetTokenResult> task) {
+                            if (task.isSuccessful()) {
+                                String idToken = task.getResult().getToken();
+                                // Send token to your backend via HTTPS
+                                // ...
+                            } else {
+                                // Handle error -> task.getException();
+                            }
+                        }
+                    });
+        }else{
+            Log.i(TAG,"updateUI"+currentUser);
+        }
+    }
+
+    private GoogleSignInClient signInClient;
+    private GoogleSignInOptions gso;
+    private FirebaseAuth auth;
+
+    public FirebaseAuth getAuth() {
+        return auth;
+    }
+
+    public GoogleSignInOptions getGso() {
+        return gso;
+    }
+
+    public GoogleSignInClient getSignInClient() {
+        return signInClient;
+    }
+    int RC_SIGN_IN = 12345;
+    public void signIn() {
+        Intent signInIntent = signInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+    String TAG = "main";
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e);
+                // ...
+            }
+        }
+    }
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = auth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Snackbar.make(findViewById(R.id.activity_main), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+
+                        // ...
+                    }
+                });
+    }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         mainFragment =new MainFragment();
@@ -249,14 +334,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         alertDialog.show();
 
     }
-    public void setLog(boolean enable) {
-        if(enable){
-            cmdLog.setVisibility(View.VISIBLE);
-        }else{
-            cmdLog.setVisibility(View.GONE);
-        }
-    }
-
     public String getType() {
         return type;
     }

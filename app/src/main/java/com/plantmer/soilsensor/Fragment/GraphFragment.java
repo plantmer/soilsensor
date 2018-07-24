@@ -262,7 +262,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         TextView ecLabel = (TextView) getActivity().findViewById(R.id.graphs_ec_label);
         ecLabel.setText("Electrical Conductivity");
         TextView vwcLabel = (TextView) getActivity().findViewById(R.id.graphs_vwc_label);
-        vwcLabel.setText("Water Content");
+        vwcLabel.setText("Water Content %");
         updateRange();
         init=true;
         // Inflate the layout for this fragment

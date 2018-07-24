@@ -8,12 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.plantmer.soilsensor.MainActivity;
 import com.plantmer.soilsensor.R;
 import com.plantmer.soilsensor.util.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {
@@ -57,6 +63,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private Button lwNWKSKeyButton;
     private Button lwAPPSKeyButton;
 
+    private TextView cmdLog;
 
     private EditText rawEt;
 //    private EditText airEt;
@@ -126,8 +133,39 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
+    public TextView getCmdLog() {
+        return cmdLog;
+    }
+    CheckBox showLogCB;
+    private List<String> logs = new ArrayList<>(10);
+    public void initLog() {
+
+        for (int i = 0; i < 5; i++) {
+            logs.add("");
+        }
+        setLog(false);
+    }
+    public void setLog(boolean enable) {
+        if(enable){
+            getCmdLog().setVisibility(View.VISIBLE);
+        }else{
+            getCmdLog().setVisibility(View.GONE);
+        }
+    }
+
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        cmdLog =  getActivity().findViewById(R.id.cmdLog);
+        showLogCB = getActivity().findViewById( R.id.showLogCB );
+        showLogCB.setChecked(false);
+        showLogCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
+                setLog(isChecked);
+            }
+        });
         rawButton =  getActivity().findViewById(R.id.rawButton);
         rawButton.setOnClickListener(this);
         airButton =  getActivity().findViewById(R.id.airButton);
@@ -183,6 +221,24 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 setLwEnabled(true);
             }
         }
+        initLog();
+        getCmdLog().setText("\n\n\n\n\n");
+
+    }
+    public void addLog(String log){
+        if(!init){
+            return;
+        }
+
+        if(logs.size()>5) {
+            logs.remove(0);
+        }
+        logs.add(log);
+        final StringBuilder sb = new StringBuilder("");
+        for(int i=0;i<logs.size();i++){
+            sb.append(logs.get(i)).append("\n");
+        }
+        getCmdLog().setText(sb.toString());
     }
 
     LinearLayout usb;
