@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.google.android.gms.common.SignInButton;
 import com.plantmer.soilsensor.MainActivity;
 import com.plantmer.soilsensor.R;
+import com.plantmer.soilsensor.dao.DataObj;
 import com.plantmer.soilsensor.dao.DataSourceDTO;
 import com.plantmer.soilsensor.dao.DeviceObj;
 
@@ -65,6 +66,15 @@ public class MainFragment extends Fragment implements View.OnClickListener{
             mTemperatureView.setText(getString(R.string.temp_label, split[3]));
             mVWCView.setText(getString(R.string.vwc_label, getWString(split[4]), mPercentSign));
         }
+    }
+    public void append(DataObj dob){
+        if(!init){
+            return;
+        }
+        mDielectricPermittivityView.setText(getString(R.string.dp_label, String.valueOf(dob.getDp())));
+        mElectricalConductivityView.setText(getString(R.string.ec_label, String.valueOf(dob.getEc())));
+        mTemperatureView.setText(getString(R.string.temp_label, String.valueOf(dob.getTemp())));
+        mVWCView.setText(getString(R.string.vwc_label, getWString(String.valueOf(dob.getVwc())), mPercentSign));
     }
 
     private String getWString(String s) {
@@ -196,14 +206,24 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     }
     RadioGroup radiogroup;
     private List<DeviceObj> devices = new ArrayList<>();
+    private List<String> deviceIds = new ArrayList<>();
+
+    public List<String> getDeviceIds() {
+        return deviceIds;
+    }
+
     public void setDss(ArrayList<DataSourceDTO> dss) {
         if(dss.size()==0){
             return;
         }
         devices.clear();
+        deviceIds.clear();
         devices.add(new DeviceObj(main.USB_DEV,"USB Device"));
         for(DataSourceDTO ds:dss){
-            devices.add(new DeviceObj(ds.getId(),ds.getDescr()));
+            if(ds.getType().equals(main.DEV_TYPE)) {
+                devices.add(new DeviceObj(ds.getId(), ds.getDescr()));
+                deviceIds.add(ds.getId());
+            }
         }
         populateDevList();
     }

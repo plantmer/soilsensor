@@ -32,13 +32,27 @@ import com.plantmer.soilsensor.Fragment.MainFragment;
 import com.plantmer.soilsensor.Fragment.GraphFragment;
 import com.plantmer.soilsensor.Fragment.SettingsFragment;
 import com.plantmer.soilsensor.dao.BootConfDAO;
+import com.plantmer.soilsensor.dao.DataObj;
 import com.plantmer.soilsensor.dao.DataSourceDTO;
 import com.plantmer.soilsensor.serial.UsbSerial;
 import com.plantmer.soilsensor.dao.AppDatabase;
 import com.plantmer.soilsensor.util.http.Context;
 
+import org.eclipse.paho.android.service.MqttAndroidClient;
+import org.eclipse.paho.client.mqttv3.DisconnectedBufferOptions;
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -52,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     public static final String TYPE_LWA = "LWA";
     public static final String USB_DEV = "USB";
     private String currentDevice = USB_DEV;
-
+    public static final String  DEV_TYPE = "soilwcs3";
+    public static final String serverUri = "tcp://zerver.io:1883";
+    MqttAndroidClient mqttAndroidClient;
     public String getCurrentDevice() {
         return currentDevice;
     }
@@ -258,6 +274,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                                     Type listType = new TypeToken<ArrayList<DataSourceDTO>>(){}.getType();
                                     ArrayList<DataSourceDTO> devs = httpContext.doGetRequest("datasources",listType);
                                     mainFragment.setDss(devs);
+                                    connectMqtt(conf.getUser().getLogin(),conf.getUser().getPass());
                                 }
                             } else {
                             }
@@ -380,5 +397,137 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
             }
         });
+    }
+
+    public void connectMqtt(String user, String pass){
+        String clientId = "SoilSensor" + System.currentTimeMillis();
+
+        mqttAndroidClient = new MqttAndroidClient(getApplicationContext(), serverUri, clientId);
+        mqttAndroidClient.setCallback(new MqttCallbackExtended() {
+            @Override
+            public void connectComplete(boolean reconnect, String serverURI) {
+
+                if (reconnect) {
+                    Log.i(TAG,"Reconnected to : " + serverURI);
+                    // Because Clean Session is true, we need to re-subscribe
+                    subscribeToTopic();
+                } else {
+                    Log.i(TAG,"Connected to: " + serverURI);
+                }
+            }
+
+            @Override
+            public void connectionLost(Throwable cause) {
+                Log.i(TAG,"The Connection was lost.");
+            }
+
+            @Override
+            public void messageArrived(String topic, MqttMessage message) throws Exception {
+                Log.i(TAG,topic + "Incoming message: " + new String(message.getPayload()));
+
+            }
+
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken token) {
+
+            }
+        });
+
+        MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
+        mqttConnectOptions.setAutomaticReconnect(true);
+        mqttConnectOptions.setCleanSession(false);
+        mqttConnectOptions.setUserName(user);
+        mqttConnectOptions.setPassword(pass.toCharArray());
+
+
+
+
+        try {
+            //Log.i(TAG,"Connecting to " + serverUri);
+            mqttAndroidClient.connect(mqttConnectOptions, null, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    DisconnectedBufferOptions disconnectedBufferOptions = new DisconnectedBufferOptions();
+                    disconnectedBufferOptions.setBufferEnabled(true);
+                    disconnectedBufferOptions.setBufferSize(100);
+                    disconnectedBufferOptions.setPersistBuffer(false);
+                    disconnectedBufferOptions.setDeleteOldestMessages(false);
+                    mqttAndroidClient.setBufferOpts(disconnectedBufferOptions);
+                    subscribeToTopic();
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    Log.i(TAG,"Failed to connect to: " + serverUri);
+                }
+            });
+
+
+        } catch (MqttException ex){
+            Log.e(TAG,"subscribeToTopic",ex);
+        }
+
+    }
+    static String separator = ",";
+    public String  toStr(byte[] l) {
+        StringBuilder sb = new StringBuilder("(");
+        String sep = "";
+        for (byte object : l) {
+            sb.append(sep).append(object & 0xFF);
+            sep = separator;
+        }
+        return sb.append(")").toString();
+    }
+
+    String subscriptionTopic = "ds/"+DEV_TYPE+"/+/out/#";
+    public void subscribeToTopic(){
+        try {
+            mqttAndroidClient.subscribe(subscriptionTopic, 0, null, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i(TAG,"Subscribed!");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    Log.i(TAG,"Failed to subscribe");
+                }
+            });
+
+            // THIS DOES NOT WORK!
+            mqttAndroidClient.subscribe(subscriptionTopic, 0, new IMqttMessageListener() {
+                @Override
+                public void messageArrived(String topic, MqttMessage message) throws Exception {
+                    // message Arrived!
+                    Log.i(TAG,"Message: " + topic + " : " +message.getPayload().length);
+                    String[] tok = topic.split("/");
+                    if(mainFragment.getDeviceIds().contains(tok[2])){
+                        byte cmd = Byte.valueOf(tok[4]);
+                        if(cmd==7){
+                            ByteBuffer buf=ByteBuffer.wrap(message.getPayload());
+                            buf.order(ByteOrder.LITTLE_ENDIAN);
+//                            new DataType("e25", DataType.DT_SHORT, -2)
+//                                    , new DataType("EC", DataType.DT_SHORT, -2)
+//                                    , new DataType("Temp", DataType.DT_SHORT, -2)
+//                                    , new DataType("VWC", DataType.DT_SHORT, 0)
+//                                    , new DataType("Bat", DataType.DT_BYTE, 0)
+//                                    , new DataType("RSSI", DataType.DT_SHORT, 0)
+                            try{//DataObj(String devId, long dateTime, float dp, float ec, float temp, float vwc, int rssi)
+                                DataObj dop = new DataObj(tok[2], System.currentTimeMillis(), buf.getShort()/100, buf.getShort()/100, buf.getShort()/100, buf.getShort(), buf.get(),buf.getShort());
+                                mainFragment.append(dop);
+                                graphFragment.updatez(dop);
+                            } catch (Exception exe){
+                                Log.e(TAG,"Message Parse failed: "  +toStr(message.getPayload()),exe);
+
+                            }
+
+                        }
+                    }
+                }
+            });
+
+        } catch (MqttException ex){
+            Log.e(TAG,"subscribeToTopic",ex);
+        }
     }
 }

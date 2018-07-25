@@ -21,6 +21,8 @@ public class DataObj {
     private float temp;
     @ColumnInfo(name = "vwc")
     private float vwc;
+    private int rssi;
+    private int bat;
 
 
     public DataObj() {}
@@ -38,6 +40,17 @@ public class DataObj {
         this.ec = ec;
         this.temp = temp;
         this.vwc = vwc;
+    }
+    @Ignore
+    public DataObj(String devId, long dateTime, float dp, float ec, float temp, float vwc, int bat, int rssi) {
+        this.deviceId = devId;
+        this.dateTime = dateTime;
+        this.dp = dp;
+        this.ec = ec;
+        this.temp = temp;
+        this.vwc = vwc;
+        this.bat = bat;
+        this.rssi = rssi;
     }
 
     public long getDateTime() {
@@ -86,5 +99,13 @@ public class DataObj {
 
     public void setVwc(float vwc) {
         this.vwc = vwc;
+    }
+
+    public int getRssi() {
+        return rssi;
+    }
+
+    public void setRssi(int rssi) {
+        this.rssi = rssi;
     }
 }

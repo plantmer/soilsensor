@@ -132,7 +132,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         }
     }
 
-    private void updatez(final DataObj dob) {
+    public void updatez(final DataObj dob) {
         if(last) {
             dataList.add(dob);
             if (dataList.size() > 200) {
