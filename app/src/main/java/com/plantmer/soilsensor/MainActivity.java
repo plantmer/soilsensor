@@ -48,6 +48,13 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
     public static final String TYPE_USB = "USB";
     public static final String TYPE_LWA = "LWA";
+    public static final String USB_DEV = "USB";
+    private String currentDevice = USB_DEV;
+
+    public String getCurrentDevice() {
+        return currentDevice;
+    }
+
     BottomNavigationView bottomNavigationView;
 
     //This is our viewPager
@@ -219,8 +226,17 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         updateUI(currentUser);
     }
 
+    public void setCurrentDevice(String currentDevice) {
+        if(!this.currentDevice.equals(currentDevice)){
+            graphFragment.updateRange();
+        }
+        this.currentDevice = currentDevice;
+
+    }
+
     private void updateUI(FirebaseUser currentUser) {
         if(currentUser!=null){
+            mainFragment.setSignInEnabled(false);
             Log.i(TAG,"updateUI"+currentUser.getDisplayName());
             currentUser.getIdToken(true)
                     .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
@@ -236,6 +252,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                     });
         }else{
             Log.i(TAG,"updateUI"+currentUser);
+            mainFragment.setSignInEnabled(true);
         }
     }
 

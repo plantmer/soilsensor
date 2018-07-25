@@ -11,16 +11,26 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.common.SignInButton;
 import com.plantmer.soilsensor.MainActivity;
 import com.plantmer.soilsensor.R;
+import com.plantmer.soilsensor.util.DeviceObj;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 public class MainFragment extends Fragment implements View.OnClickListener{
@@ -37,10 +47,12 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         if(connText==null){
             return;
         }
-        if(connected){
-            connText.setText("Connected "+main.getType());
+       if(connected){
+            readButton.setVisibility(View.VISIBLE);
+            connText.setText("USB Connected "+main.getType());
         }else{
-            connText.setText("Disconnected ");
+            connText.setText("USB Disconnected ");
+            readButton.setVisibility(View.GONE);
         }
 
     }
@@ -171,8 +183,65 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setOnClickListener(this);
         updateCurrentWeather();
+        radiogroup = (RadioGroup) getActivity().findViewById(R.id.radiogroup);
+        radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                Log.i("MF","Checked change:"+checkedId);
+                // This will get the radiobutton that has changed in its check state
+                DeviceObj dev = devices.get(checkedId);
+                // This puts the value (true/false) into the variable
+                Log.i("MF","Checked change1:"+dev);
+                if(dev!=null) {
+                    main.setCurrentDevice(dev.getDeviceId());
+                }
+            }
+        });
+        devices.add(new DeviceObj(main.USB_DEV,"USB Device"));
+        populateDevList();
     }
+    RadioGroup radiogroup;
+    private List<DeviceObj> devices = new ArrayList<>();
+    private void addDevice(DeviceObj dev){
+        devices.add(dev);
+        // get reference to radio group in layout
+        // layout params to use when adding each radio button
+        populateDevList();
+    }
+
+    private void populateDevList() {
+        radiogroup.removeAllViews();
+        LinearLayout.LayoutParams layoutParams = new RadioGroup.LayoutParams(
+                RadioGroup.LayoutParams.WRAP_CONTENT,
+                RadioGroup.LayoutParams.WRAP_CONTENT);
+        for (int i=0;i<devices.size();i++){
+            DeviceObj dev = devices.get(i);
+            RadioButton newRadioButton = new RadioButton(main);
+            newRadioButton.setText(dev.getName());
+            newRadioButton.setTag(dev.getDeviceId());
+            newRadioButton.setId(i);
+            if(dev.getDeviceId().equals(main.getCurrentDevice())){
+                newRadioButton.setChecked(true);
+            }
+            radiogroup.addView(newRadioButton, layoutParams);
+        }
+
+    }
+
     SignInButton signInButton;
+    public void setSignInEnabled(boolean enable){
+        if(!init){
+            return;
+        }
+
+        if(enable){
+            signInButton.setVisibility(View.VISIBLE);
+        }else{
+            signInButton.setVisibility(View.GONE);
+        }
+    }
+
     private String mIconDp;
     private String mIconTemp;
     private String mIconEc;

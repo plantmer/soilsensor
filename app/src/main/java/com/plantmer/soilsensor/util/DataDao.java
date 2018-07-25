@@ -14,8 +14,11 @@ public interface DataDao {
     @Query("SELECT * FROM DataObj")
     List<DataObj> getAll();
 
-    @Query("SELECT * FROM DataObj WHERE dateTime < (:end) and dateTime > (:start)")
+    @Query("SELECT * FROM DataObj WHERE dateTime < :end and dateTime > (:start)")
     List<DataObj> getRange(long start , long end);
+
+    @Query("SELECT * FROM DataObj WHERE dateTime < :end and dateTime > :start and deviceId = :devId")
+    List<DataObj> getRangeDevice(long start , long end, String devId);
 
     @Insert
     void insertAll(DataObj... data);

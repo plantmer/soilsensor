@@ -102,8 +102,8 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
             @Override
             protected Void doInBackground(Void... voids) {
 
-                dataList = main.getDb().dataDao().getRange(start,end);
-                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+                dataList = main.getDb().dataDao().getRangeDevice(start,end, main.getCurrentDevice());
+//                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
                 //Log.i("GF","dataList.size:"+dataList.size()+" start:"+format.format(new Date(start))+" end:"+format.format(new Date(end)));
                 if(dataList.size()==0){
@@ -125,10 +125,10 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         }
 
         if(split.length==4){ // readings dateTime, float dp, float ec, float temp, float vwc
-            DataObj dob = new DataObj(System.currentTimeMillis(),Float.valueOf(split[0]),Float.valueOf(split[1]),Float.valueOf(split[2]), BigDecimal.valueOf(Float.valueOf(split[3])*100).setScale(2).floatValue());
+            DataObj dob = new DataObj(main.USB_DEV,System.currentTimeMillis(),Float.valueOf(split[0]),Float.valueOf(split[1]),Float.valueOf(split[2]), BigDecimal.valueOf(Float.valueOf(split[3])*100).setScale(2).floatValue());
             updatez(dob);
         }else if(split.length==5){ //readings with date
-            DataObj dob = new DataObj(System.currentTimeMillis(),Float.valueOf(split[1]),Float.valueOf(split[2]),Float.valueOf(split[3]),BigDecimal.valueOf(Float.valueOf(split[4])*100).setScale(2).floatValue());
+            DataObj dob = new DataObj(main.USB_DEV,System.currentTimeMillis(),Float.valueOf(split[1]),Float.valueOf(split[2]),Float.valueOf(split[3]),BigDecimal.valueOf(Float.valueOf(split[4])*100).setScale(2).floatValue());
             updatez(dob);
         }
     }

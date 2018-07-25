@@ -3,14 +3,16 @@ package com.plantmer.soilsensor.util;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 
-@Entity
+@Entity(indices = {@Index("deviceId")})
 public class DataObj {
 
     @PrimaryKey
     private long dateTime;
+    private String deviceId;
     @ColumnInfo(name = "dp")
     private float dp;
     @ColumnInfo(name = "ec")
@@ -29,7 +31,8 @@ public class DataObj {
     }
 
     @Ignore
-    public DataObj(long dateTime, float dp, float ec, float temp, float vwc) {
+    public DataObj(String devId, long dateTime, float dp, float ec, float temp, float vwc) {
+        this.deviceId = devId;
         this.dateTime = dateTime;
         this.dp = dp;
         this.ec = ec;
@@ -43,6 +46,14 @@ public class DataObj {
 
     public void setDateTime(long dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
     public float getDp() {
