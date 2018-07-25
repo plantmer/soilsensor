@@ -34,6 +34,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
 
     public void setMain(MainActivity main) {
         this.main = main;
+
     }
     public MainFragment() {
         // Required empty public constructor
@@ -182,7 +183,6 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         mIconTempView.setText(mIconTemp);
         mIconVWCView.setTypeface(weatherFontIcon);
         mIconVWCView.setText(mIconVWC);
-        init=true;
         signInButton = getActivity().findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setOnClickListener(this);
@@ -203,6 +203,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
             }
         });
         addDevice(new DeviceObj(main.USB_DEV,"USB Device"));
+        init=true;
     }
     RadioGroup radiogroup;
     private List<DeviceObj> devices = new ArrayList<>();
@@ -242,7 +243,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                 RadioGroup.LayoutParams.WRAP_CONTENT);
         for (int i=0;i<devices.size();i++){
             DeviceObj dev = devices.get(i);
-            RadioButton newRadioButton = new RadioButton(main);
+            RadioButton newRadioButton = new RadioButton(this.getContext());
             newRadioButton.setText(dev.getName());
             newRadioButton.setTag(dev.getDeviceId());
             newRadioButton.setId(i);

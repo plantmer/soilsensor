@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "778686974812-d7tm4qk103fks9vg5udej7hij5kd3bsf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.plantmer.soilsensor",
+            "certificate_hash": "cfdd4c5fc502a2b14da7f7e3c279b16452cba26c"
+          }
+        },
+        {
           "client_id": "778686974812-fg5ustbtiptoh7qj6ek4hnhp2q64qu08.apps.googleusercontent.com",
           "client_type": 3
         }

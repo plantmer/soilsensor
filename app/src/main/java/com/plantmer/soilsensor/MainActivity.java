@@ -243,6 +243,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         FirebaseApp.initializeApp(this);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .build();
         signInClient = GoogleSignIn.getClient(this, gso);
         auth = FirebaseAuth.getInstance();
@@ -311,6 +312,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
     String TAG = "main";
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -329,6 +331,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             }
         }
     }
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
@@ -345,7 +348,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Snackbar.make(findViewById(R.id.activity_main), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                            //Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                             updateUI(null);
                         }
 

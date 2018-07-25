@@ -4,7 +4,7 @@ android {
         config {
             keyAlias 'plantmer.com'
             keyPassword 'f34dw34rswetr45'
-            storeFile file('C:/ed/SoilSensor/ks/ss_ks.jks')
+            storeFile file('/home/ed/soilsensor/ks/ks_ss1.jks')
             storePassword 'f34dw34rswetr45'
         }
     }
@@ -44,7 +44,7 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.google.firebase:firebase-auth:16.0.2'
-    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    compile 'com.google.android.gms:play-services-auth:15.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'org.jetbrains:annotations-java5:15.0'
     implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
