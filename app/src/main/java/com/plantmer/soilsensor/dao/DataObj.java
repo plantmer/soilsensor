@@ -53,6 +53,14 @@ public class DataObj {
         this.rssi = rssi;
     }
 
+    public int getBat() {
+        return bat;
+    }
+
+    public void setBat(int bat) {
+        this.bat = bat;
+    }
+
     public long getDateTime() {
         return dateTime;
     }

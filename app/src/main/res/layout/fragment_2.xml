@@ -219,6 +219,31 @@
                         android:layout_height="wrap_content"
                         android:text="Gen. DevEUI \n and AppKey" />
                 </LinearLayout>
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/lwDevName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLength="26"
+                        android:text="" />
+
+
+                    <Button
+                        android:id="@+id/lwRegButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="REGISTER" />
+                    <TextView
+                        android:id="@+id/tvGen1LW"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Register device \n on server" />
+                </LinearLayout>
                 <TextView
                     android:id="@+id/tv0lw1"
                     android:layout_width="wrap_content"

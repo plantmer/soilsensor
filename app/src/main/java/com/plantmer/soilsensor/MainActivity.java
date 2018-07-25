@@ -271,9 +271,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                                 if(conf!=null){
                                     mainFragment.setSignInEnabled(false);
                                     httpContext.setToken(conf.getToken());
-                                    Type listType = new TypeToken<ArrayList<DataSourceDTO>>(){}.getType();
-                                    ArrayList<DataSourceDTO> devs = httpContext.doGetRequest("datasources",listType);
-                                    mainFragment.setDss(devs);
+                                    reloadDev();
                                     connectMqtt(conf.getUser().getLogin(),conf.getUser().getPass());
                                 }
                             } else {
@@ -284,6 +282,12 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             Log.i(TAG,"updateUI"+currentUser);
             mainFragment.setSignInEnabled(true);
         }
+    }
+
+    public void reloadDev() {
+        Type listType = new TypeToken<ArrayList<DataSourceDTO>>(){}.getType();
+        ArrayList<DataSourceDTO> devs = httpContext.doGetRequest("datasources",listType);
+        mainFragment.setDss(devs);
     }
 
     private GoogleSignInClient signInClient;

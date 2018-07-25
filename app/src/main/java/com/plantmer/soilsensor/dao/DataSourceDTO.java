@@ -8,10 +8,12 @@ public class DataSourceDTO {
     private String type;//:
     private boolean online;
     private String descr;
-    private Map<Integer,String> cols;
     private long expires;
     private double loc_lat;
     private double loc_long;
+    private String pin;
+    private String subProto; //subprotocol perser
+    private String subProtoConf; //subprotocol parser config
 
     public String getId() {
         return id;
@@ -53,14 +55,6 @@ public class DataSourceDTO {
         this.descr = descr;
     }
 
-    public Map<Integer, String> getCols() {
-        return cols;
-    }
-
-    public void setCols(Map<Integer, String> cols) {
-        this.cols = cols;
-    }
-
     public long getExpires() {
         return expires;
     }
@@ -85,6 +79,30 @@ public class DataSourceDTO {
         this.loc_long = loc_long;
     }
 
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
+
+    public String getSubProto() {
+        return subProto;
+    }
+
+    public void setSubProto(String subProto) {
+        this.subProto = subProto;
+    }
+
+    public String getSubProtoConf() {
+        return subProtoConf;
+    }
+
+    public void setSubProtoConf(String subProtoConf) {
+        this.subProtoConf = subProtoConf;
+    }
+
     @Override
     public String toString() {
         return "DataSourceDTO{" +
@@ -93,7 +111,6 @@ public class DataSourceDTO {
                 ", type='" + type + '\'' +
                 ", online=" + online +
                 ", descr='" + descr + '\'' +
-                ", cols=" + cols +
                 ", expires=" + expires +
                 ", loc_lat=" + loc_lat +
                 ", loc_long=" + loc_long +

@@ -92,7 +92,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     private TextView mIconVWCView;
 
     private TextView connText;
-    private Button connButton;
+//    private Button connButton;
     private Button readButton;
     boolean init = false;
     private String mPercentSign;

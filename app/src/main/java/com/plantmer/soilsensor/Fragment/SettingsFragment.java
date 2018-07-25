@@ -14,8 +14,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.plantmer.soilsensor.MainActivity;
 import com.plantmer.soilsensor.R;
+import com.plantmer.soilsensor.dao.DataSourceDTO;
+import com.plantmer.soilsensor.dao.MessageDAO;
+import com.plantmer.soilsensor.dao.TtnDeviceConfig;
 import com.plantmer.soilsensor.util.Utils;
 
 import java.util.ArrayList;
@@ -56,6 +60,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private Button lwIntervalButton;
     private Button lwInfoButton;
     private Button lwGenButton;
+    private Button lwRegButton;
     private Button lwDevEuiButton;
     private Button lwAppEuiButton;
     private Button lwAppKeyButton;
@@ -76,9 +81,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private EditText lwDevAddrEt;
     private EditText lwNWKSKeyEt;
     private EditText lwAPPSKeyEt;
+    private EditText lwDevName;
 
     boolean init = false;
-
+    Gson gson = new Gson();
     @Override
     public void onClick(View view)
     {
@@ -109,9 +115,34 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.lwInfoButton:
                 main.getSerial().writeCmd("csv");
                 break;
+            case R.id.lwRegButton:
+                if(main.getHttpContext().getToken()!=null){
+                    DataSourceDTO dto = new DataSourceDTO();
+                    dto.setType(main.DEV_TYPE);
+                    if(lwDevName.getText()!=null && !"".equals(lwDevName.getText().toString())) {
+                        dto.setName(lwDevName.getText().toString());
+                    }
+                    dto.setPin("0000");
+                    dto.setSubProto("TtnSubproc");
+                    dto.setSubProtoConf(gson.toJson(new TtnDeviceConfig(lwAppEuiEt.getText().toString(),lwDevEuiEt.getText().toString(),lwAppKeyEt.getText().toString())));
+                    MessageDAO msg = main.getHttpContext().doPostRequest("datasources",dto,MessageDAO.class);
+                    Log.i("SF","REG Fin:"+msg.getMessage());
+                    if("DS registered".equals(msg.getMessage())){
+                        main.reloadDev();
+                    }
+
+                }
+                break;
             case R.id.lwGenButton:
                 lwDevEuiEt.setText(Utils.randomHex(8));
+                main.getSerial().writeCmd("deveui "+lwDevEuiEt.getText().toString());
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    //Log.e("SF","set Ex",e);
+                }
                 lwAppKeyEt.setText(Utils.randomHex(16));
+                main.getSerial().writeCmd("appeui "+lwAppKeyEt.getText().toString());
                 break;
             case R.id.lwDevEuiButton:
                 main.getSerial().writeCmd("deveui "+lwDevEuiEt.getText());
@@ -182,6 +213,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         lwInfoButton.setOnClickListener(this);
         lwGenButton =  getActivity().findViewById(R.id.lwGenButton);
         lwGenButton.setOnClickListener(this);
+        lwRegButton =  getActivity().findViewById(R.id.lwRegButton);
+        lwRegButton.setOnClickListener(this);
         lwDevEuiButton =  getActivity().findViewById(R.id.lwDevEuiButton);
         lwDevEuiButton.setOnClickListener(this);
         lwAppEuiButton =  getActivity().findViewById(R.id.lwAppEuiButton);
@@ -207,13 +240,14 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         lwDevAddrEt =  getActivity().findViewById(R.id.lwDevAddrEt);
         lwNWKSKeyEt =  getActivity().findViewById(R.id.lwNWKSKeyEt);
         lwAPPSKeyEt =  getActivity().findViewById(R.id.lwAPPSKeyEt);
+        lwDevName =  getActivity().findViewById(R.id.lwDevName);
         usb = getActivity().findViewById(R.id.llUSB);
         lw = getActivity().findViewById(R.id.llLW);
         llRaw = getActivity().findViewById(R.id.llRaw);
         init = true;
         setRawEnabled(false);
         setUsbEnabled(false);
-        setLwEnabled(false);
+//        setLwEnabled(false);
         if(main.getType()!=null) {
             if(main.getType().equals(main.TYPE_USB)){
                 setUsbEnabled(true);
