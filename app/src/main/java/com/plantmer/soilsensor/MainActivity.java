@@ -385,6 +385,19 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         alertDialog.show();
 
     }
+    public void alertNotLogin(){
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("Alert");
+        alertDialog.setMessage("Not logged in");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+
+    }
     public String getType() {
         return type;
     }
