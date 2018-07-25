@@ -6,7 +6,6 @@ import android.content.ClipboardManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.plantmer.soilsensor.util.CustomValueFormatter;
-import com.plantmer.soilsensor.util.DataObj;
+import com.plantmer.soilsensor.dao.DataObj;
 import com.plantmer.soilsensor.util.XAxisValueFormatter;
 import com.plantmer.soilsensor.util.YAxisValueFormatter;
 

@@ -1,4 +1,4 @@
-package com.plantmer.soilsensor.util;
+package com.plantmer.soilsensor.dao;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

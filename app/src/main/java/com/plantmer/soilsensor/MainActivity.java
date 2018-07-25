@@ -12,8 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -29,15 +27,19 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.gson.reflect.TypeToken;
 import com.plantmer.soilsensor.Fragment.MainFragment;
 import com.plantmer.soilsensor.Fragment.GraphFragment;
 import com.plantmer.soilsensor.Fragment.SettingsFragment;
+import com.plantmer.soilsensor.dao.BootConfDAO;
+import com.plantmer.soilsensor.dao.DataSourceDTO;
 import com.plantmer.soilsensor.serial.UsbSerial;
-import com.plantmer.soilsensor.util.AppDatabase;
+import com.plantmer.soilsensor.dao.AppDatabase;
+import com.plantmer.soilsensor.util.http.Context;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -142,10 +144,16 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     }
     //Fragments
 
-    GraphFragment graphFragment;
-    MainFragment mainFragment;
-    SettingsFragment settingsFragment;
-    MenuItem prevMenuItem;
+    private GraphFragment graphFragment;
+    private MainFragment mainFragment;
+    private SettingsFragment settingsFragment;
+    private MenuItem prevMenuItem;
+
+    private Context httpContext=new Context("https://zerver.io/api/v1/");
+
+    public Context getHttpContext() {
+        return httpContext;
+    }
 
     private UsbSerial serial = new UsbSerial(this);
 
@@ -233,20 +241,25 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         this.currentDevice = currentDevice;
 
     }
-
+    BootConfDAO conf = null;
     private void updateUI(FirebaseUser currentUser) {
         if(currentUser!=null){
-            mainFragment.setSignInEnabled(false);
             Log.i(TAG,"updateUI"+currentUser.getDisplayName());
             currentUser.getIdToken(true)
                     .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                         public void onComplete(@NonNull Task<GetTokenResult> task) {
                             if (task.isSuccessful()) {
                                 String idToken = task.getResult().getToken();
-                                // Send token to your backend via HTTPS
-                                // ...
+                                conf = httpContext.doGetRequest("auth/fire/"+idToken,BootConfDAO.class);
+                                Log.i(TAG,"user:"+conf);
+                                if(conf!=null){
+                                    mainFragment.setSignInEnabled(false);
+                                    httpContext.setToken(conf.getToken());
+                                    Type listType = new TypeToken<ArrayList<DataSourceDTO>>(){}.getType();
+                                    ArrayList<DataSourceDTO> devs = httpContext.doGetRequest("datasources",listType);
+                                    mainFragment.setDss(devs);
+                                }
                             } else {
-                                // Handle error -> task.getException();
                             }
                         }
                     });

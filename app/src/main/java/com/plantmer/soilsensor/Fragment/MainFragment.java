@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -19,18 +17,14 @@ import android.widget.TextView;
 import com.google.android.gms.common.SignInButton;
 import com.plantmer.soilsensor.MainActivity;
 import com.plantmer.soilsensor.R;
-import com.plantmer.soilsensor.util.DeviceObj;
+import com.plantmer.soilsensor.dao.DataSourceDTO;
+import com.plantmer.soilsensor.dao.DeviceObj;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 
 public class MainFragment extends Fragment implements View.OnClickListener{
@@ -198,11 +192,22 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                 }
             }
         });
-        devices.add(new DeviceObj(main.USB_DEV,"USB Device"));
-        populateDevList();
+        addDevice(new DeviceObj(main.USB_DEV,"USB Device"));
     }
     RadioGroup radiogroup;
     private List<DeviceObj> devices = new ArrayList<>();
+    public void setDss(ArrayList<DataSourceDTO> dss) {
+        if(dss.size()==0){
+            return;
+        }
+        devices.clear();
+        devices.add(new DeviceObj(main.USB_DEV,"USB Device"));
+        for(DataSourceDTO ds:dss){
+            devices.add(new DeviceObj(ds.getId(),ds.getDescr()));
+        }
+        populateDevList();
+    }
+
     private void addDevice(DeviceObj dev){
         devices.add(dev);
         // get reference to radio group in layout

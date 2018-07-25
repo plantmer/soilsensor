@@ -1,4 +1,4 @@
-package com.plantmer.soilsensor.util;
+package com.plantmer.soilsensor.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;

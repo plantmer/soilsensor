@@ -1,4 +1,4 @@
-package com.plantmer.soilsensor.util;
+package com.plantmer.soilsensor.dao;
 
 
 public class DeviceObj {
