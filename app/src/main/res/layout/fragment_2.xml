@@ -237,7 +237,7 @@
                         android:id="@+id/lwRegButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="REGISTER" />
+                        android:text="REGISTER OTAA" />
                     <TextView
                         android:id="@+id/tvGen1LW"
                         android:layout_width="wrap_content"

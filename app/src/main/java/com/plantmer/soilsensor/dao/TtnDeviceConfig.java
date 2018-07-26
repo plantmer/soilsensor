@@ -1,6 +1,7 @@
 package com.plantmer.soilsensor.dao;
 
 public class TtnDeviceConfig {
+    private String type="otaa";
     private String appEui;
     private String devEui;
     private String appKey;
@@ -9,6 +10,14 @@ public class TtnDeviceConfig {
         this.appEui = appEui;
         this.devEui = devEui;
         this.appKey = appKey;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getAppEui() {
