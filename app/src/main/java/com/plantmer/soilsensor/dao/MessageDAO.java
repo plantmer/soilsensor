@@ -10,4 +10,11 @@ public class MessageDAO {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    @Override
+    public String toString() {
+        return "MessageDAO{" +
+                "message='" + message + '\'' +
+                '}';
+    }
 }

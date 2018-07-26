@@ -28,4 +28,13 @@ public class BootConfDAO {
     public void setToken(String token) {
         this.token = token;
     }
+
+    @Override
+    public String toString() {
+        return "BootConfDAO{" +
+                "user=" + user +
+                ", message='" + message + '\'' +
+                ", token='" + token + '\'' +
+                '}';
+    }
 }

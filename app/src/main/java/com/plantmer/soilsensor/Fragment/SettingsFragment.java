@@ -135,8 +135,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     dto.setSubProto("TtnSubproc");
                     dto.setSubProtoConf(gson.toJson(new TtnDeviceConfig(lwAppEuiEt.getText().toString(),lwDevEuiEt.getText().toString(),lwAppKeyEt.getText().toString())));
                     MessageDAO msg = main.getHttpContext().doPostRequest("datasources",dto,MessageDAO.class);
-                    Log.i("SF","REG Fin:"+msg.getMessage());
-                    if("DS registered".equals(msg.getMessage())){
+                    Log.i("SF","REG Fin:"+msg);
+                    if(msg!=null && "DS registered".equals(msg.getMessage())){
                         main.reloadDev();
                     }
                 }else{

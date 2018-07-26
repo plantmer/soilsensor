@@ -1,29 +1,21 @@
 {
   "project_info": {
-    "project_number": "778686974812",
-    "firebase_url": "https://plantmer-ba51a.firebaseio.com",
-    "project_id": "plantmer-ba51a",
-    "storage_bucket": "plantmer-ba51a.appspot.com"
+    "project_number": "863029914162",
+    "firebase_url": "https://zerverio-4ab68.firebaseio.com",
+    "project_id": "zerverio-4ab68",
+    "storage_bucket": "zerverio-4ab68.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:778686974812:android:c150842e1f1f0c74",
+        "mobilesdk_app_id": "1:863029914162:android:c150842e1f1f0c74",
         "android_client_info": {
           "package_name": "com.plantmer.soilsensor"
         }
       },
       "oauth_client": [
         {
-          "client_id": "778686974812-76dop0a9kh56jn2epi0ltu0betudnk9d.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.plantmer.soilsensor",
-            "certificate_hash": "ec689573f4af398342488df7cba850a335810c28"
-          }
-        },
-        {
-          "client_id": "778686974812-d7tm4qk103fks9vg5udej7hij5kd3bsf.apps.googleusercontent.com",
+          "client_id": "863029914162-k9qe0onkelufqtb2sc2f3gc5jadpspdr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.plantmer.soilsensor",
@@ -31,13 +23,13 @@
           }
         },
         {
-          "client_id": "778686974812-fg5ustbtiptoh7qj6ek4hnhp2q64qu08.apps.googleusercontent.com",
+          "client_id": "863029914162-rgh4bpk56h02lpid90rbba4rhu3lt9u9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAuC2QU6olbLXungT_rLrSjnyHkIUZCMrs"
+          "current_key": "AIzaSyBqljd0OQpJjQ7uWGGnH-PMHBszDM4XR-w"
         }
       ],
       "services": {
@@ -48,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "778686974812-fg5ustbtiptoh7qj6ek4hnhp2q64qu08.apps.googleusercontent.com",
+              "client_id": "863029914162-rgh4bpk56h02lpid90rbba4rhu3lt9u9.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
