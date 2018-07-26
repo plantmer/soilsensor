@@ -24,6 +24,7 @@ import com.plantmer.soilsensor.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {
@@ -85,6 +86,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     boolean init = false;
     Gson gson = new Gson();
+
+    public final static String DATA_SOURCE_PATTERN = "^[a-zA-Z0-9_]+([-.][a-zA-Z0-9_]+)*$";
+    private static Pattern pattern = Pattern.compile(DATA_SOURCE_PATTERN);
+
     @Override
     public void onClick(View view)
     {
@@ -120,6 +125,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     DataSourceDTO dto = new DataSourceDTO();
                     dto.setType(main.DEV_TYPE);
                     if(lwDevName.getText()!=null && !"".equals(lwDevName.getText().toString())) {
+                        if(!pattern.matcher(lwDevName.getText().toString()).matches()){
+                            main.alertInvalidName();
+                            return;
+                        }
                         dto.setName(lwDevName.getText().toString());
                     }
                     dto.setPin("0000");
