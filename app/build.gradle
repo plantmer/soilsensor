@@ -4,7 +4,7 @@ android {
         config {
             keyAlias 'plantmer.com'
             keyPassword 'f34dw34rswetr45'
-            storeFile file('/home/ed/soilsensor/ks/ks_ss1.jks')
+            storeFile file('C:/ed/SoilSensor/ks/ks_ss1.jks')
             storePassword 'f34dw34rswetr45'
         }
     }

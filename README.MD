@@ -15,8 +15,9 @@ You may use any android phone supporting OTG host option to configure USB and Lo
 !WARNING device joining mode OTAA or ABP is switched automatically on configuration when you setup OTAA or ABP parameter.
 
 ## Features
-* Setup USB and LoraWAN plantmer soil sensors
-* Write USB sensor data to phone memory
+* Setup USB and LoRaWAN plantmer soil sensors
+* Monitor LoRaWAN sensor in mobile application using The Things Network infrastructure.
+* Write sensor data to phone memory.
 * View data on charts and export to CSV
 
 See sensor [specification here] (https://plantmer.com/about/)
