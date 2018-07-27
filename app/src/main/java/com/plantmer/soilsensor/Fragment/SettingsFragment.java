@@ -257,7 +257,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         init = true;
         setRawEnabled(false);
         setUsbEnabled(false);
-//        setLwEnabled(false);
+        setLwEnabled(false);
         if(main.getType()!=null) {
             if(main.getType().equals(main.TYPE_USB)){
                 setUsbEnabled(true);

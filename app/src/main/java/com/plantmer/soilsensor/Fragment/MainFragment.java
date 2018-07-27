@@ -214,6 +214,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     }
 
     public void setDss(ArrayList<DataSourceDTO> dss) {
+        Log.i("MF","setDss:"+dss.size());
         if(dss.size()==0){
             return;
         }
@@ -221,7 +222,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         deviceIds.clear();
         devices.add(new DeviceObj(main.USB_DEV,"USB Device"));
         for(DataSourceDTO ds:dss){
-            if(ds.getType().equals(main.DEV_TYPE)) {
+            if(ds.getId()!=null && ds.getType().equals(main.DEV_TYPE)) {
                 devices.add(new DeviceObj(ds.getId(), ds.getName()));
                 deviceIds.add(ds.getId());
             }
