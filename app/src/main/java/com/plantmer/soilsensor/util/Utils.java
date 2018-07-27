@@ -15,7 +15,8 @@ public class Utils {
         StringBuilder ret = new StringBuilder("");
         Random rnd = new Random();
         for(int i=0;i<size;i++){
-            ret.append(Integer.toHexString(rnd.nextInt(255)));
+            byte b = (byte)(rnd.nextInt(255)-125);
+            ret.append(Integer.toHexString(b & 0xFF));
         }
         return ret.toString().toUpperCase();
     }
