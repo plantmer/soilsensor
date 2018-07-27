@@ -202,7 +202,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                 }
             }
         });
-        addDevice(new DeviceObj(main.USB_DEV,"USB Device"));
+        initDeviceList(new DeviceObj(main.USB_DEV,"USB Device"));
         init=true;
     }
     RadioGroup radiogroup;
@@ -229,13 +229,11 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         populateDevList();
     }
 
-    private void addDevice(DeviceObj dev){
+    private void initDeviceList(DeviceObj dev){
         devices.clear();
         deviceIds.clear();
         devices.add(dev);
-        deviceIds.add(dev.getDeviceId());
-        // get reference to radio group in layout
-        // layout params to use when adding each radio button
+//        deviceIds.add(dev.getDeviceId());
         populateDevList();
     }
 
