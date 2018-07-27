@@ -222,7 +222,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         devices.add(new DeviceObj(main.USB_DEV,"USB Device"));
         for(DataSourceDTO ds:dss){
             if(ds.getType().equals(main.DEV_TYPE)) {
-                devices.add(new DeviceObj(ds.getId(), ds.getDescr()));
+                devices.add(new DeviceObj(ds.getId(), ds.getName()));
                 deviceIds.add(ds.getId());
             }
         }
@@ -230,7 +230,10 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     }
 
     private void addDevice(DeviceObj dev){
+        devices.clear();
+        deviceIds.clear();
         devices.add(dev);
+        deviceIds.add(dev.getDeviceId());
         // get reference to radio group in layout
         // layout params to use when adding each radio button
         populateDevList();
