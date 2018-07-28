@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             Executors.newScheduledThreadPool(1);
 
     public void initLog(){
-        scheduler.scheduleAtFixedRate(this, 3, 3, SECONDS);
+        scheduler.scheduleAtFixedRate(this, 3, 5, SECONDS);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             @Override
             public void run() {
                 try {
-                    if(!connected.get()){
+                    if(!connected.get() && currentDevice.equals(USB_DEV)){
                         try {
                             getSerial().connect();
                         } catch (IOException e) {
