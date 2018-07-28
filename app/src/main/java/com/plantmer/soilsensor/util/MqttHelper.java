@@ -23,21 +23,18 @@ public class MqttHelper {
     final String clientId = "SoilSensor" + System.currentTimeMillis();
     final String subscriptionTopic = "ds/"+DEV_TYPE+"/+/out/#";
 
-    final String username = "xxxxxxx";
-    final String password = "yyyyyyyyyy";
-
     public MqttHelper(Context context){
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
         mqttAndroidClient.setCallback(new MqttCallbackExtended() {
             @Override
             public void connectComplete(boolean b, String s) {
-                Log.w("mqtt", s);
+                Log.w("mqtt", "connectComplete "+s);
             }
 
             @Override
-            public void connectionLost(Throwable throwable) {
-
-            }
+            public void connectionLost(Throwable e) {
+                Log.e("mqtt", "connectionLost ",e);
+           }
 
             @Override
             public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
@@ -49,14 +46,14 @@ public class MqttHelper {
 
             }
         });
-        connect();
+        //connect();
     }
 
     public void setCallback(MqttCallbackExtended callback) {
         mqttAndroidClient.setCallback(callback);
     }
 
-    private void connect(){
+    public void connect(String username, String password){
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setAutomaticReconnect(true);
         mqttConnectOptions.setCleanSession(false);
@@ -86,7 +83,7 @@ public class MqttHelper {
 
 
         } catch (MqttException ex){
-            ex.printStackTrace();
+            Log.e("Mqtt","err",ex);
         }
     }
 
@@ -106,8 +103,7 @@ public class MqttHelper {
             });
 
         } catch (MqttException ex) {
-            System.err.println("Exceptionst subscribing");
-            ex.printStackTrace();
+            Log.e("Mqtt","err1",ex);
         }
     }
 }

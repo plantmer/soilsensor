@@ -37,6 +37,7 @@ import com.plantmer.soilsensor.dao.DataObj;
 import com.plantmer.soilsensor.dao.DataSourceDTO;
 import com.plantmer.soilsensor.serial.UsbSerial;
 import com.plantmer.soilsensor.dao.AppDatabase;
+import com.plantmer.soilsensor.util.MqttHelper;
 import com.plantmer.soilsensor.util.http.Context;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
@@ -255,6 +256,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
         updateUI(currentUser);
+        startMqtt();
     }
 
     public void setCurrentDevice(String currentDevice) {
@@ -279,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                                     mainFragment.setSignInEnabled(false);
                                     httpContext.setToken(conf.getToken());
                                     reloadDev();
-                                    connectMqtt(conf.getUser().getLogin(),conf.getUser().getPass());
+                                    mqttHelper.connect(conf.getUser().getLogin(),conf.getUser().getPass());
                                 }
                             } else {
                             }
@@ -437,35 +439,27 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             }
         });
     }
-
-    public void connectMqtt(String user, String pass){
-        String clientId = "SoilSensor" + System.currentTimeMillis();
-
-        mqttAndroidClient = new MqttAndroidClient(getApplicationContext(), serverUri, clientId);
-        mqttAndroidClient.setCallback(new MqttCallbackExtended() {
+    MqttHelper mqttHelper;
+    private void startMqtt(){
+        mqttHelper = new MqttHelper(getApplicationContext());
+        mqttHelper.setCallback(new MqttCallbackExtended() {
             @Override
-            public void connectComplete(boolean reconnect, String serverURI) {
+            public void connectComplete(boolean b, String s) {
+                Log.w("Mqtt", "connectComplete ");
 
-                if (reconnect) {
-                    Log.i("MQTT","Reconnected to : " + serverURI);
-                    // Because Clean Session is true, we need to re-subscribe
-                    subscribeToTopic();
-                } else {
-                    Log.i("MQTT","Connected to: " + serverURI);
-
-                }
             }
 
             @Override
-            public void connectionLost(Throwable cause) {
-                Log.i(TAG,"The Connection was lost.");
+            public void connectionLost(Throwable throwable) {
+                Log.e("Mqtt", "conn lost ",throwable);
+
             }
 
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
-                Log.i("MQTT",topic + "Incoming message: " + new String(message.getPayload()));
+                Log.i("Mqtt",topic + "Incoming message1: " + new String(message.getPayload()));
                 String[] tok = topic.split("/");
-                if(mainFragment.getDeviceIds().contains(tok[2])){
+                if(tok[1].equals(DEV_TYPE)){
                     byte cmd = Byte.valueOf(tok[4]);
                     if(cmd==7){
                         ByteBuffer buf=ByteBuffer.wrap(message.getPayload());
@@ -481,56 +475,19 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                             mainFragment.append(dop);
                             graphFragment.updatez(dop);
                         } catch (Exception exe){
-                            Log.e("MQTT","Message Parse failed: "  +toStr(message.getPayload()),exe);
+                            Log.e(TAG,"Message Parse failed: "  +toStr(message.getPayload()),exe);
 
                         }
 
                     }
                 }
-
             }
 
             @Override
-            public void deliveryComplete(IMqttDeliveryToken token) {
+            public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
 
             }
         });
-
-        MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
-        mqttConnectOptions.setAutomaticReconnect(true);
-        mqttConnectOptions.setCleanSession(false);
-        mqttConnectOptions.setUserName(user);
-        mqttConnectOptions.setPassword(pass.toCharArray());
-
-
-
-
-        try {
-            //Log.i(TAG,"Connecting to " + serverUri);
-            mqttAndroidClient.connect(mqttConnectOptions, null, new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.i("MQTT","Connected to: " + serverUri);
-                    DisconnectedBufferOptions disconnectedBufferOptions = new DisconnectedBufferOptions();
-                    disconnectedBufferOptions.setBufferEnabled(true);
-                    disconnectedBufferOptions.setBufferSize(100);
-                    disconnectedBufferOptions.setPersistBuffer(false);
-                    disconnectedBufferOptions.setDeleteOldestMessages(false);
-                    mqttAndroidClient.setBufferOpts(disconnectedBufferOptions);
-                    subscribeToTopic();
-                }
-
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    Log.e("MQTT","Failed to connect to: " + serverUri +" ex:",exception);
-                }
-            });
-
-
-        } catch (MqttException ex){
-            Log.e("MQTT","subscribeToTopic",ex);
-        }
-
     }
     static String separator = ",";
     public String  toStr(byte[] l) {
@@ -541,57 +498,5 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             sep = separator;
         }
         return sb.append(")").toString();
-    }
-
-    String subscriptionTopic = "ds/"+DEV_TYPE+"/+/out/#";
-    public void subscribeToTopic(){
-        try {
-            mqttAndroidClient.subscribe(subscriptionTopic, 0, null, new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.i("MQTT","Subscribed!");
-                }
-
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    Log.i("MQTT","Failed to subscribe");
-                }
-            });
-
-            // THIS DOES NOT WORK!
-            mqttAndroidClient.subscribe(subscriptionTopic, 0, new IMqttMessageListener() {
-                @Override
-                public void messageArrived(String topic, MqttMessage message) throws Exception {
-                    // message Arrived!
-                    Log.i("MQTT",topic + "Incoming message1: " + new String(message.getPayload()));
-                    String[] tok = topic.split("/");
-                    if(mainFragment.getDeviceIds().contains(tok[2])){
-                        byte cmd = Byte.valueOf(tok[4]);
-                        if(cmd==7){
-                            ByteBuffer buf=ByteBuffer.wrap(message.getPayload());
-                            buf.order(ByteOrder.LITTLE_ENDIAN);
-//                            new DataType("e25", DataType.DT_SHORT, -2)
-//                                    , new DataType("EC", DataType.DT_SHORT, -2)
-//                                    , new DataType("Temp", DataType.DT_SHORT, -2)
-//                                    , new DataType("VWC", DataType.DT_SHORT, 0)
-//                                    , new DataType("Bat", DataType.DT_BYTE, 0)
-//                                    , new DataType("RSSI", DataType.DT_SHORT, 0)
-                            try{//DataObj(String devId, long dateTime, float dp, float ec, float temp, float vwc, int rssi)
-                                DataObj dop = new DataObj(tok[2], System.currentTimeMillis(), buf.getShort()/100, buf.getShort()/100, buf.getShort()/100, buf.getShort(), buf.get(),buf.getShort());
-                                mainFragment.append(dop);
-                                graphFragment.updatez(dop);
-                            } catch (Exception exe){
-                                Log.e(TAG,"Message Parse failed: "  +toStr(message.getPayload()),exe);
-
-                            }
-
-                        }
-                    }
-                }
-            });
-
-        } catch (MqttException ex){
-            Log.e(TAG,"subscribeToTopic",ex);
-        }
     }
 }

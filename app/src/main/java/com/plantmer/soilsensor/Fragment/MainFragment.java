@@ -207,11 +207,6 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     }
     RadioGroup radiogroup;
     private List<DeviceObj> devices = new ArrayList<>();
-    private List<String> deviceIds = new ArrayList<>();
-
-    public List<String> getDeviceIds() {
-        return deviceIds;
-    }
 
     public void setDss(ArrayList<DataSourceDTO> dss) {
         Log.i("MF","setDss:"+dss.size());
@@ -219,12 +214,10 @@ public class MainFragment extends Fragment implements View.OnClickListener{
             return;
         }
         devices.clear();
-        deviceIds.clear();
         devices.add(new DeviceObj(main.USB_DEV,"USB Device"));
         for(DataSourceDTO ds:dss){
             if(ds.getId()!=null && ds.getType().equals(main.DEV_TYPE)) {
                 devices.add(new DeviceObj(ds.getId(), ds.getName()));
-                deviceIds.add(ds.getId());
             }
         }
         populateDevList();
@@ -232,9 +225,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
 
     private void initDeviceList(DeviceObj dev){
         devices.clear();
-        deviceIds.clear();
         devices.add(dev);
-//        deviceIds.add(dev.getDeviceId());
         populateDevList();
     }
 
