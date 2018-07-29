@@ -472,8 +472,10 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 //                                    , new DataType("RSSI", DataType.DT_SHORT, 0)
                         try{//DataObj(String devId, long dateTime, float dp, float ec, float temp, float vwc, int rssi)
                             DataObj dop = new DataObj(tok[2], System.currentTimeMillis(), buf.getShort()/100, buf.getShort()/100, buf.getShort()/100, buf.getShort(), buf.get(),buf.getShort());
-                            mainFragment.append(dop);
                             graphFragment.updatez(dop);
+                            if(tok[2].equals(DEV_TYPE)) {
+                                mainFragment.append(dop);
+                            }
                         } catch (Exception exe){
                             Log.e(TAG,"Message Parse failed: "  +toStr(message.getPayload()),exe);
 

@@ -69,16 +69,16 @@ public class MainFragment extends Fragment implements View.OnClickListener{
             mVWCView.setText(getString(R.string.vwc_label, getWString(split[4]), mPercentSign));
         }
     }
-    DecimalFormat df = new DecimalFormat("#.00");
+    DecimalFormat df = new DecimalFormat("###.##");
     public void append(DataObj dob){
         if(!init){
             return;
-        }//String.format ("%.2f",
-        mDielectricPermittivityView.setText(getString(R.string.dp_label, String.format ("%.2f",dob.getDp())));
-        mElectricalConductivityView.setText(getString(R.string.ec_label, String.format ("%.2f",dob.getEc())));
-        mTemperatureView.setText(getString(R.string.temp_label, String.format ("%.2f",dob.getTemp())));
-        mVWCView.setText(getString(R.string.vwc_label, getWString(String.format ("%.2f",dob.getVwc())), mPercentSign));
-        mBatView.setText(getString(R.string.bat_label, getWString(String.format ("%.2f",dob.getBatVolt())), mVoltSign));
+        }//String.format (
+        mDielectricPermittivityView.setText(getString(R.string.dp_label, df.format (dob.getDp())));
+        mElectricalConductivityView.setText(getString(R.string.ec_label, df.format (dob.getEc())));
+        mTemperatureView.setText(getString(R.string.temp_label, df.format (dob.getTemp())));
+        mVWCView.setText(getString(R.string.vwc_label, df.format (dob.getVwc()), mPercentSign));
+        mBatView.setText(getString(R.string.bat_label, df.format (dob.getBatVolt()), mVoltSign));
         mRssiView.setText(getString(R.string.rssi_label, String.valueOf(dob.getRssi())));
     }
 
@@ -252,6 +252,9 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     }
 
     private void populateDevList() {
+        if(radiogroup==null){
+            return;
+        }
         radiogroup.removeAllViews();
         LinearLayout.LayoutParams layoutParams = new RadioGroup.LayoutParams(
                 RadioGroup.LayoutParams.WRAP_CONTENT,
