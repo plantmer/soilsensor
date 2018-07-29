@@ -58,7 +58,7 @@ public class DataObj {
     }
 
     public float getBatVolt() {
-        return bat * 0.03f + 3;
+        return bat * 0.03f + 2;
     }
 
     public void setBat(int bat) {

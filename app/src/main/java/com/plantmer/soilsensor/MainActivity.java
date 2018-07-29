@@ -463,13 +463,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                     byte cmd = Byte.valueOf(tok[4]);
                     if(cmd==7){
                         ByteBuffer buf=ByteBuffer.wrap(message.getPayload());
-//                        buf.order(ByteOrder.LITTLE_ENDIAN);
-//                            new DataType("e25", DataType.DT_SHORT, -2)
-//                                    , new DataType("EC", DataType.DT_SHORT, -2)
-//                                    , new DataType("Temp", DataType.DT_SHORT, -2)
-//                                    , new DataType("VWC", DataType.DT_SHORT, 0)
-//                                    , new DataType("Bat", DataType.DT_BYTE, 0)
-//                                    , new DataType("RSSI", DataType.DT_SHORT, 0)
                         try{//DataObj(String devId, long dateTime, float dp, float ec, float temp, float vwc, int rssi)
                             DataObj dop = new DataObj(tok[2], System.currentTimeMillis(), buf.getShort()/100, buf.getShort()/100, buf.getShort()/100, buf.getShort(), buf.get(),buf.getShort());
                             graphFragment.updatez(dop);
