@@ -473,7 +473,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                         try{//DataObj(String devId, long dateTime, float dp, float ec, float temp, float vwc, int rssi)
                             DataObj dop = new DataObj(tok[2], System.currentTimeMillis(), buf.getShort()/100, buf.getShort()/100, buf.getShort()/100, buf.getShort(), buf.get(),buf.getShort());
                             graphFragment.updatez(dop);
-                            if(tok[2].equals(DEV_TYPE)) {
+                            if(currentDevice!=null && tok[2].equals(currentDevice)) {
                                 mainFragment.append(dop);
                             }
                         } catch (Exception exe){
