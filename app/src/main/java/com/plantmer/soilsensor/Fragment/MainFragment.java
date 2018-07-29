@@ -159,7 +159,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     }
     private void initializeTextView() {
         mPercentSign = getString(R.string.percent_sign);
-        mVoltSign = getString(R.string.volt_sign);
+        mVoltSign =getString(R.string.volt_sign);
         Typeface weatherFontIcon = Typeface.createFromAsset(getActivity().getAssets(),
                 "fonts/weathericons-regular-webfont.ttf");
         Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),
