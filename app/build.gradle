@@ -4,7 +4,7 @@ android {
         config {
             keyAlias 'plantmer.com'
             keyPassword 'f34dw34rswetr45'
-            storeFile file('C:/ed/soilsensor/ks/ks_ss1.jks')
+            storeFile file('/home/ed/soilsensor/ks/ks_ss1.jks')
             storePassword 'f34dw34rswetr45'
         }
     }
@@ -14,7 +14,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

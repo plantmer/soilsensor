@@ -24,6 +24,7 @@ import com.plantmer.soilsensor.dao.DeviceObj;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,14 +69,17 @@ public class MainFragment extends Fragment implements View.OnClickListener{
             mVWCView.setText(getString(R.string.vwc_label, getWString(split[4]), mPercentSign));
         }
     }
+    DecimalFormat df = new DecimalFormat("#.00");
     public void append(DataObj dob){
         if(!init){
             return;
-        }
-        mDielectricPermittivityView.setText(getString(R.string.dp_label, String.valueOf(dob.getDp())));
-        mElectricalConductivityView.setText(getString(R.string.ec_label, String.valueOf(dob.getEc())));
-        mTemperatureView.setText(getString(R.string.temp_label, String.valueOf(dob.getTemp())));
-        mVWCView.setText(getString(R.string.vwc_label, getWString(String.valueOf(dob.getVwc())), mPercentSign));
+        }//String.format ("%.2f",
+        mDielectricPermittivityView.setText(getString(R.string.dp_label, String.format ("%.2f",dob.getDp())));
+        mElectricalConductivityView.setText(getString(R.string.ec_label, String.format ("%.2f",dob.getEc())));
+        mTemperatureView.setText(getString(R.string.temp_label, String.format ("%.2f",dob.getTemp())));
+        mVWCView.setText(getString(R.string.vwc_label, getWString(String.format ("%.2f",dob.getVwc())), mPercentSign));
+        mBatView.setText(getString(R.string.bat_label, getWString(String.format ("%.2f",dob.getBatVolt())), mVoltSign));
+        mRssiView.setText(getString(R.string.rssi_label, String.valueOf(dob.getRssi())));
     }
 
     private String getWString(String s) {
@@ -86,17 +90,22 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     private TextView mElectricalConductivityView;
     private TextView mTemperatureView;
     private TextView mVWCView;
+    private TextView mBatView;
+    private TextView mRssiView;
 
     private TextView mIconDPView;
     private TextView mIconECView;
     private TextView mIconTempView;
     private TextView mIconVWCView;
+    private TextView mIconBatView;
+    private TextView mIconRssiView;
 
     private TextView connText;
 //    private Button connButton;
     private Button readButton;
     boolean init = false;
     private String mPercentSign;
+    private String mVoltSign;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -117,6 +126,8 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         mElectricalConductivityView.setText(getString(R.string.ec_label, "0.00"));
         mTemperatureView.setText(getString(R.string.temp_label, "0.00"));
         mVWCView.setText(getString(R.string.vwc_label, "0.00", mPercentSign));
+        mBatView.setText(getString(R.string.bat_label, "0.00", mVoltSign));
+        mRssiView.setText(getString(R.string.rssi_label, "0"));
 
      }
 
@@ -148,6 +159,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     }
     private void initializeTextView() {
         mPercentSign = getString(R.string.percent_sign);
+        mVoltSign = getString(R.string.volt_sign);
         Typeface weatherFontIcon = Typeface.createFromAsset(getActivity().getAssets(),
                 "fonts/weathericons-regular-webfont.ttf");
         Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),
@@ -163,17 +175,23 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         mElectricalConductivityView =  getActivity().findViewById(R.id.main_ec);
         mTemperatureView =  getActivity().findViewById(R.id.main_temp);
         mVWCView =  getActivity().findViewById(R.id.main_vwc);
+        mBatView =  getActivity().findViewById(R.id.main_bat);
+        mRssiView =  getActivity().findViewById(R.id.main_rssi);
 
         mIconDPView =  getActivity().findViewById(R.id.icon_dp);
         mIconECView=  getActivity().findViewById(R.id.icon_ec);
         mIconTempView=  getActivity().findViewById(R.id.icon_temp);
         mIconVWCView=  getActivity().findViewById(R.id.icon_vwc);
+        mIconBatView=  getActivity().findViewById(R.id.icon_bat);
+        mIconRssiView=  getActivity().findViewById(R.id.icon_rssi);
 
         connText.setTypeface(robotoLight);
         mDielectricPermittivityView.setTypeface(robotoLight);
         mElectricalConductivityView.setTypeface(robotoLight);
         mTemperatureView.setTypeface(robotoLight);
         mVWCView.setTypeface(robotoLight);
+        mBatView.setTypeface(robotoLight);
+        mRssiView.setTypeface(robotoLight);
 
         mIconDPView.setTypeface(weatherFontIcon);
         mIconDPView.setText(mIconDp);
@@ -183,6 +201,10 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         mIconTempView.setText(mIconTemp);
         mIconVWCView.setTypeface(weatherFontIcon);
         mIconVWCView.setText(mIconVWC);
+        mIconBatView.setTypeface(weatherFontIcon);
+        mIconBatView.setText(mIconBat);
+        mIconRssiView.setTypeface(weatherFontIcon);
+        mIconRssiView.setText(mIconRssi);
         signInButton = getActivity().findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setOnClickListener(this);
@@ -265,12 +287,17 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     private String mIconTemp;
     private String mIconEc;
     private String mIconVWC;
+    private String mIconBat;
+    private String mIconRssi;
 
     private void weatherConditionsIcons() {
         mPercentSign = getString(R.string.percent_sign);
+        mVoltSign = getString(R.string.volt_sign);
         mIconDp = getString(R.string.icon_dp);
         mIconTemp = getString(R.string.icon_temp);
         mIconEc = getString(R.string.icon_ec);
         mIconVWC = getString(R.string.icon_vwc);
+        mIconBat = getString(R.string.icon_bat);
+        mIconRssi = getString(R.string.icon_rssi);
     }
 }

@@ -84,6 +84,42 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"/>
                 </LinearLayout>
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:background="@color/textColorPrimary"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/icon_bat"
+                        style="@style/MainIcon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"/>
+
+                    <TextView
+                        android:id="@+id/main_bat"
+                        style="@style/MainConditions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:background="@color/textColorPrimary"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/icon_rssi"
+                        style="@style/MainIcon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"/>
+
+                    <TextView
+                        android:id="@+id/main_rssi"
+                        style="@style/MainConditions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -94,20 +130,12 @@
                     style="@style/MainLinearLayout"
                     android:layout_width="match_parent"
                     android:orientation="horizontal">
-
-                    <!--<Button-->
-                        <!--android:id="@+id/connButton"-->
-                        <!--android:layout_width="122dp"-->
-                        <!--android:layout_height="36dp"-->
-                        <!--android:text="CONNECT" />-->
                     <TextView
                         android:id="@+id/connText"
                         style="@style/MainConditions"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Not Connected" />
-
-
                 </LinearLayout>
                 <LinearLayout
                     style="@style/MainLinearLayout"
@@ -155,6 +183,19 @@
                         >
                     </RadioGroup>
                 </ScrollView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    android:background="?android:attr/listDivider"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    android:background="?android:attr/listDivider"/>
+
             </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
 </RelativeLayout>

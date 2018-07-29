@@ -457,13 +457,13 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
-                Log.i("Mqtt",topic + "Incoming message1: " + new String(message.getPayload()));
+//                Log.i("Mqtt",topic + "Incoming message1: " + new String(message.getPayload()));
                 String[] tok = topic.split("/");
                 if(tok[1].equals(DEV_TYPE)){
                     byte cmd = Byte.valueOf(tok[4]);
                     if(cmd==7){
                         ByteBuffer buf=ByteBuffer.wrap(message.getPayload());
-                        buf.order(ByteOrder.LITTLE_ENDIAN);
+//                        buf.order(ByteOrder.LITTLE_ENDIAN);
 //                            new DataType("e25", DataType.DT_SHORT, -2)
 //                                    , new DataType("EC", DataType.DT_SHORT, -2)
 //                                    , new DataType("Temp", DataType.DT_SHORT, -2)
