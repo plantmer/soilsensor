@@ -40,12 +40,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Show logs" />
+                    android:text="Show USB logs" />
                 <TextView
                     android:id="@+id/tv0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Calibration:" />
+                    android:text="USB Calibration:" />
 
                 <LinearLayout
                     android:id="@+id/llRaw"

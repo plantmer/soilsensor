@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "863029914162-k9qe0onkelufqtb2sc2f3gc5jadpspdr.apps.googleusercontent.com",
+          "client_id": "863029914162-8963nqqcl37emmedvra7snqefl97de16.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.plantmer.soilsensor",
-            "certificate_hash": "cfdd4c5fc502a2b14da7f7e3c279b16452cba26c"
+            "certificate_hash": "ec689573f4af398342488df7cba850a335810c28"
           }
         },
         {
