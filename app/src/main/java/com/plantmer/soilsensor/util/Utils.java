@@ -1,6 +1,5 @@
 package com.plantmer.soilsensor.util;
 
-import android.app.AlarmManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -16,7 +15,11 @@ public class Utils {
         Random rnd = new Random();
         for(int i=0;i<size;i++){
             byte b = (byte)(rnd.nextInt(255)-125);
-            ret.append(Integer.toHexString(b & 0xFF));
+            String str = Integer.toHexString(b & 0xFF);
+            if(str.length()<2){
+                str = "0"+str;
+            }
+            ret.append(str);
         }
         return ret.toString().toUpperCase();
     }
@@ -36,5 +39,9 @@ public class Utils {
                 Context.CLIPBOARD_SERVICE);
         ClipData clipData = ClipData.newPlainText(string, string);
         clipboardManager.setPrimaryClip(clipData);
+    }
+    public static void main(String s[]){
+        for(int i=0;1<100;i++)
+        System.out.println(randomHex(16).length());
     }
 }
