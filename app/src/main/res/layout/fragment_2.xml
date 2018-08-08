@@ -187,7 +187,7 @@
                         android:layout_height="wrap_content"
                         android:digits="0123456789"
                         android:inputType="numberDecimal"
-                        android:text="20" />
+                        android:text="30" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -206,7 +206,7 @@
                         android:id="@+id/tvReadLW"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" " />
+                        android:text=" OR " />
                     <Button
                         android:id="@+id/lwGenButton"
                         android:layout_width="wrap_content"
@@ -225,13 +225,26 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
+
+                    <TextView
+                        android:id="@+id/tvName1LW"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Device name:" />
                     <EditText
                         android:id="@+id/lwDevName"
+                        android:minWidth = "100dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLength="26"
                         android:text="" />
 
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/lwRegButton"
@@ -269,6 +282,7 @@
 
                     <EditText
                         android:id="@+id/lwDevEuiEt"
+                        android:minWidth = "100dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:digits="0123456789ABCDEF"
@@ -296,6 +310,7 @@
 
                     <EditText
                         android:id="@+id/lwAppEuiEt"
+                        android:minWidth = "100dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:digits="0123456789ABCDEF"
@@ -323,6 +338,7 @@
 
                     <EditText
                         android:id="@+id/lwAppKeyEt"
+                        android:minWidth = "100dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:digits="0123456789ABCDEF"
@@ -355,6 +371,7 @@
 
                     <EditText
                         android:id="@+id/lwDevAddrEt"
+                        android:minWidth = "100dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:digits="0123456789ABCDEF"
@@ -382,6 +399,7 @@
 
                     <EditText
                         android:id="@+id/lwNWKSKeyEt"
+                        android:minWidth = "100dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:digits="0123456789ABCDEF"
@@ -409,6 +427,7 @@
 
                     <EditText
                         android:id="@+id/lwAPPSKeyEt"
+                        android:minWidth = "100dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:digits="0123456789ABCDEF"
