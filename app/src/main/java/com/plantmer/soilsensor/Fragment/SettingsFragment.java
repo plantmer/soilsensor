@@ -48,6 +48,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             lwNWKSKeyEt.setText(split[4]);
             lwAPPSKeyEt.setText(split[5]);
             lwDevAddrEt.setText(split[6]);
+        }else if(split.length==3){
+            usbOffTimeEt.setText(split[0]);
+//            usbAppIdEt.setText(split[1]);
+            usbDevIdEt.setText(split[2]);
         }
     }
     public SettingsFragment() {
@@ -57,7 +61,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private Button airButton;
     private Button waterButton;
     private Button usbIntervalButton;
-//    private Button usbTimeButton;
+    private Button usbTimeButton;
+    private Button usbOffTimeButton;
+    private Button usbDevIdButton;
+//    private Button usbAppIdButton;
     private Button lwIntervalButton;
     private Button lwInfoButton;
     private Button lwGenButton;
@@ -75,8 +82,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 //    private EditText airEt;
 //    private EditText waterEt;
     private EditText usbIntervalEt;
+    private EditText usbOffTimeEt;
     private EditText lwIntervalEt;
     private EditText lwDevEuiEt;
+    private TextView usbDevIdEt;
+//    private EditText usbAppIdEt;
     private EditText lwAppEuiEt;
     private EditText lwAppKeyEt;
     private EditText lwDevAddrEt;
@@ -108,12 +118,21 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.waterButton:
                 main.getSerial().writeCmd("water");//+waterEt.getText());
                 break;
-            case R.id.usbIntervalButton:
-                main.getSerial().writeCmd("millis "+usbIntervalEt.getText());
+            case R.id.usbMillsButton:
+                main.getSerial().writeCmd("millis "+String.valueOf(Integer.parseInt(usbIntervalEt.getText().toString())*1000));
                 break;
-//            case R.id.usbTimeButton:
-//                main.getSerial().writeCmd("time "+System.currentTimeMillis());
+            case R.id.usbTimeButton:
+                main.getSerial().writeCmd("time "+System.currentTimeMillis());
+                break;
+            case R.id.usbOffTimeButton:
+                main.getSerial().writeCmd("int "+usbOffTimeEt.getText());
+                break;
+//            case R.id.usbAppIdButton:
+//                main.getSerial().writeCmd("appid "+usbAppIdEt.getText());
 //                break;
+            case R.id.usbDevIdButton:
+                main.getSerial().writeCmd("info");
+                break;
             case R.id.lwIntervalButton:
                 main.getSerial().writeCmd("int "+lwIntervalEt.getText());
                 break;
@@ -123,7 +142,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.lwRegButton:
                 if(main.getHttpContext().getToken()!=null){
                     DataSourceDTO dto = new DataSourceDTO();
-                    dto.setType(main.DEV_TYPE);
+                    dto.setType(main.DEV_TYPE_LW);
                     if(lwDevName.getText()!=null && !"".equals(lwDevName.getText().toString())) {
                         if(!pattern.matcher(lwDevName.getText().toString()).matches()){
                             main.alertInvalidName();
@@ -140,19 +159,14 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                         main.reloadDev();
                     }
                 }else{
-                        main.alertNotLogin();
+                    main.alertNotLogin();
                 }
                 break;
             case R.id.lwGenButton:
                 lwDevEuiEt.setText(Utils.randomHex(8));
-                main.getSerial().writeCmd("deveui "+lwDevEuiEt.getText().toString());
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    //Log.e("SF","set Ex",e);
-                }
+                main.getSerial().writeCmd("deveui "+lwDevEuiEt.getText());
                 lwAppKeyEt.setText(Utils.randomHex(16));
-                main.getSerial().writeCmd("appeui "+lwAppKeyEt.getText().toString());
+                main.getSerial().writeCmd("appeui "+lwAppKeyEt.getText());
                 break;
             case R.id.lwDevEuiButton:
                 main.getSerial().writeCmd("deveui "+lwDevEuiEt.getText());
@@ -213,10 +227,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         airButton.setOnClickListener(this);
         waterButton =  getActivity().findViewById(R.id.waterButton);
         waterButton.setOnClickListener(this);
-        usbIntervalButton =  getActivity().findViewById(R.id.usbIntervalButton);
+        usbIntervalButton =  getActivity().findViewById(R.id.usbMillsButton);
         usbIntervalButton.setOnClickListener(this);
-//        usbTimeButton =  getActivity().findViewById(R.id.usbTimeButton);
-//        usbTimeButton.setOnClickListener(this);
+        usbTimeButton =  getActivity().findViewById(R.id.usbTimeButton);
+        usbTimeButton.setOnClickListener(this);
+        usbOffTimeButton =  getActivity().findViewById(R.id.usbOffTimeButton);
+        usbOffTimeButton.setOnClickListener(this);
         lwIntervalButton =  getActivity().findViewById(R.id.lwIntervalButton);
         lwIntervalButton.setOnClickListener(this);
         lwInfoButton =  getActivity().findViewById(R.id.lwInfoButton);
@@ -227,6 +243,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         lwRegButton.setOnClickListener(this);
         lwDevEuiButton =  getActivity().findViewById(R.id.lwDevEuiButton);
         lwDevEuiButton.setOnClickListener(this);
+        usbDevIdButton =  getActivity().findViewById(R.id.usbDevIdButton);
+        usbDevIdButton.setOnClickListener(this);
+//        usbAppIdButton =  getActivity().findViewById(R.id.usbAppIdButton);
+//        usbAppIdButton.setOnClickListener(this);
         lwAppEuiButton =  getActivity().findViewById(R.id.lwAppEuiButton);
         lwAppEuiButton.setOnClickListener(this);
         lwAppKeyButton =  getActivity().findViewById(R.id.lwAppKeyButton);
@@ -243,7 +263,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 //        waterEt =  getActivity().findViewById(R.id.waterEt);
         usbIntervalEt =  getActivity().findViewById(R.id.usbIntervalEt);
         lwIntervalEt =  getActivity().findViewById(R.id.lwIntervalEt);
+        usbOffTimeEt =  getActivity().findViewById(R.id.usbOffTimeEt);
         lwDevEuiEt =  getActivity().findViewById(R.id.lwDevEuiEt);
+        usbDevIdEt =  getActivity().findViewById(R.id.usbDevIdEt);
+//        usbAppIdEt =  getActivity().findViewById(R.id.usbAppIdEt);
         lwAppEuiEt =  getActivity().findViewById(R.id.lwAppEuiEt);
         lwAppKeyEt =  getActivity().findViewById(R.id.lwAppKeyEt);
         lwDevAddrEt =  getActivity().findViewById(R.id.lwDevAddrEt);
@@ -256,7 +279,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         llRaw = getActivity().findViewById(R.id.llRaw);
         init = true;
         setRawEnabled(false);
-        setUsbEnabled(false);
+        //setUsbEnabled(false);
         setLwEnabled(false);
         if(main.getType()!=null) {
             if(main.getType().equals(main.TYPE_USB)){

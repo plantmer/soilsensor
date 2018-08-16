@@ -5,9 +5,7 @@ public class DeviceObj {
 
     private String deviceId;
     private String name;
-    private String devEui;
-    private String appEui;
-    private String appKey;
+    private String devType;
 
     public DeviceObj( ) {
     }
@@ -18,12 +16,10 @@ public class DeviceObj {
     }
 
 
-    public DeviceObj(String deviceId, String name, String devEui, String appEui, String appKey) {
+    public DeviceObj(String deviceId, String name, String devType) {
         this.deviceId = deviceId;
         this.name = name;
-        this.devEui = devEui;
-        this.appEui = appEui;
-        this.appKey = appKey;
+        this.devType = devType;
     }
 
 
@@ -43,28 +39,12 @@ public class DeviceObj {
         this.name = name;
     }
 
-    public String getDevEui() {
-        return devEui;
+    public String getDevType() {
+        return devType;
     }
 
-    public void setDevEui(String devEui) {
-        this.devEui = devEui;
-    }
-
-    public String getAppEui() {
-        return appEui;
-    }
-
-    public void setAppEui(String appEui) {
-        this.appEui = appEui;
-    }
-
-    public String getAppKey() {
-        return appKey;
-    }
-
-    public void setAppKey(String appKey) {
-        this.appKey = appKey;
+    public void setDevType(String devType) {
+        this.devType = devType;
     }
 
     @Override
@@ -72,9 +52,7 @@ public class DeviceObj {
         return "DeviceObj{" +
                 "deviceId='" + deviceId + '\'' +
                 ", name='" + name + '\'' +
-                ", devEui='" + devEui + '\'' +
-                ", appEui='" + appEui + '\'' +
-                ", appKey='" + appKey + '\'' +
+                ", devEui='" + devType + '\'' +
                 '}';
     }
 }

@@ -238,7 +238,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         devices.clear();
         devices.add(new DeviceObj(main.USB_DEV,"USB Device"));
         for(DataSourceDTO ds:dss){
-            if(ds.getId()!=null && ds.getType().equals(main.DEV_TYPE)) {
+            if(ds.getId()!=null && ds.getType().equals(main.DEV_TYPE_LW)) {
                 devices.add(new DeviceObj(ds.getId(), ds.getName()));
             }
         }

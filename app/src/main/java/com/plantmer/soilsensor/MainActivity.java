@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     public static final String TYPE_LWA = "LWA";
     public static final String USB_DEV = "USB";
     private String currentDevice = USB_DEV;
-    public static final String  DEV_TYPE = "soilwcs3";
+    public static final String  DEV_TYPE_LW = "soilwcs3";
+    public static final String  DEV_TYPE_USB = "SWCS3USB";
     public static final String serverUri = "tcp://zerver.io:1883";
     MqttAndroidClient mqttAndroidClient;
     public String getCurrentDevice() {
@@ -281,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                                     mainFragment.setSignInEnabled(false);
                                     httpContext.setToken(conf.getToken());
                                     reloadDev();
-                                    mqttHelper.connect(conf.getUser().getLogin(),conf.getUser().getPass());
+                                    mqttHelper.connect(conf.getUser().getLogin(), conf.getUser().getPass());
                                 }
                             } else {
                             }
@@ -459,7 +460,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             public void messageArrived(String topic, MqttMessage message) throws Exception {
 //                Log.i("Mqtt",topic + "Incoming message1: " + new String(message.getPayload()));
                 String[] tok = topic.split("/");
-                if(tok[1].equals(DEV_TYPE)){
+                if(tok[1].equals(DEV_TYPE_LW)){
                     byte cmd = Byte.valueOf(tok[4]);
                     if(cmd==7){
                         ByteBuffer buf=ByteBuffer.wrap(message.getPayload());

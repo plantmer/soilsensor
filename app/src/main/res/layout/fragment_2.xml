@@ -113,16 +113,16 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/usbIntervalButton"
+                        android:id="@+id/usbMillsButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Interval" />
+                        android:text="Online log" />
 
                     <TextView
                         android:id="@+id/tvInterval"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Millis:" />
+                        android:text="seconds:" />
 
                     <EditText
                         android:id="@+id/usbIntervalEt"
@@ -130,27 +130,79 @@
                         android:layout_height="wrap_content"
                         android:digits="0123456789"
                         android:inputType="numberDecimal"
-                        android:text="2000" />
+                        android:text="2" />
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/usbOffTimeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Offline log" />
+
+                    <TextView
+                        android:id="@+id/tvusbOffTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="seconds:" />
+
+                    <EditText
+                        android:id="@+id/usbOffTimeEt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789"
+                        android:inputType="numberDecimal"
+                        android:text="60" />
                 </LinearLayout>
 
-                <!--<LinearLayout-->
-                    <!--style="@style/MainLinearLayout"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:orientation="horizontal">-->
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                    <!--<Button-->
-                        <!--android:id="@+id/usbTimeButton"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="Current time" />-->
+                    <Button
+                        android:id="@+id/usbTimeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Current time" />
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/tvCT"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="Set current time" />-->
-                <!--</LinearLayout>-->
+                    <TextView
+                        android:id="@+id/tvCT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Set current time" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/usbDevIdButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="READ" />
+
+                    <TextView
+                        android:id="@+id/tvusbDevId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DevId:" />
+                    <TextView
+                        android:id="@+id/usbDevIdEt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+
+                 </LinearLayout>
+
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/llLW"

@@ -13,7 +13,7 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-import static com.plantmer.soilsensor.MainActivity.DEV_TYPE;
+import static com.plantmer.soilsensor.MainActivity.DEV_TYPE_LW;
 
 public class MqttHelper {
     public MqttAndroidClient mqttAndroidClient;
@@ -21,7 +21,7 @@ public class MqttHelper {
     final String serverUri = "tcp://zerver.io:1883";
 
     final String clientId = "SoilSensor" + System.currentTimeMillis();
-    final String subscriptionTopic = "ds/"+DEV_TYPE+"/+/out/#";
+    final String subscriptionTopic = "ds/"+DEV_TYPE_LW+"/+/out/#";
 
     public MqttHelper(Context context){
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
