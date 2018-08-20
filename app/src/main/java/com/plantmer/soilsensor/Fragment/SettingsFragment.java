@@ -50,7 +50,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             lwDevAddrEt.setText(split[6]);
         }else if(split.length==3){
             usbOffTimeEt.setText(split[0]);
-//            usbAppIdEt.setText(split[1]);
+//            calECEt.setText(split[1]);
             usbDevIdEt.setText(split[2]);
         }
     }
@@ -64,7 +64,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private Button usbTimeButton;
     private Button usbOffTimeButton;
     private Button usbDevIdButton;
-//    private Button usbAppIdButton;
+    private Button calECButton;
     private Button lwIntervalButton;
     private Button lwInfoButton;
     private Button lwGenButton;
@@ -86,7 +86,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private EditText lwIntervalEt;
     private EditText lwDevEuiEt;
     private TextView usbDevIdEt;
-//    private EditText usbAppIdEt;
+    private EditText calECEt;
     private EditText lwAppEuiEt;
     private EditText lwAppKeyEt;
     private EditText lwDevAddrEt;
@@ -127,9 +127,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.usbOffTimeButton:
                 main.getSerial().writeCmd("int "+usbOffTimeEt.getText());
                 break;
-//            case R.id.usbAppIdButton:
-//                main.getSerial().writeCmd("appid "+usbAppIdEt.getText());
-//                break;
+            case R.id.calECButton:
+                main.getSerial().writeCmd("ec "+calECEt.getText());
+                break;
             case R.id.usbDevIdButton:
                 main.getSerial().writeCmd("info");
                 break;
@@ -245,8 +245,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         lwDevEuiButton.setOnClickListener(this);
         usbDevIdButton =  getActivity().findViewById(R.id.usbDevIdButton);
         usbDevIdButton.setOnClickListener(this);
-//        usbAppIdButton =  getActivity().findViewById(R.id.usbAppIdButton);
-//        usbAppIdButton.setOnClickListener(this);
+        calECButton =  getActivity().findViewById(R.id.calECButton);
+        calECButton.setOnClickListener(this);
         lwAppEuiButton =  getActivity().findViewById(R.id.lwAppEuiButton);
         lwAppEuiButton.setOnClickListener(this);
         lwAppKeyButton =  getActivity().findViewById(R.id.lwAppKeyButton);
@@ -266,7 +266,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         usbOffTimeEt =  getActivity().findViewById(R.id.usbOffTimeEt);
         lwDevEuiEt =  getActivity().findViewById(R.id.lwDevEuiEt);
         usbDevIdEt =  getActivity().findViewById(R.id.usbDevIdEt);
-//        usbAppIdEt =  getActivity().findViewById(R.id.usbAppIdEt);
+        calECEt =  getActivity().findViewById(R.id.calECEt);
         lwAppEuiEt =  getActivity().findViewById(R.id.lwAppEuiEt);
         lwAppKeyEt =  getActivity().findViewById(R.id.lwAppKeyEt);
         lwDevAddrEt =  getActivity().findViewById(R.id.lwDevAddrEt);

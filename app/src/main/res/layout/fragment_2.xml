@@ -93,6 +93,31 @@
                         android:layout_height="wrap_content"
                         android:text="WATER" />
                 </LinearLayout>
+                <LinearLayout
+                    style="@style/MainLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/calECButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Calibr. EC" />
+
+                    <TextView
+                        android:id="@+id/tvcalEC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="uS/m:" />
+
+                    <EditText
+                        android:id="@+id/calECEt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789"
+                        android:inputType="number"/>
+                </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llUSB"
