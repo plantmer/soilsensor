@@ -131,7 +131,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 main.getSerial().writeCmd("ec "+calECEt.getText());
                 break;
             case R.id.usbDevIdButton:
-                main.getSerial().writeCmd("info");
+                main.getSerial().writeCmd("devid");
                 break;
             case R.id.lwIntervalButton:
                 main.getSerial().writeCmd("int "+lwIntervalEt.getText());
