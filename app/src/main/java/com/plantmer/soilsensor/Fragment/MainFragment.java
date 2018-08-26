@@ -265,7 +265,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
             newRadioButton.setText(dev.getName());
             newRadioButton.setTag(dev.getDeviceId());
             newRadioButton.setId(i);
-            if(main.getCurrentDevice() !=null && dev.getDeviceId().equals(main.getCurrentDevice())){
+            if(main!=null && main.getCurrentDevice() !=null && dev.getDeviceId().equals(main.getCurrentDevice())){
                 newRadioButton.setChecked(true);
             }
             radiogroup.addView(newRadioButton, layoutParams);

@@ -143,14 +143,14 @@ public class UsbSerial implements Runnable {
     }
     public void close() {
         run = false;
-        if (mDriver != null) {
-            try {
-                mDriver.close();
-                mDriver = null;
-            } catch (IOException e2) {
-                // Ignore.
-            }
-        }
+//        if (mDriver != null) {
+//            try {
+//                mDriver.close();
+//                mDriver = null;
+//            } catch (IOException e2) {
+//                // Ignore.
+//            }
+//        }
         stop();
         handler.disconnected();
     }

@@ -228,6 +228,7 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
 
     @Override
     public void onViewCreated(View vv, Bundle savedInstanceState){
+        ee.setText("");
         genButton = getActivity().findViewById(R.id.genButton);
         genButton.setOnClickListener(this);
         genPrev = getActivity().findViewById(R.id.genPrev);
@@ -235,7 +236,6 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         genNext = getActivity().findViewById(R.id.genNext);
         genNext.setOnClickListener(this);
 
-        ee.setText("");
 
         Spinner spinner = getActivity().findViewById(R.id.time_range_spinner);
 // Create an ArrayAdapter using the string array and a default spinner layout
@@ -267,6 +267,9 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
         // Inflate the layout for this fragment
     }
     private void setTempChart() {
+        if(mTempChart==null){
+            return;
+        }
         mTempChart.setDescription(ee);
         mTempChart.setDrawGridBackground(false);
         mTempChart.setTouchEnabled(true);
@@ -348,6 +351,9 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
     }
 
     private void setDpChart() {
+        if(mDpChart==null){
+            return;
+        }
         mDpChart.setDescription(ee);
         mDpChart.setDrawGridBackground(false);
         mDpChart.setTouchEnabled(true);
@@ -429,6 +435,9 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
     }
 
     private void setEcChart() {
+        if(mEcChart==null){
+            return;
+        }
         mEcChart.setDescription(ee);
         mEcChart.setDrawGridBackground(false);
         mEcChart.setTouchEnabled(true);
@@ -510,6 +519,9 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
     }
 
     private void setVwcChart() {
+        if(mVwcChart==null){
+            return;
+        }
         mVwcChart.setDescription(ee);
         mVwcChart.setDrawGridBackground(false);
         mVwcChart.setTouchEnabled(true);
