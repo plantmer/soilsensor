@@ -48,10 +48,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             lwNWKSKeyEt.setText(split[4]);
             lwAPPSKeyEt.setText(split[5]);
             lwDevAddrEt.setText(split[6]);
-        }else if(split.length==3){
-            usbOffTimeEt.setText(split[0]);
+        }else if(split[0].startsWith("infoUSB")){
+            usbIntervalEt.setText(split[1]);
+            usbOffTimeEt.setText(split[2]);
+            usbDevIdEt.setText(split[4]);
 //            calECEt.setText(split[1]);
-            usbDevIdEt.setText(split[2]);
         }
     }
     public SettingsFragment() {

@@ -123,10 +123,10 @@ public class GraphFragment extends Fragment  implements View.OnClickListener,Ada
             return;
         }
 
-        if(split.length==4){ // readings dateTime, float dp, float ec, float temp, float vwc
+        if(split.length==4 && !split[0].startsWith("info")){ // readings dateTime, float dp, float ec, float temp, float vwc
             DataObj dob = new DataObj(main.USB_DEV,System.currentTimeMillis(),Float.valueOf(split[0]),Float.valueOf(split[1]),Float.valueOf(split[2]), BigDecimal.valueOf(Float.valueOf(split[3])*100).setScale(2).floatValue());
             updatez(dob);
-        }else if(split.length==5){ //readings with date
+        }else if(split.length==5 && !split[0].startsWith("info")){ //readings with date
             DataObj dob = new DataObj(main.USB_DEV,System.currentTimeMillis(),Float.valueOf(split[1]),Float.valueOf(split[2]),Float.valueOf(split[3]),BigDecimal.valueOf(Float.valueOf(split[4])*100).setScale(2).floatValue());
             updatez(dob);
         }

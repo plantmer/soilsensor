@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                             line = log;
                         }
                         if (!connected.get() && line.length()>3) {
-                            //Log.i("main", "line:" + line );
+                            Log.i("main", "line:" + line );
                             type = line.substring(0, 3);;
                             if(type.equalsIgnoreCase(TYPE_USB)){
                                 settingsFragment.setUsbEnabled(true);

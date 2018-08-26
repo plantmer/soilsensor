@@ -57,12 +57,12 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         if(!init){
             return;
         }
-        if(split.length==4){ // readings
+        if(split.length==4 && !split[0].startsWith("info")){ // readings
             mDielectricPermittivityView.setText(getString(R.string.dp_label, split[0]));
             mElectricalConductivityView.setText(getString(R.string.ec_label, split[1]));
             mTemperatureView.setText(getString(R.string.temp_label, split[2]));
             mVWCView.setText(getString(R.string.vwc_label, getWString(split[3]), mPercentSign));
-        }else if(split.length==5){ //readings with date
+        }else if(split.length==5 && !split[0].startsWith("info")){ //readings with date
             mDielectricPermittivityView.setText(getString(R.string.dp_label, split[1]));
             mElectricalConductivityView.setText(getString(R.string.ec_label, split[2]));
             mTemperatureView.setText(getString(R.string.temp_label, split[3]));
@@ -265,7 +265,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
             newRadioButton.setText(dev.getName());
             newRadioButton.setTag(dev.getDeviceId());
             newRadioButton.setId(i);
-            if(dev.getDeviceId().equals(main.getCurrentDevice())){
+            if(main.getCurrentDevice() !=null && dev.getDeviceId().equals(main.getCurrentDevice())){
                 newRadioButton.setChecked(true);
             }
             radiogroup.addView(newRadioButton, layoutParams);
