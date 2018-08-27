@@ -49,7 +49,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             lwAPPSKeyEt.setText(split[5]);
             lwDevAddrEt.setText(split[6]);
         }else if(split[0].startsWith("infoUSB")){
-            usbIntervalEt.setText(split[1]);
+            usbIntervalEt.setText(String.valueOf(Long.valueOf(split[1])/1000));
             usbOffTimeEt.setText(split[2]);
             usbDevIdEt.setText(split[4]);
 //            calECEt.setText(split[1]);
@@ -65,6 +65,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private Button usbTimeButton;
     private Button usbOffTimeButton;
     private Button usbDevIdButton;
+    private Button usbInfoButton;
     private Button calECButton;
     private Button lwIntervalButton;
     private Button lwInfoButton;
@@ -86,7 +87,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private EditText usbOffTimeEt;
     private EditText lwIntervalEt;
     private EditText lwDevEuiEt;
-    private TextView usbDevIdEt;
+    private EditText usbDevIdEt;
     private EditText calECEt;
     private EditText lwAppEuiEt;
     private EditText lwAppKeyEt;
@@ -123,7 +124,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 main.getSerial().writeCmd("millis "+String.valueOf(Integer.parseInt(usbIntervalEt.getText().toString())*1000));
                 break;
             case R.id.usbTimeButton:
-                main.getSerial().writeCmd("time "+System.currentTimeMillis());
+                main.getSerial().writeCmd("time "+System.currentTimeMillis()/1000);
                 break;
             case R.id.usbOffTimeButton:
                 main.getSerial().writeCmd("int "+usbOffTimeEt.getText());
@@ -131,8 +132,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.calECButton:
                 main.getSerial().writeCmd("ec "+calECEt.getText());
                 break;
+            case R.id.usbInfoButton:
+                main.getSerial().writeCmd("info");
+                break;
             case R.id.usbDevIdButton:
-                main.getSerial().writeCmd("devid");
+                main.getSerial().writeCmd("devid "+usbDevIdEt.getText());
                 break;
             case R.id.lwIntervalButton:
                 main.getSerial().writeCmd("int "+lwIntervalEt.getText());
@@ -246,6 +250,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         lwDevEuiButton.setOnClickListener(this);
         usbDevIdButton =  getActivity().findViewById(R.id.usbDevIdButton);
         usbDevIdButton.setOnClickListener(this);
+        usbInfoButton =  getActivity().findViewById(R.id.usbInfoButton);
+        usbInfoButton.setOnClickListener(this);
         calECButton =  getActivity().findViewById(R.id.calECButton);
         calECButton.setOnClickListener(this);
         lwAppEuiButton =  getActivity().findViewById(R.id.lwAppEuiButton);
