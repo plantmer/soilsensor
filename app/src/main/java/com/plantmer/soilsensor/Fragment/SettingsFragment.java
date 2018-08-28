@@ -124,7 +124,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 main.getSerial().writeCmd("millis "+String.valueOf(Integer.parseInt(usbIntervalEt.getText().toString())*1000));
                 break;
             case R.id.usbTimeButton:
-                main.getSerial().writeCmd("time "+System.currentTimeMillis()/1000);
+                main.getSerial().writeCmd("time "+((long)(System.currentTimeMillis()/1000)));
                 break;
             case R.id.usbOffTimeButton:
                 main.getSerial().writeCmd("int "+usbOffTimeEt.getText());
@@ -286,7 +286,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         llRaw = getActivity().findViewById(R.id.llRaw);
         init = true;
         setRawEnabled(false);
-        //setUsbEnabled(false);
+        setUsbEnabled(false);
         setLwEnabled(false);
         if(main.getType()!=null) {
             if(main.getType().equals(main.TYPE_USB)){
