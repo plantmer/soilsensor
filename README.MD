@@ -1,6 +1,6 @@
 [<img src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' alt='Get it on Google Play' width='210' heigh='80'>](https://play.google.com/store/apps/details?id=com.plantmer.soilsensor)
 
-# Plantmer Soil Sensor
+# Plantmer Soil Sensor powered by [Tinovi](https://tinovi.com)
 
 This android application may be used for plantmer.com soil moisture sensor setup and monitoring.
 
@@ -20,6 +20,8 @@ You may use any android phone supporting OTG host option to configure USB and Lo
 * Write sensor data to phone memory.
 * View data on charts and export to CSV
 
-See sensor [specification here] (https://plantmer.com/about/)
+See sensor [specification here] (https://tinovi.com/soil-moisture-sensors/)
+
+Check out our shop [there.](https://tinovi.com/tinovi-shop/)
 
 Legal Notice: Branding and logo icons are property of Plantmer.com and should not be used without our permission
