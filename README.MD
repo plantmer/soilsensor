@@ -1,3 +1,6 @@
+## This repository has been movet [there](https://github.com/tinovi/soilsensor)
+
+
 [<img src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' alt='Get it on Google Play' width='210' heigh='80'>](https://play.google.com/store/apps/details?id=com.plantmer.soilsensor)
 
 #Soil Moisture Temperature Sensor
